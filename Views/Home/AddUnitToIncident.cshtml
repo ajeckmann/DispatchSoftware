@@ -1,0 +1,81 @@
+@model Dispatchh
+<div class="form-group row"><a class="HomeLink" asp-action="Dashboard">Home</a>
+<a class="form-group row" asp-action="Logout">Logout</a>
+</div>
+
+
+<h1>Incident Location: @ViewBag.IncidentToEdit.Location</h1><br>
+<h1>Incident Type: @ViewBag.IncidentToEdit.Type</h1><br>
+<h1>Incident Created on: @ViewBag.IncidentToEdit.CreatedAt.ToLongDateString()<br> at @ViewBag.IncidentToEdit.CreatedAt.ToString("HH:mm:ss") hours</h1><br>
+<h1>Notes: <span>@ViewBag.IncidentToEdit.Description</span></h1><br>
+<h1>Units Available to Dispatch to Incident</h1><br>
+
+<h3>Available Ambulances</h3>
+
+<form asp-action="ProcessDispatch" asp-method="post">
+    <Select class="form-control form-control-lg" asp-for="UnitId">
+        @foreach(Unit a in ViewBag.AvailableAmbulances)
+        {
+            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+        }
+        <input type="submit" value="Dispatch Ambulance">
+        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+    </Select><br>
+</form><br>
+<h3>Available Medics</h3>
+<form asp-action="ProcessDispatch" asp-method="post">
+    <Select class="form-control form-control-sm" asp-for="UnitId">
+        @foreach(Unit a in ViewBag.AvailableMedics)
+        {
+            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+        }
+        <input type="submit" value="Dispatch Medic Unit">
+        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+    </Select>
+</form><br>
+<h3>Available Engines</h3>
+
+<form asp-action="ProcessDispatch" asp-method="post">
+    <Select class="form-control form-control-lg" asp-for="UnitId">
+        @foreach(Unit a in ViewBag.AvailableEngines)
+        {
+            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        }
+        <input type="submit" value="Dispatch Engine"><br>
+        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+    </Select>
+</form><br>
+
+
+<h3>Available Trucks</h3>
+
+<form asp-action="ProcessDispatch" asp-method="post">
+    <Select class="form-control form-control-lg" asp-for="UnitId">
+        @foreach(Unit a in ViewBag.AvailableTrucks)
+        {
+            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        }
+        <input type="submit" value="Dispatch Truck"><br>
+        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+    </Select>
+</form><br>
+
+<h3>Available Rescue Squads</h3>
+
+<form asp-action="ProcessDispatch" asp-controller="Home" asp-method="post">
+    <Select class="form-control form-control-lg" asp-for="UnitId">
+        @foreach(Unit a in ViewBag.AvailableRescueSquads)
+        {
+            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        }
+        </Select>
+        <input type="submit" value="Dispatch RescueSquad"><br>
+        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+    
+
+</form><br>

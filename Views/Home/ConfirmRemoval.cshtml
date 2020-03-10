@@ -1,0 +1,16 @@
+@model Unit 
+<h1>Confirm Unit Removal</h1><br><br>
+
+
+<h3>Are you sure you want to remove @Model.NumberType@Model.Number from the @ViewBag.IncidentRemovedFrom.Type at @ViewBag.IncidentRemovedFrom.Location? </h3>
+
+<form asp-action="RemoveUnit" asp-route-unitId="@Model.UnitId" asp-route-incidentId="@ViewBag.IncidentRemovedFrom.IncidentId">
+
+<input type="submit" value="Remove @Model.NumberType@Model.Number">
+</form>
+
+<form asp-action="CancelRemoval" asp-controller="Home" asp-method="post">
+
+<input type="submit" value="Cancel">
+</form>
+

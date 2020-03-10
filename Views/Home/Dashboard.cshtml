@@ -1,0 +1,125 @@
+
+@model List<Incident> 
+
+    <h3>Hello, Dispatcher @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h3>
+
+    
+
+    
+    
+<div class="form-group">
+    
+<form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
+    <input  class="btn btn-outline-danger btn-lg center" type="submit" value="Create New Incident">
+</form><br>
+
+
+
+</div>
+
+<div class="form-group">
+<h3>Active Incidents</h3>
+
+    <table class="table table-striped border-top">
+        <thead>
+            <tr>
+                <th>Incident Status</th>
+                <th>Incident ID</th>
+                <th>Incident Location</th>
+                <th>Incident Type</th>
+                <th>Units Responding (click to remove)</th>
+                <th>Action</th>
+                <th>Dispatch</th>
+                <th>Incident Time/Date</th> 
+            </tr>
+
+        </thead>
+        @foreach(var inc in @Model.OrderByDescending(i=>i.CreatedAt))
+        {
+            <tr>
+                @if(@inc.IsActive==true)
+                {
+                    <td>ACTIVE</td>
+                }
+                @if(@inc.IsActive==false)
+                {
+                   <td>NOT ACTIVE</td>
+                }
+                
+                <td>@inc.IncidentId</td>
+                <td>@inc.Location</td>
+                <td>@inc.Type</td>
+                <td>
+                @foreach(var u in @inc.dispatchedUnits)
+                {
+                    <span><a asp-action="ConfirmRemoval" asp-route-incidentId=@inc.IncidentId asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                }
+                </td>
+                
+                @if(@inc.IsActive==true)
+                {
+                    <td><a asp-action="CompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark Incident Complete</a></td>
+                    
+                }
+                else
+                {
+                    <td>Incident Complete-No Action Possible</td>
+                }
+                 @if(@inc.IsActive==true)
+                 {
+                     <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to Incident</a></td>
+                 }
+                 else{
+                     <td>Cannot Add Units</td>
+                 }
+                
+                <td>@inc.CreatedAt</td>
+               
+
+            </tr>
+        }
+    </table>
+<div class="form-row align-items-center">
+    <div class="exc">
+
+    <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+    <input  class="btn btn-outline-info btn-sm exc" type="submit" value="Create New Rescuer">
+</form>
+</div>
+
+<div class="exc">
+<form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
+    <input  class="btn btn-outline-info btn-sm exc" type="submit" value="Create New Unit">
+</form>
+</div>
+
+<div class="exc">
+<form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+    <input  class="btn btn-outline-info btn-sm exc" type="submit" value="View Available Personnel">
+</form>
+</div>
+
+</div><br>
+
+<div>
+    
+    <h4>Avaialable Units</h4>
+     @foreach(var unit in @ViewBag.AvailableUnits)
+     {
+         <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number, </a></span>
+     }
+
+</div>
+
+<div>
+    
+    <h4>All Units</h4>
+     @foreach(var unit in @ViewBag.AllUnits)
+     {
+         <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number, </a></span>
+     }
+
+</div>
+    
+
+

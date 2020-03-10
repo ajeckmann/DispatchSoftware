@@ -1,0 +1,66 @@
+@model Unit
+<nav class="nav center">
+<a class="nav-link" asp-action="Dashboard">Home</a><br>
+<a class="nav-link" asp-action="Logout">Logout</a><br>
+</nav>
+
+<h2>Unit: @Model.NumberType@Model.Number</h2><br>
+<h2>Type of Unit: @Model.UnitType</h2><br>
+<h4>Personnel:</h4><br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Rider Last Name</th>
+            <th>Rider First Name</th>
+            <th>Rank</th>
+            <th>Action</th>
+        </tr>
+            
+        
+        @foreach(Assignment Asst in @Model.personnel)
+        {
+            <tr>
+                <td>@Asst.RiderAssigned.LastName</td>
+                <td>@Asst.RiderAssigned.FirstName</td>
+                <td>@Asst.RiderAssigned.Rank</td>
+                <td><a asp-action="RemoveRescuerFromUnit" asp-route-rescuerId="@Asst.RiderAssigned.RescuerId" asp-route-unitId="@Asst.UnitId">Remove From Unit</a></td>
+            </tr>
+            
+        }
+        
+    </thead>
+</table>
+
+<h2>Incidents Currently Involved: </h2><br>
+
+@if (@Model.IsAvailable==true)
+{
+    <h3>Unit Status:   AVAILABLE/IN SERVICE</h3><br>
+}
+else if(@Model.IsAvailable==false)
+{
+<h3>Unit Status:   ON A CALL</h3><br>
+}
+else
+{
+<h3>Unit Status:   UNAVAILABLE</h3><br>
+}
+
+@if (@Model.IsAvailable==true)
+{<form asp-action="InactivateUnit" asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+
+    <input type="submit" value="Take Unit Out Of Service" class="btn btn-outline-danger">
+</form>}
+@if (@Model.IsAvailable==false)
+{
+<form asp-action="ActivateUnit" asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+
+    <input type="submit" value="Place Unit In Service" class="btn btn-outline-danger">
+</form>
+}
+
+<form asp-action="AddPersonnel" asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+
+    <input type="submit" value="Add Personnel" class="btn btn-outline-danger">
+</form>
+

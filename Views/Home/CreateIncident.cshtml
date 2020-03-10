@@ -1,0 +1,42 @@
+@model Incident
+<nav class="nav center">
+<a class="nav-link" asp-action="Dashboard">Back to Dashboard</a><br>
+
+</nav>
+
+<h2>Dispatcher: @ViewBag.Dispatcher.FirstName</h2>
+<form class="col-5 form-group" asp-action="AddIncident" asp-controller="Home" method="post">
+
+            <span asp-validation-for="Location"></span>
+            <label asp-for="Location">Incident Location: </label>
+            <input asp-for="Location" class="form-control"><br>
+
+            <span asp-validation-for="Type"></span>
+            <label asp-for="Type">Incident Type:</label>
+            <select asp-for="Type">
+                <option value="Medical-BLS">Medical-BLS</option>
+                <option value="Medical-ALS">Medical-ALS</option>
+                <option value="Fire">Fire</option>
+            </select><br><br>
+
+            <span asp-validation-for="Description"></span>
+            <label asp-for="Description">Notes: </label>
+            <input asp-for="Description" class="form-control"><br>
+
+            <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
+
+
+
+
+            <label >Incident Created On </label>
+            <h5>@DateTime.Now.ToLongDateString() at @DateTime.Now.ToLongTimeString()</h5><br>
+
+
+            <input class="btn btn-outline-warning" type="submit" value="Generate Incident">
+
+            
+
+           
+          
+          
+</form>

@@ -1,0 +1,108 @@
+@model List<Rescuer>
+<h6>Dispatcher: @ViewBag.UserLoggedIn.FirstName</h6><br><br>
+<nav class="nav center">
+<a class="nav-link" asp-action="Dashboard">Dashboard</a><br>
+<a class="nav-link" asp-action="Logout">Logout</a><br>
+</nav>
+
+
+<h1>Available Personnel</h1>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Age</th>
+            <th>Rank</th>
+            <th>Status</th>
+            <th>Units Assigned To</th>
+            <th>User Profile</th>
+           
+        </tr>
+
+    </thead>
+    @foreach(var resc in @ViewBag.AvailableRescuers)
+    {
+        <tr>
+            <td>@resc.LastName</td>
+            <td>@resc.FirstName</td>
+            <td>@resc.Age</td>
+            <td>@resc.Rank</td>
+            
+            @if(@resc.IsAssigned==true)
+            {
+                <td>ASSIGNED TO UNIT</td>
+
+            }
+            else
+            {
+                <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for Assignment</a></td>
+            }
+           
+            
+            <td>None</td>
+            
+            <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
+            
+        </tr>
+    }
+
+
+</table>
+<form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+    <input  class="btn btn-outline-info btn-sm" type="submit" value="Create New Rescuer">
+</form><br>
+
+
+<h1>All Personnel</h1>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Age</th>
+            <th>Rank</th>
+            <th>Status</th>
+            <th>Units Assigned To</th>
+            <th>User Profile</th>
+           
+        </tr>
+
+    </thead>
+    @foreach(var resc in @ViewBag.AllRescuers)
+    {
+        <tr>
+            <td>@resc.LastName</td>
+            <td>@resc.FirstName</td>
+            <td>@resc.Age</td>
+            <td>@resc.Rank</td>
+            
+            @if(@resc.IsAssigned==true)
+            {
+                <td>ASSIGNED TO UNIT</td>
+
+            }
+            else
+            {
+                <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for Assignment</a></td>
+            }
+            @if(@resc.IsAssigned==true)
+            {
+                @foreach(Assignment a in @resc.AssignedUnit)
+                {
+                    <td>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</td>
+                }
+                
+            }
+            else
+            {
+                <td>None</td>
+            }
+            <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
+            
+        </tr>
+    }
