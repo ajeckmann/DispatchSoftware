@@ -1,39 +1,95 @@
-﻿@model User
+@model LoginUser
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-end ">
+                <a asp-action="Login" asp-controller="Home"><b>Create New Dispatcher Account</b> </a>
+           
+        </div>
 
 
 
-<div class="text-center">
-
-<h1>Register For Dispatcher Account Here</h1>
-
-<a asp-action="Login" asp-controller="Home">Already regristrationized? Click here to log in</a>
-
-<form asp-action="Register" asp-controller="Home" asp-method="post">
-    
-    <span asp-validation-for="FirstName"></span><br>
-
-    <label asp-for="FirstName">First Name</label>
-    <input asp-for="FirstName"><br><br>
-
-    <span asp-validation-for="LastName"></span><br>
-    <label asp-for="LastName">Last Name</label>
-    <input asp-for="LastName"><br>
-
-    <span asp-validation-for="Email"></span><br>
-    <label asp-for="Email">Email Address</label>
-    <input asp-for="Email"><br>
-
-    <span asp-validation-for="Password"></span><br>
-    <label asp-for="Password">Password</label>
-    <input asp-for="Password"><br>
-
-    <span asp-validation-for="ConfirmPassword"></span><br>
-    <label asp-for="ConfirmPassword">Confirm Your Password:</label>
-    <input asp-for="ConfirmPassword"><br>
-
-    <input type="submit" value="Register Now">
-
-    
 
 
-</form>
+        <div class="row justify-content-center h-100">
+            <div class="col-sm-6 my-auto">
+                <div class="row justify-content-center">
+                    <h3>Dispatcher Login</h3>
+                </div>
+
+                <div class="card ">
+                    <div class="card-header text-center ">Enter Details Below</div>
+                    <div class="card-body ">
+
+                        <form asp-action="Signin" asp-controller="Home" asp-method="post">
+                            <div class="form-group row">
+                                <span asp-validation-for="LoginEmail"></span>
+                                <span asp-validation-for="LoginPassword"></span>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label" asp-for="LoginEmail"> <b>Email
+                                        Address:</b></label>
+
+                                <div class="col-sm-7">
+                                    <input class="form-control" asp-for="LoginEmail">
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group row">
+
+                                <label class="col-sm-5 col-form-label" asp-for="LoginPassword"><b>Password:</b></label>
+                                <div class="col-sm-7">
+                                    <input asp-for="LoginPassword" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <input type="submit" class="btn btn-light" value="Log In">
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <!--end card body-->
+                </div>
+                <!--end card-->
+            </div>
+            <!--end col-->
+
+        </div>
+
+</body>
+<style>
+    body {
+        background-color: lightgray;
+    }
+
+    .container-fluid {
+
+        height: 100vh;
+
+    }
+
+    .card {
+        border-radius: 20px;
+        background-color:#EEADAD;
+        opacity: 0.9;
+    }
+</style>
+
+</html>
