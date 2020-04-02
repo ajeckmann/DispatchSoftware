@@ -65,7 +65,26 @@ body {
 margin-left: 40%;
 }
 
-.container-fluid{
-  height:100vh;
-  background-color: aquamarine;
+body {
+  background-color: lightgray;
+}
+
+
+
+.card {
+  border-radius: 20px;
+  background-color:#EEADAD;
+  opacity: 0.9;
+}
+
+.incidentrow {
+  color: red;
+}
+
+
+
+.incident_descriptor{
+  color:rgb(253, 4, 4);
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size:125%;
 }

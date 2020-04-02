@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,44 +11,94 @@
 </head>
 
 <body>
-<div class="container">
-    
+    <div class="container">
 
 
-<div class="row justify-content-around">
 
-<h1>Register For Dispatcher Account Here</h1>
+        <div class="row justify-content-center">
 
-<a asp-action="Index" asp-controller="Home">Have an account? Click here to log in</a>
-
-<form asp-action="Register" asp-controller="Home" asp-method="post">
-    
-    <span asp-validation-for="FirstName"></span><br>
-
-    <label asp-for="FirstName">First Name</label>
-    <input asp-for="FirstName"><br><br>
-
-    <span asp-validation-for="LastName"></span><br>
-    <label asp-for="LastName">Last Name</label>
-    <input asp-for="LastName"><br>
-
-    <span asp-validation-for="Email"></span><br>
-    <label asp-for="Email">Email Address</label>
-    <input asp-for="Email"><br>
-
-    <span asp-validation-for="Password"></span><br>
-    <label asp-for="Password">Password</label>
-    <input asp-for="Password"><br>
-
-    <span asp-validation-for="ConfirmPassword"></span><br>
-    <label asp-for="ConfirmPassword">Confirm Your Password:</label>
-    <input asp-for="ConfirmPassword"><br>
-
-    <input type="submit" class="btn"value="Register Now">
-
-    
+            <h1>Register For Dispatcher Account Here</h1>
+        </div>
 
 
-</form>
-</div>
+
+
+
+        <div class="row justify-content-center">
+            <a asp-action="Index" asp-controller="Home">Have an account? Click here to log in</a>
+        </div><br>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+
+
+                    <form asp-action="Register" asp-controller="Home" asp-method="post">
+
+                        <span asp-validation-for="FirstName"></span><br>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label reg_label" asp-for="FirstName">First Name:</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" asp-for="FirstName"><br>
+                            </div>
+                        </div>
+
+                        <span asp-validation-for="LastName"></span><br>
+                        <div class="form-group row">
+                        <label  class= "col-sm-5 col-form-label reg_label" asp-for="LastName">Last Name:</label>
+                        <div class="col-sm-7">
+                        <input class="form-control" asp-for="LastName"><br>
+                    </div>
+                    </div>
+
+                        <span asp-validation-for="Email"></span><br>
+                        <div class="form-group row">
+                        <label class= "col-sm-5 col-form-label reg_label" asp-for="Email">Email Address:</label>
+                        <div class="col-sm-7">
+                        <input  class="form-control" asp-for="Email"><br>
+                    </div>
+                    </div>
+
+                    
+                        <span asp-validation-for="Password"></span><br>
+                        <div class="form-group row">
+                        <label class= "col-sm-5 col-form-label reg_label" asp-for="Password">Password:</label>
+                        <div class="col-sm-7">
+                        <input class="form-control" asp-for="Password"><br>
+                    </div>
+                </div>
+
+                        <span asp-validation-for="ConfirmPassword"></span><br>
+                        <div class="form-group row">
+                        <label class= "col-sm-5 col-form-label reg_label" asp-for="ConfirmPassword">Confirm Your Password:</label>
+                        <div class="col-sm-7">
+                        
+                        <input class="form-control" asp-for="ConfirmPassword"><br>
+                        </div>
+                </div>
+                        <div class="row justify-content-center">
+                        <input  type="submit" class="btn btn-success" value="Create Account">
+                    </div>
+                    </div>
+
+
+
+
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .card{
+                background-color: black;
+            }
+            .reg_label{
+                color: white;
+                font-size: 130%;
+            }
+        
+        </style>
 </body>

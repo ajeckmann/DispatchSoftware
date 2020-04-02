@@ -1,0 +1,53 @@
+@model Unit
+
+
+
+
+<div class="row justify-content-center">
+    <h1 class="blinking">Confirm Dispatch</h1>
+
+</div>
+
+<div class="row h-100 justify-content-center">
+    <div class="col-sm-5 my-auto">
+        <div id="card" class="card card-block ">
+
+            <div class="card-body">
+
+                <h3>Are you sure you want to dispatch <span class="bold">@Model.NumberType@Model.Number</span> to the
+                    <span class="bold">@ViewBag.IncidentToaddTo.Type</span> at <span
+                        class="bold">@ViewBag.IncidentToaddTo.Location? </span> </h3>
+
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <form asp-action="ProcessDispatch" asp-route-unitId="@Model.UnitId"
+                            asp-route-incidentId="@ViewBag.IncidentToaddTo.IncidentId">
+
+                            <input type="submit" class="btn btn-success btn-lg"
+                                value="Dispatch @Model.NumberType@Model.Number">
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-dark btn-lg" asp-action="AddUnitToIncident" asp-controller="Home" asp-method="post" asp-route-incidentId="@ViewBag.IncidentToaddTo.IncidentId">Cancel Dispatch</a>
+
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    h1 {
+        margin-top: 250px;
+    }
+
+    .bold {
+        font-weight: bold;
+        color: darkred;
+    }
+    #card{
+        background-color: silver;
+</style>

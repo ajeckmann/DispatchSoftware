@@ -1,74 +1,146 @@
-
 @model Assignment
 
-<h3>Choose Unit to add @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to</h3>
-<h1> Available Units</h1>
+<body>
 
-<h3>Ambulances Available For Assignment</h3>
 
-<form asp-action="ProcessAssignment" asp-method="post">
-    <Select asp-for="UnitId">
-        @foreach(Unit a in ViewBag.Ambulances)
+    <div class="row justify-content-between ">
+
+        <div class="col-11 text-center">
+            <h3>Choose Unit to add @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to</h3>
+        </div>
+
+        <div class="col-1">
+            <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+                <input class="btn btn-outline-info btn-sm " type="submit" value="Back">
+            </form>
+        </div>
+    </div>
+
+  
+
+        @if(ViewBag.RescuerToAdd.Rank=="EMT-B")
         {
-            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+        <h3>Ambulances Available For Assignment</h3>
+
+        <form asp-action="ProcessAssignment" asp-method="post">
+            <Select class="selectpicker" asp-for="UnitId">
+                @foreach(Unit a in ViewBag.Ambulances)
+                {
+                <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                }
+                <input type="submit" class="btn btn-success"
+                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Ambulance">
+                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+
+            </Select><br>
+        </form><br>
         }
-        <input type="submit" value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Ambulance">
-        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
 
-    </Select><br>
-    </form><br>
 
-    <h3>Medics Available For Assignment</h3>
-<form asp-action="ProcessAssignment" asp-method="post">
-    <Select asp-for="UnitId">
-        @foreach(Unit a in ViewBag.Medics)
+        @if(ViewBag.RescuerToAdd.Rank== "Paramedic")
         {
-            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+
+
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Medics Available For Assignment</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ProcessAssignment" asp-method="post">
+                        <div class="row justify-content-center">
+                        <div class="col offset-4">
+                        <Select class="selectpicker" data-width="100px" data-style="btn-primary" asp-for="UnitId">
+                            @foreach(Unit a in ViewBag.Medics)
+                            {
+                            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                            }
+                        </Select><br><br>
+                    </div>
+                
+                <div class="row justify-content-center">
+                            <input type="submit" class="btn btn-success"
+                                value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Medic Unit">
+                            <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+
+                        
+                    </form>
+                
+                </div>
+
+            </div>
+        </div><br><br>
         }
-        <input type="submit" value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Medic Unit">
-        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+        @if(ViewBag.RescuerToAdd.Rank== "FirefighterI" | ViewBag.RescuerToAdd.Rank== "FirefighterII" |
+        ViewBag.RescuerToAdd.Rank== "Lieutenant" | ViewBag.RescuerToAdd.Rank== "Paramedic"){
 
-    </Select>
-</form><br>
-<h3>Engines Available For Assignment</h3>
+        <div class="row justify-content-center">
+            <div class="col">
+            <div class="card">
+                     <div class="card-header">
+        <h3>Engines Available For Assignment</h3></div>
 
-<form asp-action="ProcessAssignment" asp-method="post">
-    <Select asp-for="UnitId">
-        @foreach(Unit a in ViewBag.Engines)
-        {
-            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        <form asp-action="ProcessAssignment" asp-method="post">
+            <Select asp-for="UnitId">
+                @foreach(Unit a in ViewBag.Engines)
+                {
+                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+                }
+                <input type="submit" class="btn btn-success"
+                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine"><br>
+                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+
+            </Select>
+        </form><br>
+    </div>
+</div>
+</div>
+
         }
-        <input type="submit" value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine"><br>
-        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+        
 
-    </Select>
-    </form><br>
+        @if(ViewBag.RescuerToAdd.Rank== "FirefighterII" | ViewBag.RescuerToAdd.Rank== "Lieutenant"){
 
-    <h3>Trucks Available For Assignment</h3>
+        <h3>Trucks Available For Assignment</h3>
 
-<form asp-action="ProcessAssignment" asp-method="post">
-    <Select asp-for="UnitId">
-        @foreach(Unit a in ViewBag.Trucks)
-        {
-            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        <form asp-action="ProcessAssignment" asp-method="post">
+            <Select asp-for="UnitId">
+                @foreach(Unit a in ViewBag.Trucks)
+                {
+                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+                }
+                <input type="submit" class="btn btn-success"
+                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Truck"><br>
+                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+
+            </Select>
+        </form><br>
         }
-        <input type="submit" value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Truck"><br>
-        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
 
-    </Select>
-</form><br>
+        @if(ViewBag.RescuerToAdd.Rank == "FirefighterII" | ViewBag.RescuerToAdd.Rank== "Lieutenant"){
 
-<h3>Rescue Squads Available For Assignment</h3>
+        <h3>Rescue Squads Available For Assignment</h3>
 
-<form asp-action="ProcessAssignment" asp-controller="Home" asp-method="post">
-    <Select asp-for="UnitId">
-        @foreach(Unit a in ViewBag.RescueSquads)
-        {
-            <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+        <form asp-action="ProcessAssignment" asp-method="post">
+            <select class="selectpicker " data-style="btn-primary" data-width="250px" asp-for="UnitId">
+                @foreach(Unit a in ViewBag.RescueSquads)
+                {
+                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
+                }
+
+                <input type="submit" class="btn btn-success"
+                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName To RescueSquad"><br>
+                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+
+            </select>
+
+
+        </form>
         }
-        </Select>
-        <input type="submit" value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName To RescueSquad"><br>
-        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+        <style>
+            .row {
+                margin-top: 20px;
+            }
+        </style>
 
-    </Select>
-</form><br>
+</body>

@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="~/css/site.css"/>
 
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row justify-content-end ">
-                <a asp-action="Login" asp-controller="Home"><b>Create New Dispatcher Account</b> </a>
+                <a id="new_account" asp-action="Login" asp-controller="Home">Create New Dispatcher Account </a>
            
         </div>
 
@@ -25,12 +26,12 @@
         <div class="row justify-content-center h-100">
             <div class="col-sm-6 my-auto">
                 <div class="row justify-content-center">
-                    <h3>Dispatcher Login</h3>
+                    
                 </div>
 
                 <div class="card ">
-                    <div class="card-header text-center ">Enter Details Below</div>
-                    <div class="card-body ">
+                    <div class="card-header text-center ">Dispatcher Login</div>
+                    —
 
                         <form asp-action="Signin" asp-controller="Home" asp-method="post">
                             <div class="form-group row">
@@ -76,19 +77,34 @@
 </body>
 <style>
     body {
-        background-color: lightgray;
+        background-image: url("./wwwroot/images/ambo.png")
+       
     }
 
     .container-fluid {
 
         height: 100vh;
+        
 
     }
 
     .card {
         border-radius: 20px;
-        background-color:#EEADAD;
+        background-color:lightblue;
         opacity: 0.9;
+    }
+    body{
+                    background-image: url("./Images/RE703.png");
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100vh;
+                    opacity: 0.8;
+    }
+
+    #new_account{
+        color: black;
+        background-color: white;
+        
     }
 </style>
 
