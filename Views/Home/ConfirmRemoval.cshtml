@@ -1,16 +1,75 @@
-@model Unit 
-<h1>Confirm Unit Removal</h1><br><br>
+@model Unit
+<div class="row justify-content-center">
+    <h1 class="blinking">Confirm Unit Removal</h1>
+
+</div>
+
+<div class="row h-100 justify-content-center">
+    <div class="col-sm-5 my-auto">
+        <div id="card" class="card card-block ">
+
+            <div class="card-body">
+
+                <h3>Are you sure you want to remove <span class="bold">@Model.NumberType@Model.Number</span> from the
+                    <span class="bold">@ViewBag.IncidentRemovedFrom.Type</span> at <span
+                        class="bold">@ViewBag.IncidentRemovedFrom.Location? </span> </h3>
+
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                    <form asp-action="RemoveUnit" asp-route-unitId="@Model.UnitId"
+                        asp-route-incidentId="@ViewBag.IncidentRemovedFrom.IncidentId">
+
+                        <input type="submit" class="btn btn-danger btn-lg" value="Remove @Model.NumberType@Model.Number">
+                    </form>
+                </div>
+                <div class="col-auto">
+                    <form asp-action="CancelRemoval" asp-controller="Home" asp-method="post">
+
+                        <input type="submit" class="btn btn-dark btn-lg" value="Cancel">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<h3>Are you sure you want to remove @Model.NumberType@Model.Number from the @ViewBag.IncidentRemovedFrom.Type at @ViewBag.IncidentRemovedFrom.Location? </h3>
+<style>
+    .bold {
+        font-weight: bold;
+        color: darkred;
+    }
+    #card{
+        background-color: silver;
+        
+    }
+    h1{
+        margin-top: 250px;
+    }
+    .blinking {
+                    animation: blinkingText 0.3s infinite;
+                }
 
-<form asp-action="RemoveUnit" asp-route-unitId="@Model.UnitId" asp-route-incidentId="@ViewBag.IncidentRemovedFrom.IncidentId">
+                @@keyframes blinkingText {
+                    0% {
+                        color:  red;
+                    }
 
-<input type="submit" value="Remove @Model.NumberType@Model.Number">
-</form>
+                    49% {
+                        color: black;
+                    }
 
-<form asp-action="CancelRemoval" asp-controller="Home" asp-method="post">
+                    50% {
+                        color: black;
+                    }
 
-<input type="submit" value="Cancel">
-</form>
+                    51% {
+                        color: black;
+                    }
 
+                    100% {
+                        color: red;
+                    }
+                }
+</style>

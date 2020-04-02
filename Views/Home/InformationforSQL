@@ -1,0 +1,240 @@
+21:41:59 UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0x7fb1ba800000
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 70000f6aeeb0 thread_stack 0x46000
+0   mysqld                              0x000000010caa4ffc my_print_stacktrace(unsigned char const*, unsigned long) + 60
+1   mysqld                              0x000000010bead3d9 handle_fatal_signal + 425
+2   libsystem_platform.dylib            0x00007fff6534442d _sigtramp + 29
+3   ???                                 0x000000011d7e6bcb 0x0 + 4789791691
+4   libsystem_c.dylib                   0x00007fff65219a1c abort + 120
+5   mysqld                              0x000000010d19bfd4 ut_dbg_assertion_failed(char const*, char const*, unsigned long) (.cold.1) + 84
+6   mysqld                              0x000000010ce7d051 ut_dbg_assertion_failed(char const*, char const*, unsigned long) + 273
+7   mysqld                              0x000000010cbf90a2 dict_foreign_add_to_cache(dict_foreign_t*, char const**, bool, bool, dict_err_ignore_t) + 1714
+8   mysqld                              0x000000010cc0d3c4 dd_table_load_fk_from_dd(dict_table_t*, dd::Table const*, char const**, dict_err_ignore_t, bool) + 1572
+9   mysqld                              0x000000010cc1310a dict_table_t* dd_open_table_one<dd::Table>(dd::cache::Dictionary_client*, TABLE const*, char const*, dd::Table const*, THD*, std::__1::deque<char const*, ut_allocator<char const*> >&) + 7098
+10  mysqld                              0x000000010cc03614 dd_table_open_on_dd_obj(dd::cache::Dictionary_client*, dd::Table const&, dd::Partition const*, char const*, dict_table_t*&, THD*) + 2196
+11  mysqld                              0x000000010cc04d43 dd_table_open_on_id_low(THD*, MDL_ticket**, unsigned long long) + 2019
+12  mysqld                              0x000000010cc041f5 dd_table_open_on_id(unsigned long long, THD*, MDL_ticket**, bool, bool) + 2437
+13  mysqld                              0x000000010ce000cb row_purge_step(que_thr_t*) + 763
+14  mysqld                              0x000000010cdb9047 que_run_threads(que_thr_t*) + 375
+15  mysqld                              0x000000010ce32125 srv_worker_thread() + 677
+16  mysqld                              0x000000010ce44017 void Runnable::operator()<void (*)()>(void (*&&)()) + 199
+17  mysqld                              0x000000010ce43e94 void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, Runnable, void (*)()> >(void*) + 52
+18  libsystem_pthread.dylib             0x00007fff6534fe65 _pthread_start + 148
+19  libsystem_pthread.dylib             0x00007fff6534b83b thread_start + 15
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 0
+Status: NOT_KILLED
+
+The manual page at http://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.
+2020-03-24T21:42:08.097405Z 0 [System] [MY-010116] [Server] /usr/local/mysql/bin/mysqld (mysqld 8.0.19) starting as process 2734
+2020-03-24T21:42:08.100745Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /usr/local/mysql/data/ is case insensitive
+2020-03-24T21:42:09.180737Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...
+2020-03-24T21:42:09.190069Z 0 [System] [MY-010232] [Server] XA crash recovery finished.
+2020-03-24T21:42:09.299119Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-03-24T21:42:09.315216Z 0 [System] [MY-010931] [Server] /usr/local/mysql/bin/mysqld: ready for connections. Version: '8.0.19'  socket: '/tmp/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+2020-03-24T21:42:09.427068Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/tmp/mysqlx.sock' bind-address: '::' port: 33060
+2020-03-24T21:42:10.205510Z 0 [ERROR] [MY-013183] [InnoDB] Assertion failure: dict0dict.cc:3338:for_table || ref_table thread 123145565736960
+InnoDB: We intentionally generate a memory trap.
+InnoDB: Submit a detailed bug report to http://bugs.mysql.com.
+InnoDB: If you get repeated assertion failures or crashes, even
+InnoDB: immediately after the mysqld startup, there may be
+InnoDB: corruption in the InnoDB tablespace. Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/8.0/en/forcing-innodb-recovery.html
+InnoDB: about forcing recovery.
+21:42:10 UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0x7fbdfd006000
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 70000fb38eb0 thread_stack 0x46000
+0   mysqld                              0x00000001063c2ffc my_print_stacktrace(unsigned char const*, unsigned long) + 60
+1   mysqld                              0x00000001057cb3d9 handle_fatal_signal + 425
+2   libsystem_platform.dylib            0x00007fff6534442d _sigtramp + 29
+3   ???                                 0x0000000111ecebcb 0x0 + 4595706827
+4   libsystem_c.dylib                   0x00007fff65219a1c abort + 120
+5   mysqld                              0x0000000106ab9fd4 ut_dbg_assertion_failed(char const*, char const*, unsigned long) (.cold.1) + 84
+6   mysqld                              0x000000010679b051 ut_dbg_assertion_failed(char const*, char const*, unsigned long) + 273
+7   mysqld                              0x00000001065170a2 dict_foreign_add_to_cache(dict_foreign_t*, char const**, bool, bool, dict_err_ignore_t) + 1714
+8   mysqld                              0x000000010652b3c4 dd_table_load_fk_from_dd(dict_table_t*, dd::Table const*, char const**, dict_err_ignore_t, bool) + 1572
+9   mysqld                              0x000000010653110a dict_table_t* dd_open_table_one<dd::Table>(dd::cache::Dictionary_client*, TABLE const*, char const*, dd::Table const*, THD*, std::__1::deque<char const*, ut_allocator<char const*> >&) + 7098
+10  mysqld                              0x0000000106521614 dd_table_open_on_dd_obj(dd::cache::Dictionary_client*, dd::Table const&, dd::Partition const*, char const*, dict_table_t*&, THD*) + 2196
+11  mysqld                              0x0000000106522d43 dd_table_open_on_id_low(THD*, MDL_ticket**, unsigned long long) + 2019
+12  mysqld                              0x00000001065221f5 dd_table_open_on_id(unsigned long long, THD*, MDL_ticket**, bool, bool) + 2437
+13  mysqld                              0x000000010671e0cb row_purge_step(que_thr_t*) + 763
+14  mysqld                              0x00000001066d7047 que_run_threads(que_thr_t*) + 375
+15  mysqld                              0x0000000106750125 srv_worker_thread() + 677
+16  mysqld                              0x0000000106762017 void Runnable::operator()<void (*)()>(void (*&&)()) + 199
+17  mysqld                              0x0000000106761e94 void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, Runnable, void (*)()> >(void*) + 52
+18  libsystem_pthread.dylib             0x00007fff6534fe65 _pthread_start + 148
+19  libsystem_pthread.dylib             0x00007fff6534b83b thread_start + 15
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 0
+Status: NOT_KILLED
+
+The manual page at http://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.
+2020-03-24T21:42:18.518755Z 0 [System] [MY-010116] [Server] /usr/local/mysql/bin/mysqld (mysqld 8.0.19) starting as process 2741
+2020-03-24T21:42:18.521943Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /usr/local/mysql/data/ is case insensitive
+2020-03-24T21:42:19.596091Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...
+2020-03-24T21:42:19.606870Z 0 [System] [MY-010232] [Server] XA crash recovery finished.
+2020-03-24T21:42:19.720560Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-03-24T21:42:19.736370Z 0 [System] [MY-010931] [Server] /usr/local/mysql/bin/mysqld: ready for connections. Version: '8.0.19'  socket: '/tmp/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+2020-03-24T21:42:19.841276Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/tmp/mysqlx.sock' bind-address: '::' port: 33060
+2020-03-24T21:42:20.621452Z 0 [ERROR] [MY-013183] [InnoDB] Assertion failure: dict0dict.cc:3338:for_table || ref_table thread 123145392521216
+InnoDB: We intentionally generate a memory trap.
+InnoDB: Submit a detailed bug report to http://bugs.mysql.com.
+InnoDB: If you get repeated assertion failures or crashes, even
+InnoDB: immediately after the mysqld startup, there may be
+InnoDB: corruption in the InnoDB tablespace. Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/8.0/en/forcing-innodb-recovery.html
+InnoDB: about forcing recovery.
+21:42:20 UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0x7fb734800e00
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 700005607eb0 thread_stack 0x46000
+0   mysqld                              0x0000000110f1dffc my_print_stacktrace(unsigned char const*, unsigned long) + 60
+1   mysqld                              0x00000001103263d9 handle_fatal_signal + 425
+2   libsystem_platform.dylib            0x00007fff6534442d _sigtramp + 29
+3   ???                                 0x000000011b388bcb 0x0 + 4751657931
+4   libsystem_c.dylib                   0x00007fff65219a1c abort + 120
+5   mysqld                              0x0000000111614fd4 ut_dbg_assertion_failed(char const*, char const*, unsigned long) (.cold.1) + 84
+6   mysqld                              0x00000001112f6051 ut_dbg_assertion_failed(char const*, char const*, unsigned long) + 273
+7   mysqld                              0x00000001110720a2 dict_foreign_add_to_cache(dict_foreign_t*, char const**, bool, bool, dict_err_ignore_t) + 1714
+8   mysqld                              0x00000001110863c4 dd_table_load_fk_from_dd(dict_table_t*, dd::Table const*, char const**, dict_err_ignore_t, bool) + 1572
+9   mysqld                              0x000000011108c10a dict_table_t* dd_open_table_one<dd::Table>(dd::cache::Dictionary_client*, TABLE const*, char const*, dd::Table const*, THD*, std::__1::deque<char const*, ut_allocator<char const*> >&) + 7098
+10  mysqld                              0x000000011107c614 dd_table_open_on_dd_obj(dd::cache::Dictionary_client*, dd::Table const&, dd::Partition const*, char const*, dict_table_t*&, THD*) + 2196
+11  mysqld                              0x000000011107dd43 dd_table_open_on_id_low(THD*, MDL_ticket**, unsigned long long) + 2019
+12  mysqld                              0x000000011107d1f5 dd_table_open_on_id(unsigned long long, THD*, MDL_ticket**, bool, bool) + 2437
+13  mysqld                              0x00000001112790cb row_purge_step(que_thr_t*) + 763
+14  mysqld                              0x0000000111232047 que_run_threads(que_thr_t*) + 375
+15  mysqld                              0x00000001112ab125 srv_worker_thread() + 677
+16  mysqld                              0x00000001112bd017 void Runnable::operator()<void (*)()>(void (*&&)()) + 199
+17  mysqld                              0x00000001112bce94 void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, Runnable, void (*)()> >(void*) + 52
+18  libsystem_pthread.dylib             0x00007fff6534fe65 _pthread_start + 148
+19  libsystem_pthread.dylib             0x00007fff6534b83b thread_start + 15
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 0
+Status: NOT_KILLED
+
+The manual page at http://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.
+2020-03-24T21:42:28.967807Z 0 [System] [MY-010116] [Server] /usr/local/mysql/bin/mysqld (mysqld 8.0.19) starting as process 2752
+2020-03-24T21:42:28.971061Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /usr/local/mysql/data/ is case insensitive
+2020-03-24T21:42:30.046589Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...
+2020-03-24T21:42:30.056921Z 0 [System] [MY-010232] [Server] XA crash recovery finished.
+2020-03-24T21:42:30.166644Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-03-24T21:42:30.182401Z 0 [System] [MY-010931] [Server] /usr/local/mysql/bin/mysqld: ready for connections. Version: '8.0.19'  socket: '/tmp/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+2020-03-24T21:42:30.291232Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/tmp/mysqlx.sock' bind-address: '::' port: 33060
+2020-03-24T21:42:31.075240Z 0 [ERROR] [MY-013183] [InnoDB] Assertion failure: dict0dict.cc:3338:for_table || ref_table thread 123145326108672
+InnoDB: We intentionally generate a memory trap.
+InnoDB: Submit a detailed bug report to http://bugs.mysql.com.
+InnoDB: If you get repeated assertion failures or crashes, even
+InnoDB: immediately after the mysqld startup, there may be
+InnoDB: corruption in the InnoDB tablespace. Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/8.0/en/forcing-innodb-recovery.html
+InnoDB: about forcing recovery.
+21:42:31 UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0x7fe805808800
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 7000016b1eb0 thread_stack 0x46000
+0   mysqld                              0x0000000105206ffc my_print_stacktrace(unsigned char const*, unsigned long) + 60
+1   mysqld                              0x000000010460f3d9 handle_fatal_signal + 425
+2   libsystem_platform.dylib            0x00007fff6534442d _sigtramp + 29
+3   ???                                 0x0000000115723bcb 0x0 + 4654775243
+4   libsystem_c.dylib                   0x00007fff65219a1c abort + 120
+5   mysqld                              0x00000001058fdfd4 ut_dbg_assertion_failed(char const*, char const*, unsigned long) (.cold.1) + 84
+6   mysqld                              0x00000001055df051 ut_dbg_assertion_failed(char const*, char const*, unsigned long) + 273
+7   mysqld                              0x000000010535b0a2 dict_foreign_add_to_cache(dict_foreign_t*, char const**, bool, bool, dict_err_ignore_t) + 1714
+8   mysqld                              0x000000010536f3c4 dd_table_load_fk_from_dd(dict_table_t*, dd::Table const*, char const**, dict_err_ignore_t, bool) + 1572
+9   mysqld                              0x000000010537510a dict_table_t* dd_open_table_one<dd::Table>(dd::cache::Dictionary_client*, TABLE const*, char const*, dd::Table const*, THD*, std::__1::deque<char const*, ut_allocator<char const*> >&) + 7098
+10  mysqld                              0x0000000105365614 dd_table_open_on_dd_obj(dd::cache::Dictionary_client*, dd::Table const&, dd::Partition const*, char const*, dict_table_t*&, THD*) + 2196
+11  mysqld                              0x0000000105366d43 dd_table_open_on_id_low(THD*, MDL_ticket**, unsigned long long) + 2019
+12  mysqld                              0x00000001053661f5 dd_table_open_on_id(unsigned long long, THD*, MDL_ticket**, bool, bool) + 2437
+13  mysqld                              0x00000001055620cb row_purge_step(que_thr_t*) + 763
+14  mysqld                              0x000000010551b047 que_run_threads(que_thr_t*) + 375
+15  mysqld                              0x0000000105594125 srv_worker_thread() + 677
+16  mysqld                              0x00000001055a6017 void Runnable::operator()<void (*)()>(void (*&&)()) + 199
+17  mysqld                              0x00000001055a5e94 void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, Runnable, void (*)()> >(void*) + 52
+18  libsystem_pthread.dylib             0x00007fff6534fe65 _pthread_start + 148
+19  libsystem_pthread.dylib             0x00007fff6534b83b thread_start + 15
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 0
+Status: NOT_KILLED
+
+The manual page at http://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.
+2020-03-24T21:42:39.403877Z 0 [System] [MY-010116] [Server] /usr/local/mysql/bin/mysqld (mysqld 8.0.19) starting as process 2758
+2020-03-24T21:42:39.407230Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /usr/local/mysql/data/ is case insensitive
+2020-03-24T21:42:40.478822Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...
+2020-03-24T21:42:40.492278Z 0 [System] [MY-010232] [Server] XA crash recovery finished.
+2020-03-24T21:42:40.602480Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-03-24T21:42:40.620140Z 0 [System] [MY-010931] [Server] /usr/local/mysql/bin/mysqld: ready for connections. Version: '8.0.19'  socket: '/tmp/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+2020-03-24T21:42:40.721606Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/tmp/mysqlx.sock' bind-address: '::' port: 33060
+2020-03-24T21:42:41.509302Z 0 [ERROR] [MY-013183] [InnoDB] Assertion failure: dict0dict.cc:3338:for_table || ref_table thread 123145542332416
+InnoDB: We intentionally generate a memory trap.
+InnoDB: Submit a detailed bug report to http://bugs.mysql.com.
+InnoDB: If you get repeated assertion failures or crashes, even
+InnoDB: immediately after the mysqld startup, there may be
+InnoDB: corruption in the InnoDB tablespace. Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/8.0/en/forcing-innodb-recovery.html
+InnoDB: about forcing recovery.
+21:42:41 UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0x7fe0d9829e00
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 70000e4e6eb0 thread_stack 0x46000
+0   mysqld                              0x0000000102119ffc my_print_stacktrace(unsigned char const*, unsigned long) + 60
+1   mysqld                              0x00000001015223d9 handle_fatal_signal + 425
+2   libsystem_platform.dylib            0x00007fff6534442d _sigtramp + 29
+3   ???                                 0x0000000114b12bcb 0x0 + 4642122699
+4   libsystem_c.dylib                   0x00007fff65219a1c abort + 120
+5   mysqld                              0x0000000102810fd4 ut_dbg_assertion_failed(char const*, char const*, unsigned long) (.cold.1) + 84
+6   mysqld                              0x00000001024f2051 ut_dbg_assertion_failed(char const*, char const*, unsigned long) + 273
+7   mysqld                              0x000000010226e0a2 dict_foreign_add_to_cache(dict_foreign_t*, char const**, bool, bool, dict_err_ignore_t) + 1714
+8   mysqld                              0x00000001022823c4 dd_table_load_fk_from_dd(dict_table_t*, dd::Table const*, char const**, dict_err_ignore_t, bool) + 1572
+9   mysqld                              0x000000010228810a dict_table_t* dd_open_table_one<dd::Table>(dd::cache::Dictionary_client*, TABLE const*, char const*, dd::Table const*, THD*, std::__1::deque<char const*, ut_allocator<char const*> >&) + 7098
+10  mysqld                              0x0000000102278614 dd_table_open_on_dd_obj(dd::cache::Dictionary_client*, dd::Table const&, dd::Partition const*, char const*, dict_table_t*&, THD*) + 2196
+11  mysqld                              0x0000000102279d43 dd_table_open_on_id_low(THD*, MDL_ticket**, unsigned long long) + 2019
+12  mysqld                              0x00000001022791f5 dd_table_open_on_id(unsigned long long, THD*, MDL_ticket**, bool, bool) + 2437
+13  mysqld                              0x00000001024750cb row_purge_step(que_thr_t*) + 763
+14  mysqld                              0x000000010242e047 que_run_threads(que_thr_t*) + 375
+15  mysqld                              0x00000001024a7125 srv_worker_thread() + 677
+16  mysqld                              0x00000001024b9017 void Runnable::operator()<void (*)()>(void (*&&)()) + 199
+17  mysqld                              0x00000001024b8e94 void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, Runnable, void (*)()> >(void*) + 52
+18  libsystem_pthread.dylib             0x00007fff6534fe65 _pthread_start + 148
+19  libsystem_pthread.dylib             0x00007fff6534b83b thread_start + 15
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 0
+Status: NOT_KILLED
+
+The manual page at http://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.
