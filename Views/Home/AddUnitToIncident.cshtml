@@ -1,316 +1,305 @@
 @model Dispatchh
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-        <link rel="stylesheet" href="~/css/site.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
         console.log($);
         $(document).ready(function () {
 
-            $('.unit').hover(function (){
-               $(this).toggleClass("hover");
+            $('.unit').hover(function () {
+                $(this).toggleClass("hover");
             })
-
-          
-        
-
-        $('h3').click(function () {
-                    $('.btn').toggle(2000);
-                });
-
-
-
-
-
-
-
-
 
         });
 
     </script>
-    </head>
+</head>
 
-    <body>
+<body>
 
-<div class="container-fluid">
-        <div class="row  justify-content-end" style="height:100px">
-                <div class="col-2">
-                <form asp-action="Dashboard" method="get">
-                        <input type="submit" class="btn btn-danger" value= "Cancel" />
-                </form>
-            </div>
-                
-        
-            </div>
-   
-    <div class="row incident_info_row justify-content-center">
-       
-        <div class="col-10">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row justify-content-center">
-                        <div class="col">
-                            <h2 class="incident_info">Incident Location</h2>
-                        </div>
-                        <div class="col">
-                            <h2>@ViewBag.IncidentToEdit.Location</h2>
-                        </div>
-                    </div>
-                    <!--end row-->
-                    <div class="row justify-content-between incident_info_row">
-                        <div class="col">
-                            <h2 class="incident_info">Incident Type:</h2>
-                        </div>
-                        <div class="col">
-                            <h2>@ViewBag.IncidentToEdit.Type</h2>
-                        </div>
-                    </div>
-                    <!--end row-->
+    <div class="container-fluid">
+
+        <div class="row  justify-content-between" style="height:100px">
+            <h5>Dispatcher: @ViewBag.Dispatcher.FirstName @ViewBag.Dispatcher.LastName</h5>
+            <form asp-action="Dashboard" method="get">
+                <input type="submit" class="btn btn-danger" value="Cancel" />
+            </form>
 
 
-                    <div class="row justify-content-between incident_info_row">
-                        <div class="col">
-                            <h2 class="incident_info">Incident Created on:</h2>
-                        </div>
-                        <div class="col">
-                            <h2>@ViewBag.IncidentToEdit.CreatedAt.ToLongDateString()</h2>
-                        </div>
-                    </div>
-                    <!--end row-->
-
-                    <div class="row justify-content-between incident_info_row">
-                        <div class="col">
-                            <h2 class="incident_info">Notes:</h2>
-                        </div>
-                        <div class="col">
-                            <h2>@ViewBag.IncidentToEdit.Description</h2>
-                        </div>
-                    </div>
-                    <!--end row-->
-                </div>
-                <!--end card body-->
-            </div>
-            <!--end card-->
         </div>
-    </div>
-    <!--end info row -->
 
-    <div class="row justify-content-center">
-       
+        <div class="row incident_info_row justify-content-center">
+
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <h2 class="incident_info">Incident Location</h2>
+                            </div>
+                            <div class="col">
+                                <h2>@ViewBag.IncidentToEdit.Location</h2>
+                            </div>
+                        </div>
+                        <!--end row-->
+                        <div class="row justify-content-between incident_info_row">
+                            <div class="col">
+                                <h2 class="incident_info">Incident Type:</h2>
+                            </div>
+                            <div class="col">
+                                <h2>@ViewBag.IncidentToEdit.Type</h2>
+                            </div>
+                        </div>
+                        <!--end row-->
+
+
+                        <div class="row justify-content-between incident_info_row">
+                            <div class="col">
+                                <h2 class="incident_info">Incident Created on:</h2>
+                            </div>
+                            <div class="col">
+                                <h2>@ViewBag.IncidentToEdit.CreatedAt.ToLongDateString()</h2>
+                            </div>
+                        </div>
+                        <!--end row-->
+
+                        <div class="row justify-content-between incident_info_row">
+                            <div class="col">
+                                <h2 class="incident_info">Notes:</h2>
+                            </div>
+                            <div class="col">
+                                <h2>@ViewBag.IncidentToEdit.Description</h2>
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </div>
+                    <!--end card body-->
+                </div>
+                <!--end card-->
+            </div>
+        </div>
+        <!--end info row -->
+
+        <div class="row justify-content-center">
+
             @if(ViewBag.IncidentToEdit.Type =="Medical-BLS")
             {
-                <h2>Recommened Units for Dispatch: <span class="incident_info">1 Ambulance per #injured persons</span></h2>
-                    
+            <h2>Recommened Units for Dispatch: <span class="incident_info">1 Ambulance per #injured persons</span></h2>
+
             }
             @if(ViewBag.IncidentToEdit.Type=="Medical-ALS")
             {
-                <h2>Recommened Units for Dispatch: <span class="incident_info">1 Medic per #injured persons </span></h2>
+            <h2>Recommened Units for Dispatch: <span class="incident_info">1 Medic per #injured persons </span></h2>
             }
             @if(ViewBag.IncidentToEdit.Type=="Fire")
             {
-                <h2>Recommened Units for Dispatch: <span class="incident_info"> 1 Engine + 1 Truck + 1 Rescue Squad </span></h2>
+            <h2>Recommened Units for Dispatch: <span class="incident_info"> 1 Engine + 1 Truck + 1 Rescue Squad </span>
+            </h2>
             }
-        
-    </div>
 
-    
-
-    <div class="row justify-content-around"> <!--ambulance/medic row-->
-       
-
-        <div class="col-sm-4">
-            <!--ambulance column-->
-            <div class="card">
-                <div class="card-header text-center">
-                    <h4>Available Ambulances: </h4>
-                    <h6>Click On Ambulance To Dispatch</h6>
-                    
-
-                </div>
-                
-                <div class="card-body text-center">
-                    @foreach(Unit a in @ViewBag.AvailableAmbulances)
-                    {
-                    <!-- <option value=@a.UnitId>@a.NumberType@a.Number</option> -->
-                    
-                    
-                    <span><a class="unit" asp-action="Confirm" asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId asp-route-unitId= "@a.UnitId" >@a.NumberType@a.Number,  </a></span>
-                    
-                     <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
-                    }
-            
-
-                </div>
-
-
-
-            </div>
-            <!--end card-->
         </div>
-        <!--end col-->
 
-        <div class="col-sm-4">
-            <!--Medic Column-->
-            <div class="card">
-                <div class="card-header text-center">
-                    <h4>Available Medics</h4>
-                    <h6>Click On Medic To Dispatch</h6>
+
+
+        <div class="row justify-content-around">
+            <!--ambulance/medic row-->
+
+
+            <div class="col-sm-4">
+                <!--ambulance column-->
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Available Ambulances: </h4>
+                        <h6>Click On Ambulance To Dispatch</h6>
+
+
+                    </div>
+
+                    <div class="card-body text-center">
+                        @foreach(Unit a in @ViewBag.AvailableAmbulances)
+                        {
+
+
+                        <span><a class="unit" asp-action="Confirm"
+                                asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number, </a></span>
+
+                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                        }
+
+
+                    </div>
+
+
 
                 </div>
-                <div class="card-body text-center">
-                    @foreach(Unit a in @ViewBag.AvailableMedics)
-                    {
-                    <!-- <option value=@a.UnitId>@a.NumberType@a.Number</option> -->
-                    
-                    
-                    <span><a class="unit" asp-action="Confirm" asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId asp-route-unitId= "@a.UnitId" >@a.NumberType@a.Number ,</a></span>
-                    
-                     <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
-                    }
-            
-
-                </div>
+                <!--end card-->
             </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-    </div><br>
+            <!--end col-->
+
+            <div class="col-sm-4">
+                <!--Medic Column-->
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Available Medics</h4>
+                        <h6>Click On Medic To Dispatch</h6>
+
+                    </div>
+                    <div class="card-body text-center">
+                        @foreach(Unit a in @ViewBag.AvailableMedics)
+                        {
+
+                        <span><a class="unit" asp-action="Confirm"
+                                asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
+
+                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                        }
 
 
-    <!--end amb/medic row--->
-
-    <div class="row justify-content-around">
-        <!--engine/truck row-->
-        <div class="col-sm-4">
-            <!--engine col-->
-            <div class="card">
-                <div class="card-header text-center">
-
-                    <h4>Available Engines</h4>
-                    <h6>Click On Engine To Dispatch</h6>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    @foreach(Unit a in @ViewBag.AvailableEngines)
-                    {
-                    <!-- <option value=@a.UnitId>@a.NumberType@a.Number</option> -->
-                    
-                    
-                    <span><a class="unit" asp-action="Confirm" asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId asp-route-unitId= "@a.UnitId" >@a.NumberType@a.Number ,</a></span>
-                    
-                     <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
-                    }
-            
-                    
-                </div>
-                <!--end card body-->
+                <!--end card-->
             </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
+            <!--end col-->
+        </div><br>
 
-        <!--end engine col-->
 
-        <div class="col-sm-4">
-            <!--truck col-->
+        <!--end amb/medic row--->
 
-            <div class="card">
-                <div class="card-header text-center">
+        <div class="row justify-content-around">
+            <!--engine/truck row-->
+            <div class="col-sm-4">
+                <!--engine col-->
+                <div class="card">
+                    <div class="card-header text-center">
 
-                    <h4>Available Trucks</h4>
-                    <h6>Click On Truck To Dispatch</h6>
+                        <h4>Available Engines</h4>
+                        <h6>Click On Engine To Dispatch</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        @foreach(Unit a in @ViewBag.AvailableEngines)
+                        {
+
+
+
+                        <span><a class="unit" asp-action="Confirm"
+                                asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
+
+                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                        }
+
+
+                    </div>
+                    <!--end card body-->
                 </div>
-                <div class="card-body text-center">
-                       
-                    
+                <!--end card-->
+            </div>
+            <!--end col-->
+
+            <!--end engine col-->
+
+            <div class="col-sm-4">
+                <!--truck col-->
+
+                <div class="card">
+                    <div class="card-header text-center">
+
+                        <h4>Available Trucks</h4>
+                        <h6>Click On Truck To Dispatch</h6>
+                    </div>
+                    <div class="card-body text-center">
+
+
                         @foreach(Unit a in @ViewBag.AvailableTrucks)
                         {
-                        <!-- <option value=@a.UnitId>@a.NumberType@a.Number</option> -->
-                        
-                        
-                        <span><a class="unit" asp-action="Confirm" asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId asp-route-unitId= "@a.UnitId" >@a.NumberType@a.Number ,</a></span>
-                        
-                         <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+                        <span><a class="unit" asp-action="Confirm"
+                                asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
+
+                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
                         }
-                
+
+                    </div>
+                    <!--end card body-->
                 </div>
-                <!--end card body-->
+                <!--end card-->
             </div>
-            <!--end card-->
-        </div>
-        <!--end truck col-->
-    </div><br>
-    <!--end engine/truck row -->
+            <!--end truck col-->
+        </div><br>
+        <!--end engine/truck row -->
 
-    <div class="row justify-content-center"> <!--rescue squad row -->
-        <div class="col-sm-4">
-            <!--RS col-->
+        <div class="row justify-content-center">
+            <!--rescue squad row -->
+            <div class="col-sm-4">
+                <!--RS col-->
 
-            <div class="card">
-                <div class="card-header text-center">
+                <div class="card">
+                    <div class="card-header text-center">
 
-                    <h4>Available Rescue Squads</h4>
-                    <h6>Click On Rescue Squad To Dispatch</h6>
-                </div>
-                <div class="card-body text-center">
-                <!--end RS card header-->
+                        <h4>Available Rescue Squads</h4>
+                        <h6>Click On Rescue Squad To Dispatch</h6>
+                    </div>
+                    <div class="card-body text-center">
 
-                <!-- <form asp-action="ConfirmDispatch" asp-controller="Home" asp-method="post" > -->
-                    <!-- <Select class="form-control form-control-lg" asp-for="UnitId" > -->
                         @foreach(Unit a in @ViewBag.AvailableRescueSquads)
                         {
-                        <!-- <option value=@a.UnitId>@a.NumberType@a.Number</option> -->
-                        
-                        
-                        <span><a class="unit" asp-action="Confirm" asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId asp-route-unitId= "@a.UnitId" >@a.NumberType@a.Number ,</a></span>
-                        
-                         <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
-                        } 
-                    <!-- </Select><Br> -->
-                    
 
-                <!-- </form> -->
-            </div>
-            </div>
+                        <span><a class="unit" asp-action="Confirm"
+                                asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
 
-            
-        </div>
-    </div>
+                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+
+                      }
+                    </div><!--end card body-->
+                </div><!--end card -->
+            </div><!--end col -->
+            </div><!--end row-->
 
 
-    <style>
-        .incident_info {
-            color: red;
-        }
 
-        .container-fluid {
-            margin-top: 30px;
-        }
 
-        .incident_info_row {
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        .card{
-            background-color: lightyellow;
-        }
-        
-        .unit{
-            color:green;
-            font-size :175%;       
-    }
-    .hover{
-        font-size:300%;
-        color: red;
-        text-decoration: none;
-    }
-    </style>
+
+
+            <style>
+                .incident_info {
+                    color: red;
+                }
+
+                .container-fluid {
+                    margin-top: 30px;
+                }
+
+                .incident_info_row {
+                    margin-top: 30px;
+                    margin-bottom: 30px;
+                }
+
+                .card {
+                    background-color: lightyellow;
+                }
+
+                .unit {
+                    color: green;
+                    font-size: 175%;
+                }
+
+                .hover {
+                    font-size: 300%;
+                    color: red;
+                    text-decoration: none;
+                }
+            </style>
 </body>
-</html>
 
+</html>
