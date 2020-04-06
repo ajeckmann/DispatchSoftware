@@ -1,12 +1,23 @@
 @model List<Rescuer>
-<h6>Dispatcher: @ViewBag.UserLoggedIn.FirstName</h6><br><br>
-<nav class="nav center">
-<a class="nav-link" asp-action="Dashboard">Dashboard</a><br>
-<a class="nav-link" asp-action="Logout">Logout</a><br>
-</nav>
+
+        <div class="row  justify-content-between" style="margin-top: 20px;">
+                <h5>Dispatcher: @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
+                <form asp-action="Dashboard" method="get">
+                        <input type="submit" class="btn btn-danger" value= "Cancel" />
+                </form>
+                
+        
+            </div>
 
 
+
+<!-- <a class="nav-link" asp-action="Logout">Logout</a><br> -->
+
+
+<div class="row justify-content-center">
 <h1>Available Personnel</h1>
+</div>
+<div class="row">
 
 <table class="table">
 
@@ -48,12 +59,14 @@
             
         </tr>
     }
-
-
 </table>
+</div>
+
+<div class="row justify-content-center">
 <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-    <input  class="btn btn-outline-info btn-sm" type="submit" value="Create New Rescuer">
-</form><br>
+    <input  class="btn btn-outline-info btn-sm" type="submit" value="Add New Rescuer">
+</form>
+</div>
 
 
 <h1>All Personnel</h1>
@@ -106,3 +119,5 @@
             
         </tr>
     }
+
+    

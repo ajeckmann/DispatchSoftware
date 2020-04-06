@@ -30,75 +30,70 @@
 
         <div class="row justify-content-center">
             <div class="col-6">
-            <div class="card">
-                <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="Register" asp-controller="Home" asp-method="post">
 
-
-                    <form asp-action="Register" asp-controller="Home" asp-method="post">
-
-                        <span asp-validation-for="FirstName"></span><br>
-                        <div class="form-group row">
-                            <label class="col-sm-5 col-form-label reg_label" asp-for="FirstName">First Name:</label>
-                            <div class="col-sm-7">
-                                <input class="form-control" asp-for="FirstName"><br>
+                            <span asp-validation-for="FirstName"></span><br>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label reg_label" asp-for="FirstName">First Name:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" asp-for="FirstName"><br>
+                                </div>
                             </div>
-                        </div>
 
-                        <span asp-validation-for="LastName"></span><br>
-                        <div class="form-group row">
-                        <label  class= "col-sm-5 col-form-label reg_label" asp-for="LastName">Last Name:</label>
-                        <div class="col-sm-7">
-                        <input class="form-control" asp-for="LastName"><br>
+                            <span asp-validation-for="LastName"></span><br>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label reg_label" asp-for="LastName">Last Name:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" asp-for="LastName"><br>
+                                </div>
+                            </div>
+
+                            <span asp-validation-for="Email"></span><br>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label reg_label" asp-for="Email">Email Address:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" asp-for="Email"><br>
+                                </div>
+                            </div>
+
+
+                            <span asp-validation-for="Password"></span><br>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label reg_label" asp-for="Password">Password:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" asp-for="Password"><br>
+                                </div>
+                            </div>
+
+                            <span asp-validation-for="ConfirmPassword"></span><br>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label reg_label" asp-for="ConfirmPassword">Confirm Your
+                                    Password:</label>
+                                <div class="col-sm-7">
+
+                                    <input class="form-control" asp-for="ConfirmPassword"><br>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input type="submit" class="btn btn-success" value="Create Account">
+                            </div>
                     </div>
-                    </div>
-
-                        <span asp-validation-for="Email"></span><br>
-                        <div class="form-group row">
-                        <label class= "col-sm-5 col-form-label reg_label" asp-for="Email">Email Address:</label>
-                        <div class="col-sm-7">
-                        <input  class="form-control" asp-for="Email"><br>
-                    </div>
-                    </div>
-
-                    
-                        <span asp-validation-for="Password"></span><br>
-                        <div class="form-group row">
-                        <label class= "col-sm-5 col-form-label reg_label" asp-for="Password">Password:</label>
-                        <div class="col-sm-7">
-                        <input class="form-control" asp-for="Password"><br>
-                    </div>
-                </div>
-
-                        <span asp-validation-for="ConfirmPassword"></span><br>
-                        <div class="form-group row">
-                        <label class= "col-sm-5 col-form-label reg_label" asp-for="ConfirmPassword">Confirm Your Password:</label>
-                        <div class="col-sm-7">
-                        
-                        <input class="form-control" asp-for="ConfirmPassword"><br>
-                        </div>
-                </div>
-                        <div class="row justify-content-center">
-                        <input  type="submit" class="btn btn-success" value="Create Account">
-                    </div>
-                    </div>
-
-
-
-
                     </form>
-                </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <style>
-            .card{
-                background-color: black;
-            }
-            .reg_label{
-                color: white;
-                font-size: 130%;
-            }
-        
-        </style>
+    <style>
+        .card {
+            background-color: black;
+        }
+
+        .reg_label {
+            color: white;
+            font-size: 130%;
+        }
+    </style>
 </body>

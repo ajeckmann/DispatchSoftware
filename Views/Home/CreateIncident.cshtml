@@ -12,12 +12,12 @@
 
 
 
-    <h2 class="text-center incident_descriptor">Enter Incident Information Carefully Below</h2><br>
-    <div class="row justify-content-center">
+    <h2 class="text-center ">Enter Incident Information Carefully Below</h2><br>
+    <div class="row justify-content-center incident_box";>
         
         <form class="col-9 " asp-action="AddIncident" asp-controller="Home" method="post">
 
-            <b><span asp-validation-for="Location"></span></b>
+            <b><span asp-validation-for="Location" offset-3></span></b>
             <div class="form-group row">
                 <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
                 <div class="col-sm-7">
@@ -78,6 +78,9 @@
 
 <style>
   
+  h2{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
   .incident_descriptor{
         color:rgb(253, 4, 4);
         font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -90,5 +93,10 @@
 
 .container-fluid{
     margin-top: 20px;
+}
+
+.incident_box{
+    border: solid black 2px;
+    padding: 30px;
 }
 </style>

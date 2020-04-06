@@ -110,7 +110,8 @@ namespace Dispatch.Controllers {
 
             List<Incident> Incidents = dbContext.Incidents.Include (i => i.dispatchedUnits).ThenInclude (p => p.UnitDispatched).ToList ();
             ViewBag.UserLoggedIn = LoggedIn ();
-            ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
+            List<Unit> AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true).ToList ();
+            ViewBag.AvailableUnits = AvailableUnits;
             ViewBag.AllUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned);
             return View (Incidents);
         }

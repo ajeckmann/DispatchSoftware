@@ -8,103 +8,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/site.css" />
 
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="row justify-content-end ">
-                <a id="new_account" asp-action="Login" asp-controller="Home">Create New Dispatcher Account </a>
-           
-        </div>
-
-
-
-
-
         <div class="row justify-content-center h-100">
             <div class="col-sm-6 my-auto">
                 <div class="row justify-content-center">
-                    
                 </div>
-
                 <div class="card ">
-                    <div class="card-header text-center ">Dispatcher Login</div>
-                    —
-
+                    <div class="card-header text-center">
+                        <h2>Dispatcher Login</h2>
+                    </div>     
+                    <div class="card-body">
                         <form asp-action="Signin" asp-controller="Home" asp-method="post">
                             <div class="form-group row">
                                 <span asp-validation-for="LoginEmail"></span>
                                 <span asp-validation-for="LoginPassword"></span>
                             </div>
-
                             <div class="form-group row">
-                                <label class="col-sm-5 col-form-label" asp-for="LoginEmail"> <b>Email
-                                        Address:</b></label>
-
+                                <label class="col-sm-5 col-form-label dispatcher_info" asp-for="LoginEmail"> Email
+                                        Address:</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" asp-for="LoginEmail">
+                                    <input class="form-control input" asp-for="LoginEmail">
                                 </div>
                             </div>
-
-
-
-
                             <div class="form-group row">
-
-                                <label class="col-sm-5 col-form-label" asp-for="LoginPassword"><b>Password:</b></label>
+                                <label class="col-sm-5 col-form-label dispatcher_info" asp-for="LoginPassword">Password:</label>
                                 <div class="col-sm-7">
-                                    <input asp-for="LoginPassword" class="form-control">
+                                    <input   class="form-control input" asp-for="LoginPassword">
                                 </div>
                             </div>
 
                             <div class="row justify-content-center">
-                                <input type="submit" class="btn btn-light" value="Log In">
+                                <input type="submit" class="btn btn-dark" value="Log In">
                             </div>
+                        </form><br>
+                        <div class="row justify-content-center">
+                                <a  id = "new_account" asp-action="Login" asp-controller="Home">Create New Dispatcher Account </a>
 
-
-                        </form>
+                        </div>   
                     </div>
-                    <!--end card body-->
                 </div>
-                <!--end card-->
+                <!--end card body-->
             </div>
-            <!--end col-->
-
+            <!--end card-->
         </div>
+        <!--end col-->
+
+    
 
 </body>
 <style>
     body {
         background-image: url("./wwwroot/images/ambo.png")
-       
+    }
+
+    .dispatcher_info{
+        color: black;
+        
+        font-size: 150%;
     }
 
     .container-fluid {
 
         height: 100vh;
-        
+
 
     }
 
     .card {
         border-radius: 20px;
-        background-color:lightblue;
-        opacity: 0.9;
-    }
-    body{
-                    background-image: url("./Images/RE703.png");
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    height: 100vh;
-                    opacity: 0.8;
+        background-color: lightgoldenrodyellow;
+        
     }
 
-    #new_account{
+    body {
+        background-image: url("./Images/RE703.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        opacity: 0.8;
+    }
+
+    #new_account {
         color: black;
-        background-color: white;
-        
+        text-decoration: underline;
+
+    }
+    .input{ 
+        border: 2px solid black;
+        opacity: none;
     }
 </style>
 

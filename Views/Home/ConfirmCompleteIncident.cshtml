@@ -1,3 +1,35 @@
 @model Incident
 
-<h2>are you sure you want to remove this @Model.Location</h2>
+
+
+<div class="row h-100 justify-content-center">
+        <div class="col-sm-9 my-auto">
+            <div id="card" class="card card-block ">
+    
+                <div class="card-body">
+    
+                    <h3>Are you sure you want to mark Incident Number @Model.IncidentId at @Model.Location complete? </h3>
+                  <h3 style="text-align: center">This action cannot be undone</h3>
+                         </h3>
+    
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <form  asp-action="CompleteIncident" asp-route-incidentId="@Model.IncidentId">
+    
+                                <input type="submit" class="btn btn-success btn-lg"
+                                    value="Terminate Incident Number @Model.IncidentId ">
+                            </form>
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-dark btn-lg" asp-action="AddUnitToIncident" asp-controller="Home" asp-method="post" asp-route-incidentId="@Model.IncidentId">Cancel</a>
+    
+                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+      

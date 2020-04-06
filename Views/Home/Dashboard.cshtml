@@ -10,7 +10,7 @@
         <title>Document</title>
         <link rel="stylesheet" href="~/css/site.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        
+
         <script>
             console.log($);
             $(document).ready(function () {
@@ -38,49 +38,44 @@
             });
 
         </script>
-
     </head>
-
     <body>
-       
-            <div class="row justify-content-beginning">
-                <div class="col ">
+
+        <div class="row justify-content-between">
+            <div class="col-11">
                 <h4>Hello, Dispatcher @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
-                </div>
             </div>
-
-           
-
-            
-            <div class="form-group">
-
-                <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
-                    <input class="btn btn-outline-danger btn-lg center" type="submit" value="Create New Incident">
-                </form><br>
+            <div class="col-1">
+                <h5><a class="nav-link" asp-action="Logout">Logout</a></h5>
             </div>
-
-            <div class="row justify-content-start">
-                <div class="col ">
+        </div>
+        <div class="form-group">
+            <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
+                <input class="btn btn-outline-danger btn-lg center" type="submit" value="Create New Incident">
+            </form><br>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col ">
                 <h3>Incidents</h3>
-                </div>
-
             </div>
-            <div class="row justify-content-center">
-                <div class="col-12">
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
                 <table class="table table-border-top">
                     <thead>
                         <tr>
-                            <th>Incident Status</th>
-                            <th>Incident ID</th>
-                            <th>Incident Location</th>
-                            <th>Incident Type</th>
-                            <th>Units Responding (click to remove)</th>
-                            <th>Action</th>
-                            <th>Dispatch</th>
-                            <th>Incident Time/Date</th>
+                            <th style="vertical-align:top">Incident Status</th>
+                            <th style="vertical-align:top">Incident ID</th>
+                            <th style="vertical-align:top">Incident Location</th>
+                            <th style="vertical-align:top" >Incident Type</th>
+                            <th style="vertical-align:top">Units Responding (click to remove)</th>
+                            <th style="vertical-align:top">Action</th>
+                            <th style="vertical-align:top">Dispatch</th>
+                            <th style="vertical-align:top">Incident Time/Date</th>
                         </tr>
 
                     </thead>
+                    <!--Incident Table -->
                     <tbody>
                         @foreach(Incident inc in @Model.OrderByDescending(i=>i.CreatedAt))
                         {
@@ -97,11 +92,9 @@
                             <td>Incident Complete-No Action Possible</td>
                             <td>Cannot Add Units</td>
                             <td>@inc.CreatedAt</td>
-
-
                         </tr>
                         }
-                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0)
+                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0) 
                         {
                         <tr class="blinking">
                             <td>AWAITING DISPATCH</td>
@@ -111,7 +104,8 @@
                             <td>
                                 AWAITING DISPATCH
                             </td>
-                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark Incident
+                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
+                                    Incident
                                     Complete</a>
                             </td>
                             <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
@@ -136,7 +130,8 @@
                                         asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
                                 }
                             </td>
-                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark Incident
+                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
+                                    Incident
                                     Complete</a>
                             </td>
                             <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
@@ -151,98 +146,100 @@
                         }
                     </tbody>
                 </table>
-            </div> <!--end col-->
             </div>
-                <div class="form-row justify-content-around">
-                    <div class="col-2">
+            <!--end col-->
+        </div>
+        <div class="form-row justify-content-around">
+            <div class="col-2">
 
-                        <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Rescuer">
-                        </form>
-                    </div>
-
-                    <div class="col-2">
-                        <form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Unit">
-                        </form>
-                    </div>
-
-                    <div class="col-2">
-                        <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="View Available Personnel">
-                        </form>
-                    </div>
-
-                </div><br>
-
-                <div>
-
-                    <h4>Avaialable Units</h4>
-                    @foreach(var unit in @ViewBag.AvailableUnits)
-                    {
-                    <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
-                        </a></span>
-                    }
-
-                </div>
-
-                <div>
-
-                    <h4>All Units</h4>
-                    @foreach(var unit in @ViewBag.AllUnits)
-                    {
-                    <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
-                        </a></span>
-                    }
-
-                </div>
+                <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+                    <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Rescuer">
+                </form>
             </div>
 
+            <div class="col-2">
+                <form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
+                    <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Unit">
+                </form>
+            </div>
 
-            <style type="text/css">
-                .active {
-                    background-color: rgb(196, 88, 88);
+            <div class="col-2">
+                <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+                    <input class="btn btn-outline-info btn-sm " type="submit" value="View Available Personnel">
+                </form>
+            </div>
 
+        </div><br>
+
+        <div class="row">
+
+            <h4>Avaialable Units</h4>
+            @foreach(var unit in @ViewBag.AvailableUnits)
+            {
+            <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
+                </a></span>
+            }
+
+        </div>
+
+        <div class="row">
+            <h4>All Units</h4>
+            @foreach(var unit in @ViewBag.AllUnits)
+            {
+            <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
+                </a></span>
+            }
+        </div>
+        </div>
+
+
+        <style type="text/css">
+            .active {
+                background-color: rgb(196, 88, 88);
+
+            }
+
+            .dispatched {
+                background-color: yellow;
+            }
+
+            .complete {
+                background-color: slategray;
+            }
+
+            .blinking {
+                animation: blinkingText 0.8s infinite;
+            }
+
+            @@keyframes blinkingText {
+                0% {
+                    background-color: red;
                 }
 
-                .dispatched {
-                    background-color: yellow;
+                25% {
+                    background-color: transparent;
                 }
 
-                .complete {
-                    background-color: slategray;
+                50% {
+                    background-color: transparent;
                 }
 
-                .blinking {
-                    animation: blinkingText 0.8s infinite;
+                75% {
+                    background-color: transparent;
                 }
 
-                @@keyframes blinkingText {
-                    0% {
-                        background-color: red;
-                    }
-
-                    25% {
-                        background-color: transparent;
-                    }
-
-                    50% {
-                        background-color: transparent;
-                    }
-
-                    75% {
-                        background-color: transparent;
-                    }
-
-                    100% {
-                        background-color: red;
-                    }
+                100% {
+                    background-color: red;
                 }
-                .container{
-                    width: 90%;
-                }
-                
-            </style>
+            }
+
+            .container {
+                width: 90%;
+            }
+            .table_header {
+vertical-align: top;                
+            }
+        </style>
 
 
 
