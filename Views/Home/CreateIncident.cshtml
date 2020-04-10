@@ -13,9 +13,9 @@
 
 
     <h2 class="text-center ">Enter Incident Information Carefully Below</h2><br>
-    <div class="row justify-content-center incident_box";>
+    <div class="row justify-content-center";>
         
-        <form class="col-9 " asp-action="AddIncident" asp-controller="Home" method="post">
+        <form class="col-8 incident_box " asp-action="AddIncident" asp-controller="Home" method="post">
 
             <b><span asp-validation-for="Location" offset-3></span></b>
             <div class="form-group row">
@@ -56,7 +56,7 @@
 
             <label class="col-sm-5 col-form-label incident_descriptor">INCIDENT GENERATED ON:</label>
             <div class="col-sm-7">
-            <h5>@DateTime.Now.ToLongDateString() at @DateTime.Now.ToLongTimeString()</h5><br>
+            <h3>@DateTime.Now.ToLongDateString() at @DateTime.Now.ToLongTimeString()</h3><br>
         </div>
     </div>
 
@@ -93,10 +93,13 @@
 
 .container-fluid{
     margin-top: 20px;
+     padding-right: 20px;
+padding-left: 20px;
+            
 }
 
 .incident_box{
-    border: solid black 2px;
+    border: solid black 4px;
     padding: 30px;
 }
 </style>

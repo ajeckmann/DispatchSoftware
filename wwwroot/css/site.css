@@ -71,11 +71,17 @@ body {
 
 
 
+h1 {
+  color: red;
+}
+
+
 .card {
   border-radius: 20px;
   background-color:#EEADAD;
   opacity: 0.9;
 }
+
 
 .incidentrow {
   color: red;

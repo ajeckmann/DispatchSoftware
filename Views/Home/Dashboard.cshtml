@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
-        <link rel="stylesheet" href="~/css/site.css" />
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <script>
@@ -26,52 +26,68 @@
                 }
                 setInterval(flashrow, 1200);
 
-
-
-
-
-
-
-
-
-
             });
 
         </script>
-    </head>
-    <body>
-
         <div class="row justify-content-between">
-            <div class="col-11">
+            <div class="col-3">
                 <h4>Hello, Dispatcher @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
             </div>
-            <div class="col-1">
-                <h5><a class="nav-link" asp-action="Logout">Logout</a></h5>
+            <div class="col-9 text-right">
+                <h5><a asp-action="Logout">Logout</a></h5>
             </div>
         </div>
-        <div class="form-group">
+
+    </head>
+
+    <body>
+
+
+
+
+
+
+        <div class="row justify-content-center">
             <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
-                <input class="btn btn-outline-danger btn-lg center" type="submit" value="Create New Incident">
-            </form><br>
-        </div>
-        <div class="row justify-content-start">
-            <div class="col ">
-                <h3>Incidents</h3>
-            </div>
+                <input class="btn btn-outline-danger btn-lg" type="submit" value="Create New Incident">
+            </form>
+        </div><br>
+        <div class="row justify-content-center">
+
+            <h3>Incidents</h3>
+
         </div>
         <div class="row justify-content-center">
-            <div class="col-12">
+            <div class="col-2">
+                <div class="card available">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+
+                            <h4>Available Units: </h4>&nbsp&nbsp&nbsp&nbsp
+                            @foreach(var unit in @ViewBag.AvailableUnits)
+                            {
+                            <span><a asp-action="ViewUnit"
+                                    asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
+                                </a></span>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6">
                 <table class="table table-border-top">
                     <thead>
                         <tr>
-                            <th style="vertical-align:top">Incident Status</th>
-                            <th style="vertical-align:top">Incident ID</th>
-                            <th style="vertical-align:top">Incident Location</th>
-                            <th style="vertical-align:top" >Incident Type</th>
-                            <th style="vertical-align:top">Units Responding (click to remove)</th>
-                            <th style="vertical-align:top">Action</th>
-                            <th style="vertical-align:top">Dispatch</th>
-                            <th style="vertical-align:top">Incident Time/Date</th>
+                            <th >Incident Status</th>
+                            <th >Incident ID</th>
+                            <th style="vertical-align: top" >Incident Location</th>
+                            <th >Incident Type</th>
+                            <th >Units Responding (click to remove)</th>
+                            <th style="vertical-align: top">Action</th>
+                            <th style="vertical-align: top" >Dispatch</th>
+                            <th >Incident Time/Date</th>
                         </tr>
 
                     </thead>
@@ -94,7 +110,7 @@
                             <td>@inc.CreatedAt</td>
                         </tr>
                         }
-                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0) 
+                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0)
                         {
                         <tr class="blinking">
                             <td>AWAITING DISPATCH</td>
@@ -148,7 +164,59 @@
                 </table>
             </div>
             <!--end col-->
+            <div class="col-2">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <h4>All Units:</h4> &nbsp&nbsp&nbsp&nbsp
+                                @foreach(var unit in @ViewBag.AllUnits)
+                                {
+                                <span><a asp-action="ViewUnit"
+                                        asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
+                                    </a></span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="card on_call" style="width:100%">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <h4>On A Call:</h4> &nbsp&nbsp&nbsp&nbsp
+                                @foreach(var unit in @ViewBag.UnitsOnCall)
+                                {
+                                <span><a asp-action="ViewUnit"
+                                        asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
+                                    </a></span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+                        <div class="card " style="width:100%; height:150px;">
+                            <div class="card-body">
+                                <div class="row justify-content-center">
+                                    <h4>Out Of Service:</h4> &nbsp&nbsp&nbsp&nbsp
+                                    @foreach(var unit in @ViewBag.OOS)
+                                    {
+                                    <span><a asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
+                                        </a></span>
+                                    }
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
         </div>
+
+        </div>
+        <!--end row-->
         <div class="form-row justify-content-around">
             <div class="col-2">
 
@@ -171,26 +239,10 @@
 
         </div><br>
 
-        <div class="row">
-
-            <h4>Avaialable Units</h4>
-            @foreach(var unit in @ViewBag.AvailableUnits)
-            {
-            <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
-                </a></span>
-            }
 
         </div>
+        </div>
 
-        <div class="row">
-            <h4>All Units</h4>
-            @foreach(var unit in @ViewBag.AllUnits)
-            {
-            <span><a asp-action="ViewUnit" asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,
-                </a></span>
-            }
-        </div>
-        </div>
 
 
         <style type="text/css">
@@ -233,11 +285,33 @@
                 }
             }
 
-            .container {
-                width: 90%;
+            .container-fluid {
+
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-top: 20px;
+                padding-bottom: 20px;
             }
+
             .table_header {
-vertical-align: top;                
+                vertical-align: top;
+            }
+
+            td {
+                color: black;
+            }
+            .available{
+                background-color: rgb(150, 236, 150);
+            }
+            .on_call{
+                background-color: yellow;
+            }
+            
+            .card{
+                margin-top: 20px;
+                margin-bottom: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
             }
         </style>
 
