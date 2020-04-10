@@ -1,36 +1,95 @@
 @model Unit
 
-<h6>Dispatcher: @ViewBag.Dispatcher.FirstName</h6><br><br>
-<h4>Enter New Unit Information</h4>
-<form class="form-group" asp-action="AddUnit" asp-controller="Home" method="post">
+<div class="row  justify-content-between" style="margin-top: 20px;">
+        <h5>Dispatcher: @ViewBag.Dispatcher.FirstName @ViewBag.Dispatcher.LastName</h5>
+        <form asp-action="Dashboard" method="get">
+            <input type="submit" class="btn btn-danger" value="Cancel" />
+        </form>
 
-    <span asp-validation-for="NumberType"></span>
-    <label asp-for="NumberType">Unit Type:</label>
-    <select asp-for="NumberType">
-        <option value="A">A</option>
-        <option value="M">M</option>
-        <option value="E">E</option>
-        <option value="T">T</option>
-        <option value="RS">RS</option>
-    </select>
 
-    <span asp-validation-for="Number"></span>
-    <label asp-for="Number">Unit Number </label>
-    <input class="input-sm" asp-for="Number" class="form-control"><br>
+    </div>
 
-    <span asp-validation-for="UnitType"></span>
-    <label asp-for="UnitType">Unit Type:</label>
-    <select asp-for="UnitType">
-        <option value="BLS Ambulance">BLS Ambulance</option>
-        <option value="ALS Ambulance">ALS Ambulance</option>
-        <option value="Fire Engine">Fire Engine</option>
-        <option value="Fire Truck">Fire Truck</option>
-        <option value="Rescue Squad">Rescue Squad</option>
 
-    </select><br><br>
+<div class="row justify-content-center">
+    <div class="col-3">
+        <div class="card">
 
-    <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
+            <div class="card-body">
+                <h1 class="row justify-content-center">Enter New Unit Information</h1>
+                <form  asp-action="AddUnit" asp-controller="Home" method="post">
+                    <div class="form-group row ">
+                        <span asp-validation-for="NumberType"></span>
 
-    <input class="btn btn-outline-info" type="submit" value="Generate Unit">
+                        <label class="col" asp-for="NumberType">Unit Prefix:</label>
+                        <div class="col">
+                            <select class="form-control-lg" asp-for="NumberType">
+                                <option value="A">A</option>
+                                <option value="M">M</option>
+                                <option value="E">E</option>
+                                <option value="T">T</option>
+                                <option value="RS">RS</option>
+                            </select>
+                        </div>
+                    </div>
 
-</form>
+
+                    <span asp-validation-for="Number"></span>
+                    <div class="form-group row">
+                        <label class="col" asp-for="Number">Unit Number </label>
+                        <div class="col">
+                            <input style="width: 100px;" class="form-control-lg" asp-for="Number" class="form-control-lg">
+                        </div>
+
+                    </div>
+
+
+                    <span asp-validation-for="UnitType"></span>
+                    <div class="form-group row">
+                        <label class="col" asp-for="UnitType">Unit Type:</label>
+                        <div class="col">
+                            <select class="form-control-lg" asp-for="UnitType">
+                                <option value="BLS Ambulance">BLS Ambulance</option>
+                                <option value="ALS Ambulance">ALS Ambulance</option>
+                                <option value="Fire Engine">Fire Engine</option>
+                                <option value="Fire Truck">Fire Truck</option>
+                                <option value="Rescue Squad">Rescue Squad</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
+                    <div class="row justify-content-center">
+                            <input class="btn btn-dark" type="submit" value="Generate Unit">
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
+<style>
+    .container-fluid {
+
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    label{
+        font-size: 200%;
+    }
+    .card{
+        background-color: lightgoldenrodyellow;
+    }
+</style>

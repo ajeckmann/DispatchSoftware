@@ -1,28 +1,115 @@
-
-
 @model Rescuer
-<nav class="nav center">
-<a class="nav-link" asp-action="Dashboard">Home</a><br>
-<a class="nav-link" asp-action="Logout">Logout</a><br>
-</nav>
-<h1 class="center">Rescuer Details</h1>
-<h3>Rescuer ID:&nbsp @Model.RescuerId</h3><br>
 
-<h3>Rescuer First Name: &nbsp @Model.FirstName</h3><br>
 
-<h3>Rescuer Last Name:&nbsp @Model.LastName</h3><br>
-<h3>Rescuer Rank:&nbsp @Model.Rank</h3><br>
+<div class="row  justify-content-end" style="margin-top: 20px;">
+        
+        <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+                <input class="btn btn-danger" type="submit" value="Back">
+            </form>
+        
 
-    
-@foreach(Assignment a in @Model.AssignedUnit)
-    {
-       <h3>Unit Currently Assigned to: @a.UnitAssigned.NumberType@a.UnitAssigned.Number  <a asp-action="RemoveRescuerFromUnit" asp-route-unitId=@a.UnitAssigned.UnitId asp-route-rescuerId=@Model.RescuerId>Remove from this Unit</a></h3>
+    </div>
+
+
+
+<div class="row justify-content-center">
+
+    <h1>Rescuer Details</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12 offset-4">
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <h3>Rescuer ID</h3>
+            </div>
+            <div class="col-6 text-left">
+                <h3> @Model.RescuerId</h3>
+            </div>
+
+        </div><br>
+
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <h3>Rescuer First Name: </h3>
+            </div>
+            <div class="col-6 text-left">
+                <h3>@Model.FirstName</h3>
+            </div>
+        </div><br>
+
+
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <h3>Rescuer Last Name: </h3>
+            </div>
+            <div class="col-6 text-left">
+                <h3>@Model.LastName</h3>
+            </div>
+        </div><Br>
+
+
+
+        <div class="row justify-content-between">
+            <div class="col-3 ">
+                <h3>Rescuer Rank:</h3>
+            </div>
+            <div class="col-6 text-left">
+                <h3> @Model.Rank</h3>
+
+            </div>
+
+        </div><Br>
+
+        <div class="row justify-content-beginning">
+            @if(@Model.IsAssigned==false)
+            {
+                <div class="col-3">
+                        <h3>Unit Assigned: </h3>
+                    </div>
+                    <div class="col-3 offset-2 text-center">
+                            <h3>None: </h3>
+                        </div>
+                        <div class="col-2 ">
+                                <a class="btn btn-info" asp-action="AddRescuerToUnit"
+                                asp-route-rescuerId=@Model.RescuerId>  Assign to Unit</a> 
+                            </div>
+                        
+            }
+            @if(@Model.IsAssigned==true)
+            
+            {
+
+                @foreach(Assignment a in @Model.AssignedUnit)
+                {
+                    <div class="col-3">
+                            <h3>Unit Assigned: </h3>
+                        </div>
+        
+                    
+                    <div class="col-3 offset-2 text-center">
+                        <h3>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</h3>
+                    </div>
+                    
+                <div class="col-2 ">
+                        <a   class="btn btn-success" asp-action="RemoveRescuerFromUnit" asp-route-unitId=@a.UnitAssigned.UnitId
+                            asp-route-rescuerId=@Model.RescuerId>Remove from Unit</a>
+                    </div>
+                    
+
+
+            }
+
+            }
+            
+        </div>
+
+        
+        
+    </div>
+</div>
+<style>
+.container-fluid {
+        padding-left: 40px;
+        padding-right: 40px;
     }
-@if(@Model.IsAssigned==false)
-{
-    <h3>Unit Currently Assigned to:  None  &nbsp &nbsp &nbsp <a asp-action="AddRescuerToUnit" asp-route-rescuerId=@Model.RescuerId> &nbsp  Assign to Unit</a>  </h3>
-}
-
-
-
-
+</style>
