@@ -5,8 +5,9 @@
 
     <div class="row justify-content-between ">
 
-        <div class="col-11 text-center">
-            <h3>Choose Unit to add @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to</h3>
+        <div class="col text-center offset-1">
+            <h3>Choose Assignment for @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName
+                @ViewBag.RescuerToAdd.LastName </h3>
         </div>
 
         <div class="col-1">
@@ -16,131 +17,335 @@
         </div>
     </div>
 
-  
-
-        @if(ViewBag.RescuerToAdd.Rank=="EMT-B")
-        {
-        <h3>Ambulances Available For Assignment</h3>
-
-        <form asp-action="ProcessAssignment" asp-method="post">
-            <Select class="selectpicker" asp-for="UnitId">
-                @foreach(Unit a in ViewBag.Ambulances)
-                {
-                <option value=@a.UnitId>@a.NumberType@a.Number</option>
-                }
-                <input type="submit" class="btn btn-success"
-                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Ambulance">
-                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
-
-            </Select><br>
-        </form><br>
-        }
 
 
-        @if(ViewBag.RescuerToAdd.Rank== "Paramedic")
-        {
+    @if(ViewBag.RescuerToAdd.Rank=="EMT-B")
+    {
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card ambulance_background">
+                <div class="card-header text-center">
+                    <h3>Ambulances Available For Assignment</h3>
+                </div>
+                <div class="card-body text-center">
+
+                    <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                        <div class="row justify-content-center">
+                            <div class="col-6 offset-2">
+                                <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                    @foreach(Unit a in ViewBag.Ambulances)
+                                    {
+                                    <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                    }
+                                </Select><br>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input class="form-control form-control-lg btn btn-success assign_button " type="submit"
+                                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Ambulance">
+                                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
 
 
-        <div class="row justify-content-center">
-            <div class="card">
-                <div class="card-header">
+                            </div>
+                        </div>
+
+                    </form><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+
+    @if(ViewBag.RescuerToAdd.Rank== "Paramedic")
+    {
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card medic_background">
+                <div class="card-header text-center">
                     <h3>Medics Available For Assignment</h3>
                 </div>
-                <div class="card-body">
-                    <form asp-action="ProcessAssignment" asp-method="post">
+                <div class="card-body text-center">
+
+                    <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
                         <div class="row justify-content-center">
-                        <div class="col offset-4">
-                        <Select class="selectpicker" data-width="100px" data-style="btn-primary" asp-for="UnitId">
-                            @foreach(Unit a in ViewBag.Medics)
-                            {
-                            <option value=@a.UnitId>@a.NumberType@a.Number</option>
-                            }
-                        </Select><br><br>
-                    </div>
-                
-                <div class="row justify-content-center">
-                            <input type="submit" class="btn btn-success"
-                                value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Medic Unit">
-                            <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+                            <div class="col-6 offset-2">
+                                <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                    @foreach(Unit a in ViewBag.Medics)
+                                    {
+                                    <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                    }
+                                </Select><br>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input class="form-control form-control-lg btn btn-success " type="submit"
+                                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Medic">
+                                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
 
-                        
-                    </form>
-                
+
+                            </div>
+                        </div>
+
+                    </form><br>
                 </div>
-
             </div>
-        </div><br><br>
-        }
-        @if(ViewBag.RescuerToAdd.Rank== "FirefighterI" | ViewBag.RescuerToAdd.Rank== "FirefighterII" |
-        ViewBag.RescuerToAdd.Rank== "Lieutenant" | ViewBag.RescuerToAdd.Rank== "Paramedic"){
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+            <div class="col-4">
+                <div class="card engine_background">
+                    <div class="card-header text-center">
+                        <h3>Engines Available For Assignment</h3>
+                    </div>
+                    <div class="card-body text-center">
+    
+                        <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                            <div class="row justify-content-center">
+                                <div class="col-6 offset-2">
+                                    <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                        @foreach(Unit a in ViewBag.Engines)
+                                        {
+                                        <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                        }
+                                    </Select><br>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <input class="form-control form-control-lg btn btn-success assign_button" type="submit"
+                                        value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine">
+    
+    
+                                </div>
+                            </div>
+    
+                        </form><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    @if(ViewBag.RescuerToAdd.Rank== "FirefighterI"  |
+    ViewBag.RescuerToAdd.Rank== "Lieutenant"){
 
         <div class="row justify-content-center">
-            <div class="col">
-            <div class="card">
-                     <div class="card-header">
-        <h3>Engines Available For Assignment</h3></div>
-
-        <form asp-action="ProcessAssignment" asp-method="post">
-            <Select asp-for="UnitId">
-                @foreach(Unit a in ViewBag.Engines)
-                {
-                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
-                }
-                <input type="submit" class="btn btn-success"
-                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine"><br>
-                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
-
-            </Select>
-        </form><br>
-    </div>
-</div>
-</div>
-
-        }
+                <div class="col-4">
+                    <div class="card engine_background">
+                        <div class="card-header text-center">
+                            <h3>Engines Available For Assignment</h3>
+                        </div>
+                        <div class="card-body text-center">
         
+                            <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 offset-2">
+                                        <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                            @foreach(Unit a in ViewBag.Engines)
+                                            {
+                                            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                            }
+                                        </Select><br>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-8">
+                                        <input class="form-control form-control-lg btn btn-success assign_button" type="submit"
+                                            value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine">
+                                        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+        
+        
+                                    </div>
+                                </div>
+        
+                            </form><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card truck_background">
+                            <div class="card-header text-center">
+                                <h3>Trucks Available For Assignment</h3>
+                            </div>
+                            <div class="card-body text-center">
+            
+                                <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                                    <div class="row justify-content-center">
+                                        <div class="col-6 offset-2">
+                                            <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                                @foreach(Unit a in ViewBag.Trucks)
+                                                {
+                                                <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                                }
+                                            </Select><br>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg btn btn-success assign_button " type="submit"
+                                                value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Truck">
+                                            <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+            
+            
+                                        </div>
+                                    </div>
+            
+                                </form><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        @if(ViewBag.RescuerToAdd.Rank== "FirefighterII" | ViewBag.RescuerToAdd.Rank== "Lieutenant"){
+    }
 
-        <h3>Trucks Available For Assignment</h3>
 
-        <form asp-action="ProcessAssignment" asp-method="post">
-            <Select asp-for="UnitId">
-                @foreach(Unit a in ViewBag.Trucks)
-                {
-                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
-                }
-                <input type="submit" class="btn btn-success"
-                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Truck"><br>
-                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+    @if(ViewBag.RescuerToAdd.Rank== "FirefighterII" | ViewBag.RescuerToAdd.Rank== "Lieutenant"){
+        <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="card engine_background">
+                        <div class="card-header text-center">
+                            <h3>Engines Available For Assignment</h3>
+                        </div>
+                        <div class="card-body text-center">
+        
+                            <form class="form-group " asp-action="ProcessAssignment" asp-method="post">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 offset-2">
+                                        <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                            @foreach(Unit a in ViewBag.Engines)
+                                            {
+                                            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                            }
+                                        </Select><br>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-8">
+                                        <input class="form-control form-control-lg btn btn-success assign_button " type="submit" 
+                                            value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Engine">
+                                        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId" >
+        
+        
+                                    </div>
+                                </div>
+        
+                            </form><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="card truck_background">
+                        <div class="card-header text-center">
+                            <h3>Trucks Available For Assignment</h3>
+                        </div>
+                        <div class="card-body text-center">
+        
+                            <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 offset-2">
+                                        <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                            @foreach(Unit a in ViewBag.Trucks)
+                                            {
+                                            <option value=@a.UnitId>@a.NumberType@a.Number</option>
+                                            }
+                                        </Select><br>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-8">
+                                        <input class="form-control form-control-lg btn btn-success assign_button " type="submit"
+                                            value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Truck">
+                                        <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+        
+        
+                                    </div>
+                                </div>
+        
+                            </form><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card squad_background">
+                            <div class="card-header text-center">
+                                <h3>Rescue Squads Available For Assignment</h3>
+                            </div>
+                            <div class="card-body text-center">
+            
+                                <form class="form-group  " asp-action="ProcessAssignment" asp-method="post">
+                                    <div class="row justify-content-center">
+                                        <div class="col-6 offset-2">
+                                            <Select class="form-control form-control-lg col-6 " asp-for="UnitId">
+                                                @foreach(Unit a in ViewBag.RescueSquads)
+                                                {
+                                                <option class="assign_button" value=@a.UnitId>@a.NumberType@a.Number</option>
+                                                }
+                                            </Select><br>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg btn btn-success assign_button " type="submit"
+                                                value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName to Rescue Squad">
+                                            <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
+            
+            
+                                        </div>
+                                    </div>
+            
+                                </form><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    }
 
-            </Select>
-        </form><br>
+   
+    <style>
+       h3{
+           font-weight: 700;
+       }
+        .row {
+            margin-top: 20px;
         }
 
-        @if(ViewBag.RescuerToAdd.Rank == "FirefighterII" | ViewBag.RescuerToAdd.Rank== "Lieutenant"){
-
-        <h3>Rescue Squads Available For Assignment</h3>
-
-        <form asp-action="ProcessAssignment" asp-method="post">
-            <select class="selectpicker " data-style="btn-primary" data-width="250px" asp-for="UnitId">
-                @foreach(Unit a in ViewBag.RescueSquads)
-                {
-                <option value=@a.UnitId>@a.NumberType@a.Number</option><br>
-                }
-
-                <input type="submit" class="btn btn-success"
-                    value="Assign @ViewBag.RescuerToAdd.Rank @ViewBag.RescuerToAdd.FirstName @ViewBag.RescuerToAdd.LastName To RescueSquad"><br>
-                <input asp-for="RescuerId" type="hidden" value="@ViewBag.RescuerToAdd.RescuerId">
-
-            </select>
-
-
-        </form>
+        .card {
+            background-color: white;
         }
-        <style>
-            .row {
-                margin-top: 20px;
-            }
-        </style>
+
+        .assign_button {
+            border-radius: 15px;
+            font-size: 125%;
+            color: black;
+            font-weight: 600;
+        }
+        .engine_background{
+            background-color: rgb(231, 168, 168)
+        }
+        .ambulance_background{
+            background-color: lightblue;
+        }
+        .medic_background{
+            background-color: gold;
+
+        }
+        .truck_background{
+            background-color: orange;
+        }
+        .squad_background{
+            background-color: rgb(146, 115, 146);
+        }
+    </style>
 
 </body>

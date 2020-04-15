@@ -47,9 +47,9 @@
 
 
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="margin-top: 70px;">
             <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
-                <input class="btn btn-outline-danger btn-lg" type="submit" value="Create New Incident">
+                <input class="btn btn-danger btn-lg" type="submit" value="Create New Incident">
             </form>
         </div><br>
         <div class="row justify-content-center">
@@ -57,37 +57,54 @@
             <h3>Incidents</h3>
 
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-around">
             <div class="col-2">
-                <div class="card available">
-                    <div class="card-body">
-                        <div class="row justify-content-center">
+                <div class="row">
+                    <div class="card all_units">
 
-                            <h4>Available Units: </h4>&nbsp&nbsp&nbsp&nbsp
-                            @foreach(var unit in @ViewBag.AvailableUnits)
-                            {
-                            <span><a asp-action="ViewUnit"
-                                    asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
-                                </a></span>
-                            }
+                        <div class="card-body" style="height: 750px;">
+                            <div class="card-header text-center" style="height: 50px;">
+                                <h4>All Units:</h4> &nbsp&nbsp&nbsp&nbsp
+                            </div>
+                            <div class="row justify-content-center">
 
+
+                                @foreach(var unit in @ViewBag.AllUnits)
+
+                                {
+                                    @if (unit != @ViewBag.AllUnits[@ViewBag.AllUnits.Count-1])
+                                    {
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp&nbsp
+                                        </a></span>
+                                    }
+                                    else{
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number
+                                        </a></span>
+                                    }
+                                
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
+                
 
             </div>
             <div class="col-6">
-                <table class="table table-border-top">
+                <table class="table table-border-top">ג
                     <thead>
                         <tr>
-                            <th >Incident Status</th>
-                            <th >Incident ID</th>
-                            <th style="vertical-align: top" >Incident Location</th>
-                            <th >Incident Type</th>
-                            <th >Units Responding (click to remove)</th>
+                            <th style="vertical-align: top">Incident Status</th>
+                            <th>Incident ID</th>
+                            <th style="vertical-align: top">Incident Location</th>
+                            <th>Incident Type</th>
+                            <th>Units Responding (click to remove)</th>
                             <th style="vertical-align: top">Action</th>
-                            <th style="vertical-align: top" >Dispatch</th>
-                            <th >Incident Time/Date</th>
+                            <th style="vertical-align: top">Dispatch</th>
+                            <th>Incident Time/Date</th>
                         </tr>
 
                     </thead>
@@ -166,15 +183,28 @@
             <!--end col-->
             <div class="col-2">
                 <div class="row">
-                    <div class="card">
+                    <div class="card available" style="height: 350px;">
+                        <div class="card-header text-center" style="height: 50px;">
+                            <h4>Available Units:</h4> &nbsp&nbsp&nbsp&nbsp
+                        </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
-                                <h4>All Units:</h4> &nbsp&nbsp&nbsp&nbsp
-                                @foreach(var unit in @ViewBag.AllUnits)
+
+                                @foreach(var unit in @ViewBag.AvailableUnits)
                                 {
-                                <span><a asp-action="ViewUnit"
-                                        asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
-                                    </a></span>
+                                    @if(unit != @ViewBag.AvailableUnits[@ViewBag.AvailableUnits.Count-1])
+                                    {
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
+                                        </a></span>
+                                    }
+                                    else
+                                    {
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number
+                                        </a></span>
+                                    }
+                                
                                 }
                             </div>
                         </div>
@@ -182,61 +212,92 @@
                 </div><br>
                 <div class="row">
                     <div class="card on_call" style="width:100%">
+                        <div class="card-header text-center" style="height: 50px;">
+                            <h4>On A Call:</h4> &nbsp&nbsp&nbsp&nbsp
+                        </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
-                                <h4>On A Call:</h4> &nbsp&nbsp&nbsp&nbsp
-                                @foreach(var unit in @ViewBag.UnitsOnCall)
+                                @if (@ViewBag.UnitsOnCall!=null)
                                 {
-                                <span><a asp-action="ViewUnit"
-                                        asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
-                                    </a></span>
+                                    @foreach(var unit in @ViewBag.UnitsOnCall)
+                                {
+                                    @if(unit != @ViewBag.UnitsOnCall[@ViewBag.UnitsOnCall.Count-1])
+                                    {
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number, &nbsp&nbsp
+                                        </a></span>
+                                    }
+                                    else{
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number 
+                                        </a></span>
+                                    }
+                                
                                 }
+                                }
+                                
                             </div>
                         </div>
                     </div>
                 </div><br>
                 <div class="row">
-                        <div class="card " style="width:100%; height:150px;">
-                            <div class="card-body">
-                                <div class="row justify-content-center">
-                                    <h4>Out Of Service:</h4> &nbsp&nbsp&nbsp&nbsp
-                                    @foreach(var unit in @ViewBag.OOS)
+                    <div class="card " style="width:100%; height:150px;">
+                        <div class="card-header text-center" style="height: 50px;">
+                            <h4>Out of Service:</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+
+                                @foreach(var unit in @ViewBag.OOS)
+                                {
+                                    @if(unit != @ViewBag.OOS[@ViewBag.OOS.Count-1])
                                     {
-                                    <span><a asp-action="ViewUnit"
+                                        <span><a class="unit_name" asp-action="ViewUnit"
                                             asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number,&nbsp
                                         </a></span>
                                     }
+                                    else
+                                    {
+                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                            asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number
+                                        </a></span>
+                                    }
                                 
-                                </div>
+                                }
+
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
 
         </div>
 
         </div>
         <!--end row-->
-        <div class="form-row justify-content-around">
-            <div class="col-2">
+        <div class="form-row justify-content-center ">
+            <div class="col-6">
+                <div class="row justify-content-center">
+                    <div class="col-2">
 
-                <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-                    <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Rescuer">
-                </form>
+                        <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Rescuer">
+                        </form>
+                    </div>
+
+                    <div class="col-2">
+                        <form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
+                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Unit">
+                        </form>
+                    </div>
+
+                    <div class="col-2">
+                        <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+                            <input class="btn btn-outline-info btn-sm " type="submit" value="View Personnel">
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="col-2">
-                <form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
-                    <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Unit">
-                </form>
-            </div>
-
-            <div class="col-2">
-                <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
-                    <input class="btn btn-outline-info btn-sm " type="submit" value="View Available Personnel">
-                </form>
-            </div>
-
         </div><br>
 
 
@@ -261,6 +322,11 @@
 
             .blinking {
                 animation: blinkingText 0.8s infinite;
+            }
+
+            .unit_name {
+                color: darkblue;
+                font-size: 150%;
             }
 
             @@keyframes blinkingText {
@@ -300,18 +366,26 @@
             td {
                 color: black;
             }
-            .available{
+
+            .available {
                 background-color: rgb(150, 236, 150);
             }
-            .on_call{
+
+            .on_call {
                 background-color: yellow;
             }
-            
-            .card{
+            .all_units{
+                background-color: white;
+            }
+
+            .card {
                 margin-top: 20px;
                 margin-bottom: 20px;
                 margin-left: 20px;
                 margin-right: 20px;
+            }
+            td{
+                font-size: 125%;
             }
         </style>
 

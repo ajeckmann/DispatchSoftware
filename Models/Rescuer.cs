@@ -20,10 +20,14 @@ namespace Dispatch.Models {
         [Range (18, 75, ErrorMessage = "Age must be between 18 and 75")]
 
         public int Age { get; set; }
-        public string Rank { get; set; }
-        //firefighter, paramedic, EMT-b, Captain, Lieutenant
+
+        public string Rank { get; set; } //firefighter, paramedic, EMT-b, Captain, Lieutenant
+
         public int UserId { get; set; }
         public User creator { get; set; }
+
+        //navigation property to refer to association between rescuer and unit
+
         public List<Assignment> AssignedUnit { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

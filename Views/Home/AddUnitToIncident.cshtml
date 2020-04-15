@@ -114,7 +114,7 @@
 
             <div class="col-sm-4">
                 <!--ambulance column-->
-                <div class="card">
+                <div class="card ambulance_background">
                     <div class="card-header text-center">
                         <h4>Available Ambulances: </h4>
                         <h6>Click On Ambulance To Dispatch</h6>
@@ -146,7 +146,7 @@
 
             <div class="col-sm-4">
                 <!--Medic Column-->
-                <div class="card">
+                <div class="card medic_background">
                     <div class="card-header text-center">
                         <h4>Available Medics</h4>
                         <h6>Click On Medic To Dispatch</h6>
@@ -170,15 +170,13 @@
             </div>
             <!--end col-->
         </div><br>
-
-
         <!--end amb/medic row--->
 
         <div class="row justify-content-around">
             <!--engine/truck row-->
             <div class="col-sm-4">
                 <!--engine col-->
-                <div class="card">
+                <div class="card engine_background">
                     <div class="card-header text-center">
 
                         <h4>Available Engines</h4>
@@ -187,8 +185,6 @@
                     <div class="card-body text-center">
                         @foreach(Unit a in @ViewBag.AvailableEngines)
                         {
-
-
 
                         <span><a class="unit" asp-action="Confirm"
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
@@ -210,7 +206,7 @@
             <div class="col-sm-4">
                 <!--truck col-->
 
-                <div class="card">
+                <div class="card truck_background">
                     <div class="card-header text-center">
 
                         <h4>Available Trucks</h4>
@@ -243,7 +239,7 @@
             <div class="col-sm-4">
                 <!--RS col-->
 
-                <div class="card">
+                <div class="card squad_background">
                     <div class="card-header text-center">
 
                         <h4>Available Rescue Squads</h4>
@@ -260,46 +256,80 @@
 
                         <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
 
-                      }
-                    </div><!--end card body-->
-                </div><!--end card -->
-            </div><!--end col -->
-            </div><!--end row-->
+                        }
+                    </div>
+                    <!--end card body-->
+                </div>
+                <!--end card -->
+            </div>
+            <!--end col -->
+        </div>
+        <!--end row-->
 
 
 
 
 
 
-            <style>
-                .incident_info {
-                    color: red;
-                }
+        <style>
+            .container-fluid {
 
-                .container-fluid {
-                    margin-top: 30px;
-                }
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
 
-                .incident_info_row {
-                    margin-top: 30px;
-                    margin-bottom: 30px;
-                }
+            .incident_info {
+                color: red;
+            }
 
-                .card {
-                    background-color: lightyellow;
-                }
+            .container-fluid {
+                margin-top: 30px;
+            }
 
-                .unit {
-                    color: green;
-                    font-size: 175%;
-                }
+            .incident_info_row {
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
 
-                .hover {
-                    font-size: 300%;
-                    color: red;
-                    text-decoration: none;
-                }
-            </style>
+            .card {
+                background-color: white;
+            }
+
+            .unit {
+                color: green;
+                font-size: 175%;
+                font-weight: 700;
+            }
+
+            .engine_background {
+                background-color: rgb(231, 168, 168)
+            }
+
+            .ambulance_background {
+                background-color: lightblue;
+            }
+
+            .medic_background {
+                background-color: gold;
+
+            }
+
+            .truck_background {
+                background-color: orange;
+            }
+
+            .squad_background {
+                background-color: rgb(146, 115, 146);
+            }
+
+            .hover {
+                font-size: 300%;
+                color: red;
+                text-decoration: none;
+            }
+        </style>
 </body>
 
 </html>

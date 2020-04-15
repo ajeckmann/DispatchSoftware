@@ -112,10 +112,12 @@ namespace Dispatch.Controllers {
             ViewBag.UserLoggedIn = LoggedIn ();
             List<Unit> AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true).OrderBy (i => i.NumberType).ThenBy (i => i.Number).ToList ();
             ViewBag.AvailableUnits = AvailableUnits;
-            ViewBag.AllUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned);
-            List<Unit> UnitsOnCall = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.calls.Count == 1).ToList ();
+            List<Unit> AllUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).OrderBy (i => i.NumberType).ThenBy (i => i.Number).ToList ();
+            ViewBag.AllUnits = AllUnits;
+            List<Unit> UnitsOnCall = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.calls.Count == 1).OrderBy (u => u.NumberType).ThenBy (i => i.Number).ToList ();
             ViewBag.UnitsOnCall = UnitsOnCall;
-            ViewBag.OOS = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.calls.Count == 0 && u.IsAvailable == false);
+            List<Unit> OutOfService = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.calls.Count == 0 && u.IsAvailable == false).OrderBy (u => u.NumberType).ThenBy (i => i.Number).ToList ();
+            ViewBag.OOS = OutOfService;
             return View (Incidents);
         }
 
@@ -155,7 +157,7 @@ namespace Dispatch.Controllers {
                 newIncident.IsActive = true;
                 ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
                 ViewBag.AllUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned);
-                return View ("Dashboard", Incidents);
+                return RedirectToAction ("Dashboard", Incidents);
 
             } else {
                 ViewBag.Dispatcher = LoggedIn ();
@@ -346,11 +348,14 @@ namespace Dispatch.Controllers {
             ViewBag.AvailableRescuers = dbContext.Rescuers
                 .Include (r => r.AssignedUnit)
                 .ThenInclude (a => a.UnitAssigned)
-                .Where (r => r.IsAssigned == false).ToList ();
+                .Where (r => r.IsAssigned == false)
+                .OrderBy (r => r.LastName)
+                .ToList ();
             ViewBag.UserLoggedIn = LoggedIn ();
             ViewBag.AllRescuers = dbContext.Rescuers
                 .Include (r => r.AssignedUnit)
                 .ThenInclude (a => a.UnitAssigned)
+                .OrderBy (r => r.LastName)
                 .ToList ();
 
             return View ();

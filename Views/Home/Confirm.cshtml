@@ -18,7 +18,7 @@
                     <span class="bold">@ViewBag.IncidentToaddTo.Type</span> at <span
                         class="bold">@ViewBag.IncidentToaddTo.Location? </span> </h3>
 
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" style="margin-top: 40px;">
                     <div class="col-auto">
                         <form asp-action="ProcessDispatch" asp-route-unitId="@Model.UnitId"
                             asp-route-incidentId="@ViewBag.IncidentToaddTo.IncidentId">
@@ -28,9 +28,7 @@
                         </form>
                     </div>
                     <div class="col-auto">
-                        <a class="btn btn-dark btn-lg" asp-action="AddUnitToIncident" asp-controller="Home" asp-method="post" asp-route-incidentId="@ViewBag.IncidentToaddTo.IncidentId">Cancel Dispatch</a>
-
-                          
+                        <a class="btn btn-dark btn-lg" asp-action="AddUnitToIncident" asp-controller="Home" asp-method="post" asp-route-incidentId="@ViewBag.IncidentToaddTo.IncidentId">Cancel Dispatch</a>                   
                     </div>
                 </div>
             </div>
@@ -49,5 +47,6 @@
         color: darkred;
     }
     #card{
-        background-color: silver;
+        background-color: white;
+    }
 </style>

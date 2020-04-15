@@ -16,6 +16,8 @@ namespace Dispatch.Models
         [Required(ErrorMessage="Must Include Type")]
         public string Type{get;set;}
         public int UserId{get;set;}
+
+        //navigation property to refer to the dispatches associated with incidents--the association between incident and unit
         public List<Dispatchh> dispatchedUnits{get;set;}
         public User Dispatcher{get;set;}
 
