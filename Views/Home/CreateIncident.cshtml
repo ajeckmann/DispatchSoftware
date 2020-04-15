@@ -20,35 +20,39 @@
             <b><span asp-validation-for="Location" offset-3></span></b>
             <div class="form-group row">
                 <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
-                <div class="col-sm-7">
-                    <input asp-for="Location" class="form-control descriptor_input">
+                <div class="col">
+                    <input asp-for="Location" class="form-control form-control-lg descriptor_input">
                 </div>
             </div><br><br>
+
+            <span asp-validation-for="Description"></span>
+
+            <div class="form-group row justify-content-between">
+                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: (inquire # of patients, gender, age) </label>
+                
+            
+            <div class="col-md-7">
+                    <textarea asp-for="Description" class="form-control descriptor_input" rows="4"></textarea><br>
+            </div>
+            
+        </div><br><br>
 
             <span asp-validation-for="Type"></span>
 
             <div class="form-group row justify-content-between">
                 <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Type">INCIDENT TYPE:</label>
                 <div class="col-sm-7">
-                    <select class="form-control descriptor_input" asp-for="Type">
+                    <select class="form-control form-control-lg descriptor_input" asp-for="Type">
                         <option value="Medical-BLS">Medical-BLS</option>
                         <option value="Medical-ALS">Medical-ALS</option>
                         <option value="Fire">Fire</option>
-                    </select><br><br>
+                    </select>
                 </div>
-            </div>
+            </div><br><br>
 
             <span asp-validation-for="Description"></span>
 
-        <div class="form-group row justify-content-between">
-            <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: </label>
-            
-        
-        <div class="col-sm-7">
-                <input asp-for="Description" class="form-control descriptor_input"><br>
-        </div>
-        <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
-    </div>
+    <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
             
 
     <div class="form-group row justify-content-between">
@@ -61,7 +65,7 @@
     </div>
 
         <div class="row justify-content-center">
-                <input class="btn btn-warning text-center btn-lg" type="submit" value="Generate New Incident">
+                <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit" value="Generate New Incident">
 
         </div>
 
@@ -85,6 +89,7 @@
         color:rgb(253, 4, 4);
         font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         font-size:175%;
+        font-weight: 600;
   }
     .descriptor_input{
         border:red solid 2px;

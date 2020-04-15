@@ -9,128 +9,138 @@
 
     </div>
 
+    <div class="row justify-content-around">
+        <div class="col-4">
+            <div class="row justify-content-center">
+                <h1 class="available">Available Personnel</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <table class="table">
 
-    <div class="row justify-content-center">
-        <h1>Available Personnel</h1>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-8">
+                        <thead>
+                            <tr className="incident_row">
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Age</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                                <th>Units Assigned To</th>
+                                <th>User Profile</th>
 
-            <table class="table">
+                            </tr>
 
-                <thead>
-                    <tr className="incident_row">
-                        <th>Last Name</th>
-                        <th>First Name</th>
-                        <th>Age</th>
-                        <th>Rank</th>
-                        <th>Status</th>
-                        <th>Units Assigned To</th>
-                        <th>User Profile</th>
+                        </thead>
+                        @foreach(var resc in @ViewBag.AvailableRescuers)
+                        {
+                        <tr>
+                            <td>@resc.LastName</td>
+                            <td>@resc.FirstName</td>
+                            <td>@resc.Age</td>
+                            <td>@resc.Rank</td>
 
-                    </tr>
+                            @if(@resc.IsAssigned==true)
+                            {
+                            <td>ASSIGNED TO UNIT</td>
 
-                </thead>
-                @foreach(var resc in @ViewBag.AvailableRescuers)
-                {
-                <tr>
-                    <td>@resc.LastName</td>
-                    <td>@resc.FirstName</td>
-                    <td>@resc.Age</td>
-                    <td>@resc.Rank</td>
-
-                    @if(@resc.IsAssigned==true)
-                    {
-                    <td>ASSIGNED TO UNIT</td>
-
-                    }
-                    else
-                    {
-                    <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
-                            Assignment</a></td>
-                    }
+                            }
+                            else
+                            {
+                            <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
+                                    Assignment</a></td>
+                            }
 
 
-                    <td>None</td>
+                            <td>None</td>
 
-                    <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
+                            <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
 
-                </tr>
-                }
-            </table>
+                        </tr>
+                        }
+                    </table>
+                    <div class="row justify-content-center">
+                            <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+                                <input class="btn btn-outline-info btn-sm" type="submit" value="Add New Rescuer">
+                            </form>
+                </div>
+
+
+                
+                </div>
+            </div>
+        </div>
+            <!-------End of Avaialble Personnel---->
+            <div class="col-4">
+                <div class="row justify-content-center">
+                    <h1>All Personnel</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <table class="table">
+
+                            <thead>
+                                <tr>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Age</th>
+                                    <th>Rank</th>
+                                    <th>Status</th>
+                                    <th>Units Assigned To</th>
+                                    <th>User Profile</th>
+
+                                </tr>
+
+                            </thead>
+                            @foreach(var resc in @ViewBag.AllRescuers)
+                            {
+                            <tr>
+                                <td>@resc.LastName</td>
+                                <td>@resc.FirstName</td>
+                                <td>@resc.Age</td>
+                                <td>@resc.Rank</td>
+
+                                @if(@resc.IsAssigned==true)
+                                {
+                                <td>ASSIGNED TO UNIT</td>
+
+                                }
+                                else
+                                {
+                                <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
+                                        Assignment</a></td>
+                                }
+                                @if(@resc.IsAssigned==true)
+                                {
+                                @foreach(Assignment a in @resc.AssignedUnit)
+                                {
+                                <td>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</td>
+                                }
+
+                                }
+                                else
+                                {
+                                <td>None</td>
+                                }
+                                <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a>
+                                </td>
+
+                            </tr>
+                            }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row justify-content-center">
-        <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-            <input class="btn btn-outline-info btn-sm" type="submit" value="Add New Rescuer">
-        </form>
-    </div>
-    <!-------End of Avaialble Personnel---->
-
-    <div class="row justify-content-center">
-        <h1>All Personnel</h1>
-    </div>
-
-
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <table class="table">
-
-                <thead>
-                    <tr>
-                        <th>Last Name</th>
-                        <th>First Name</th>
-                        <th>Age</th>
-                        <th>Rank</th>
-                        <th>Status</th>
-                        <th>Units Assigned To</th>
-                        <th>User Profile</th>
-
-                    </tr>
-
-                </thead>
-                @foreach(var resc in @ViewBag.AllRescuers)
-                {
-                <tr>
-                    <td>@resc.LastName</td>
-                    <td>@resc.FirstName</td>
-                    <td>@resc.Age</td>
-                    <td>@resc.Rank</td>
-
-                    @if(@resc.IsAssigned==true)
-                    {
-                    <td>ASSIGNED TO UNIT</td>
-
-                    }
-                    else
-                    {
-                    <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
-                            Assignment</a></td>
-                    }
-                    @if(@resc.IsAssigned==true)
-                    {
-                    @foreach(Assignment a in @resc.AssignedUnit)
-                    {
-                    <td>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</td>
-                    }
-
-                    }
-                    else
-                    {
-                    <td>None</td>
-                    }
-                    <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
-
-                </tr>
-                }
-        </div>
-    </div>
-
 
     <style>
         .container-fluid {
             padding-left: 40px;
             padding-right: 40px;
+        }
+        .available{
+            color: green;
+        }
+        h1{
+            color: black;
         }
     </style>

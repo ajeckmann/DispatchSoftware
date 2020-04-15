@@ -30,11 +30,11 @@
     <div class="col-4">
 
         <div class="row justify-content-center">
-            <div class="col-12 text-right">
-                <div class="card">
-                    <div class="card-body">
+            <div class="col-12 my-auto text-right">
+                <div class="card card-block  justify-content-center"  style="height:350px;">
+                    <div class="card-body ">
 
-                        <div class="row justify-content-around">
+                        <div class="row justify-content-around" style="margin-top: 50px;">
                             <div class="col-3 text-left">
                                 <h2 class="descriptor">Status:</h2>
                             </div>
@@ -59,7 +59,7 @@
 
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" style="margin-top: 50px;">
                             @if (@Model.IsAvailable==true)
                             {
                             <form asp-action="InactivateUnit" asp-route-unitId=@Model.UnitId Controller="Home"
@@ -75,6 +75,11 @@
 
                                 <input type="submit" value="Place Unit In Service" class="btn btn-outline-success">
                             </form>
+                            }
+                            @if (@Model.calls.Count==1 && @Model.IsAvailable==false) 
+                            {
+                                <p> 
+                                **Please see Incident Dashboard to remove Unit from call and place in service**</p>
                             }
                         </div>
 
@@ -122,6 +127,9 @@
 
                             </thead>
                         </table>
+                        <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+                                <input class="btn btn-outline-info btn-sm " type="submit" value="View Personnel">
+                            </form>
                     </div>
 
                 </div>
