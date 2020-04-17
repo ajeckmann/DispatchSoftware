@@ -248,13 +248,13 @@ namespace Dispatch.Controllers {
             Unit unitToAactivate = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
             unitToAactivate.IsAvailable = true;
             dbContext.SaveChanges ();
-            Unit Unittodispla = dbContext.Units
+            Unit Unittodisplay = dbContext.Units
                 .Include (u => u.personnel)
                 .ThenInclude (a => a.RiderAssigned)
                 .Include (u => u.calls)
                 .ThenInclude (c => c.DispatchedIncident)
                 .FirstOrDefault (u => u.UnitId == unitId);
-            return RedirectToAction ("ViewUnit", Unittodispla);
+            return RedirectToAction ("ViewUnit", Unittodisplay);
         }
 
         [HttpPost ("editresponsestatus/{unitId}/{status}")]
