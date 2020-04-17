@@ -6,8 +6,11 @@ My goal was to create a small-scale dispatching system that could be used by a 9
 
 I determined the needs of this application from my own experience with real dispatching software--namely: 
 1: The need to store create an incident object in a database and store its information
+
 2: The need to determine the appropriate rescue vehicle to dispatch to the incident
+
 3: The need to track that unit over the course of its response
+
 4: The need to ensure staffing needs of each apparatus met by appropriate personnel (i.e. ensure only paramedics ride medic units, Firefighter Level II rides rescue squad, etc...)
 
 
