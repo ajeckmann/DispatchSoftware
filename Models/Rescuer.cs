@@ -33,6 +33,7 @@ namespace Dispatch.Models {
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatdAt { get; set; } = DateTime.Now;
 
+        //a rescuer is always "available" when entered into the system (IsAvailable=true by default)
         public Boolean IsAssigned { get; set; } = false;
     }
 }

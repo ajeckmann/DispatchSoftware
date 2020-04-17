@@ -31,7 +31,10 @@ namespace Dispatch.Models {
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
+        //unit is always active by default after being created(IsActive==true)
         public Boolean IsAvailable { get; set; } = true;
+
+        public string ResponseStatus { get; set; }
 
     }
 }
