@@ -20,11 +20,11 @@
                 });
 
 
-                function flashrow() {
-                    $('.roww').removeClass("active");
-                    $('.roww').addClass("active");
-                }
-                setInterval(flashrow, 1200);
+            //     function flashrow() {
+            //         $('.roww').removeClass("active");
+            //         $('.roww').addClass("active");
+            //     }
+            //     setInterval(flashrow, 1200);
 
             });
 
@@ -41,11 +41,6 @@
     </head>
 
     <body>
-
-
-
-
-
 
         <div class="row justify-content-center" style="margin-top: 70px;">
             <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
@@ -129,12 +124,12 @@
                         }
                         else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0)
                         {
-                        <tr class="blinking">
-                            <td>AWAITING DISPATCH</td>
+                        <tr class="blinking1">
+                            <td class="status_descriptor">AWAITING DISPATCH</td>
                             <td>@inc.IncidentId</td>
                             <td>@inc.Location</td>
                             <td>@inc.Type</td>
-                            <td>
+                            <td class="status_descriptor">
                                 AWAITING DISPATCH
                             </td>
                             <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
@@ -149,18 +144,48 @@
 
                         </tr>
                         }
-                        else if(@inc.IsActive==true)
+                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()!=0)
                         {
-                        <tr class="dispatched">
-                            <td>DISPATCHED</td>
+                        <tr class="incident_dispatched">
+                            <td class="status_descriptor">DISPATCHED</td>
                             <td>@inc.IncidentId</td>
                             <td>@inc.Location</td>
                             <td>@inc.Type</td>
                             <td>
                                 @foreach(var u in @inc.dispatchedUnits)
                                 {
-                                <span><a asp-action="ConfirmRemoval" asp-route-incidentId=@inc.IncidentId
-                                        asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    @if(@u.UnitDispatched.ResponseStatus=="Dispatched")
+                                    {
+                                        <span><a class="unit_dispatched" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                    @if(@u.UnitDispatched.ResponseStatus=="Enroute")
+                                    {
+                                        <span><a class="enroute" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                    @if(@u.UnitDispatched.ResponseStatus=="On The Scene")
+                                    {
+                                        <span><a class="on_scene" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                    @if(@u.UnitDispatched.ResponseStatus=="Enroute To Hospital")
+                                    {
+                                        <span><a class="to_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                    @if(@u.UnitDispatched.ResponseStatus=="At the Hospital")
+                                    {
+                                        <span><a class="at_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                    @if(@u.UnitDispatched.ResponseStatus=="Clear of Incident")
+                                    {
+                                        <span><a class="clear" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                    }
+                                   
+                                
                                 }
                             </td>
                             <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
@@ -307,33 +332,67 @@
 
 
         <style type="text/css">
-            .active {
+            .incident_active {
                 background-color: rgb(196, 88, 88);
 
             }
 
-            .dispatched {
+            .incident_dispatched {
                 background-color: yellow;
+            
+            }
+             .unit_dispatched{
+                animation: blinkingText2 1.2s infinite;
+                font-weight:700;
+            }
+            .enroute{
+                color: rgb(233, 193, 16);
+                font-weight:700;
+            }
+            .on_scene{
+                color: rgb(130, 226, 130);
+                font-weight:700;
+            }
+            
+            .to_hospital{
+                color: rgb(236, 15, 207);
+                font-weight:700;
+                
+            }
+            .at_hospital{
+                color:rgb(18, 32, 230);
+                font-weight:700;
+            }
+            .clear{
+                color: gray;
+                text-decoration: line-through;
+            
             }
 
             .complete {
                 background-color: slategray;
+                
             }
 
-            .blinking {
-                animation: blinkingText 0.8s infinite;
+            .blinking1 {
+                animation: blinkingText1 0.8s infinite;
             }
+
+           
 
             .unit_name {
                 color: darkblue;
                 font-size: 150%;
             }
+            .status_descriptor{
+                font-weight: 700
+            }
 
-            @@keyframes blinkingText {
+            @@keyframes blinkingText1 {
                 0% {
                     background-color: red;
                 }
-
+;
                 25% {
                     background-color: transparent;
                 }
@@ -348,6 +407,27 @@
 
                 100% {
                     background-color: red;
+                }
+            }
+            @@keyframes blinkingText2 {
+                0% {
+                    color: red;
+                }
+;
+                25% {
+                    color: red;
+                }
+
+                50% {
+                    color: transparent;
+                }
+
+                75% {
+                    color: red;
+                }
+
+                100% {
+                    color: red;
                 }
             }
 
@@ -373,6 +453,7 @@
 
             .on_call {
                 background-color: yellow;
+    
             }
             .all_units{
                 background-color: white;
@@ -387,6 +468,7 @@
             td{
                 font-size: 125%;
             }
+            
         </style>
 
 

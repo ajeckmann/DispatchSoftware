@@ -218,21 +218,13 @@ namespace Dispatch.Controllers {
         [HttpGet ("unit/{unitId}")]
         public IActionResult ViewUnit (int unitId) {
 
-            ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
-
+            // ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
             Unit Unittodisplay = dbContext.Units
                 .Include (u => u.personnel)
                 .ThenInclude (a => a.RiderAssigned)
                 .Include (u => u.calls)
                 .ThenInclude (c => c.DispatchedIncident)
                 .FirstOrDefault (u => u.UnitId == unitId);
-
-            // ViewBag.Assignments=dbContext.Anrssignments
-            // .Include(u=>u.personnel)
-            // .ThenInclude(a=>a.RiderAssigned)
-            // .Include(u=>u.calls)
-            // .ThenInclude(c=>c.DispatchedIncident)
-            // .ToList();
             return View (Unittodisplay);
 
         }
@@ -256,13 +248,40 @@ namespace Dispatch.Controllers {
             Unit unitToAactivate = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
             unitToAactivate.IsAvailable = true;
             dbContext.SaveChanges ();
-            Unit Unittodisplay = dbContext.Units
+            Unit Unittodispla = dbContext.Units
                 .Include (u => u.personnel)
                 .ThenInclude (a => a.RiderAssigned)
                 .Include (u => u.calls)
                 .ThenInclude (c => c.DispatchedIncident)
                 .FirstOrDefault (u => u.UnitId == unitId);
-            return RedirectToAction ("ViewUnit", Unittodisplay);
+            return RedirectToAction ("ViewUnit", Unittodispla);
+        }
+
+        [HttpPost ("editresponsestatus/{unitId}/{status}")]
+        public IActionResult EditResponseStatus (int unitId, string status) {
+            Console.WriteLine ("is this working???");
+            Unit unitToEdit = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
+            if (status == "enroute") {
+                unitToEdit.ResponseStatus = "Enroute";
+            } else if (status == "on_scene") {
+                unitToEdit.ResponseStatus = "On The Scene";
+            } else if (status == "transport") {
+                unitToEdit.ResponseStatus = "Enroute To Hospital";
+            } else if (status == "at_hospital") {
+                unitToEdit.ResponseStatus = "At the Hospital";
+            } else if (status == "clear") {
+                unitToEdit.ResponseStatus = "Clear of Incident";
+            }
+
+            dbContext.SaveChanges ();
+            Unit EditedUnit = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (a => a.RiderAssigned)
+                .Include (u => u.calls)
+                .ThenInclude (c => c.DispatchedIncident)
+                .FirstOrDefault (u => u.UnitId == unitId);
+            return RedirectToAction ("ViewUnit", EditedUnit);
+
         }
 
         [HttpGet ("addunittoincident")]
@@ -301,6 +320,7 @@ namespace Dispatch.Controllers {
             dbContext.SaveChanges ();
             Unit unittoinactivate = dbContext.Units.FirstOrDefault (u => u.UnitId == newDispatch.UnitId);
             unittoinactivate.IsAvailable = false;
+            unittoinactivate.ResponseStatus = "Dispatched";
             dbContext.SaveChanges ();
 
             return RedirectToAction ("Dashboard");
@@ -312,6 +332,14 @@ namespace Dispatch.Controllers {
             Unit unitTodispatch = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
             ViewBag.IncidentToaddTo = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == incidentId);
             return View (unitTodispatch);
+        }
+
+        [HttpPost ("confirmclear/{unitId}/{incidentId}")]
+        public IActionResult ConfirmClearFromIncident (int unitId, int incidentId) {
+            Unit unitToremove = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
+            ViewBag.IncidentRemovedFrom = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == incidentId);
+            return View (unitToremove);
+
         }
 
         [HttpGet ("confirmremoval/{unitId}/{incidentId}")]
@@ -335,6 +363,7 @@ namespace Dispatch.Controllers {
             dbContext.Dispatches.Remove (dispatchToremove);
             Unit unitTorestore = dbContext.Units.FirstOrDefault (u => u.UnitId == dispatchToremove.UnitId);
             unitTorestore.IsAvailable = true;
+            unitTorestore.ResponseStatus = "";
             dbContext.SaveChanges ();
             return RedirectToAction ("Dashboard");
         }

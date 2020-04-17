@@ -16,7 +16,7 @@ namespace Dispatch.Models {
         public Unit UnitDispatched { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatdAt { get; set; } = DateTime.Now;
 
     }
 }

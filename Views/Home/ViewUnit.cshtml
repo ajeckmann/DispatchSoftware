@@ -1,7 +1,9 @@
 @model Unit
 
-<div class="row  justify-content-end" style="margin-top: 20px;">
-    <a asp-action="Dashboard" class="btn btn-danger">Back</a>
+<div class="row  justify-content-beginning" style="margin: 30px;">
+    <div class="col offset-5 ">
+            <a asp-action="Dashboard" class=" btn btn-danger btn-lg">Dashboard</a>
+    </div> 
 </div>
 <div class="row justify-content-center">
     <div class="col-3">
@@ -31,38 +33,33 @@
 
         <div class="row justify-content-center">
             <div class="col-12 my-auto text-right">
-                <div class="card card-block  justify-content-center"  style="height:350px;">
+                <div class="card card-block  justify-content-center" >
                     <div class="card-body ">
 
                         <div class="row justify-content-around" style="margin-top: 50px;">
                             <div class="col-3 text-left">
-                                <h2 class="descriptor">Status:</h2>
+                                <h2 class="descriptor">Unit Status:</h2>
                             </div>
                             <div class="col-6 ">
                                 @if (@Model.IsAvailable==true)
                                 {
                                 <h2 class="available">AVAILABLE/IN SERVICE</h2><br>
                                 }
-                                
                                 else if (@Model.IsAvailable==false && @Model.calls.Count==1)
                                 {
-                                    <h2 class="available">ON A CALL</h2><br>
+                                <h2 class="oncall">ON A CALL</h2><br>
                                 }
-                                
 
                                 else if (@Model.IsAvailable==false && @Model.calls.Count==0)
                                 {
                                 <h2 class="occupied">OUT OF SERVICE</h2><br>
                                 }
-                                
+
                             </div>
-
                         </div>
-
-                        <div class="row justify-content-center" style="margin-top: 50px;">
                             @if (@Model.IsAvailable==true)
                             {
-                            <form asp-action="InactivateUnit" asp-route-unitId=@Model.UnitId Controller="Home"
+                            <form asp-action="InactivateUnit" class="text-center asp-route-unitId=@Model.UnitId Controller="Home"
                                 method="post">
 
                                 <input type="submit" value="Take Unit Out Of Service" class="btn btn-outline-danger">
@@ -76,14 +73,61 @@
                                 <input type="submit" value="Place Unit In Service" class="btn btn-outline-success">
                             </form>
                             }
-                            @if (@Model.calls.Count==1 && @Model.IsAvailable==false) 
+                            @if (@Model.calls.Count==1 && @Model.IsAvailable==false)
                             {
-                                <p> 
-                                **Please see Incident Dashboard to remove Unit from call and place in service**</p>
+                            <div class="row justify-content-around">
+                                <div class="col-3 text-left">
+                                    <h2 class="descriptor">Response Status:</h2>
+                                </div>
+                                <div class="col-6">
+                                    <h2>@Model.ResponseStatus</h2>
+                                </div>
+
+                            </div><br>
+                            <div class="row justify-content-between">
+                                <div class="col text-center">
+                                    <form asp-action="EditResponseStatus" asp-route-status="enroute"
+                                        asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+                                        <input type="submit" value="Enroute" class="btn btn-warning">
+                                    </form>
+                                </div>
+                                <div class="col text-center">
+                                    <form asp-action="EditResponseStatus" asp-route-status="on_scene"
+                                        asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+                                        <input type="submit" value="On Scene" class="btn btn-success">
+                                    </form>
+                                </div>
+                                @if (@Model.NumberType=="A" | @Model.NumberType=="M")
+                                        {
+                                        <div class="col text-center">
+                                            <form asp-action="EditResponseStatus" asp-route-status="transport"
+                                                asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+                                                <input type="submit" value="To Hospital" class="btn btn-info">
+                                            </form>
+                                        </div>
+                                        <div class="col text-center">
+                                            <form asp-action="EditResponseStatus" asp-route-status="at_hospital"
+                                                asp-route-unitId=@Model.UnitId Controller="Home" method="post">
+                                                <input type="submit" value="At Hospital" class="btn btn-primary">
+                                            </form>
+                                        </div>
+                                        }
+
+                                @foreach(Dispatchh d in @Model.calls)
+                                {
+    
+                                <div class="col text-center">
+                                    <form asp-action="ConfirmClearFromIncident" 
+                                    
+                                        asp-route-unitId=@Model.UnitId asp-route-incidentId= "@d.DispatchedIncident.IncidentId" method="post">
+                                        <input type="submit" value="Clear Of Incident" class="btn btn-dark">
+                                    </form>
+                                </div>
                             }
-                        </div>
-
-
+                            
+                            </div>
+                        }
+                            
                     </div>
                 </div>
             </div>
@@ -128,8 +172,8 @@
                             </thead>
                         </table>
                         <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
-                                <input class="btn btn-outline-info btn-sm " type="submit" value="View Personnel">
-                            </form>
+                            <input class="btn btn-outline-info btn-sm " type="submit" value="View Personnel">
+                        </form>
                     </div>
 
                 </div>
@@ -148,6 +192,7 @@
 @if (@Model.calls.Count==1)
 {
 <div class="row justify-content-center">
+    <div class="col-6">
     <div class="card active_incident">
         <div class="card-header text-center">
             <h2 class="descriptor">Active Incidents</h2>
@@ -155,13 +200,26 @@
         <div class="card-body">
             @foreach(Dispatchh D in @Model.calls)
             {
-            <h3>Incident #@D.DispatchedIncident.IncidentId; @D.DispatchedIncident.Type at @D.DispatchedIncident.Location
-            </h3>
+            <div class="row">
+                <div class="col-9">
+                        <h3>Incident #@D.DispatchedIncident.IncidentId; @D.DispatchedIncident.Type at @D.DispatchedIncident.Location
+                            </h3>
+                </div>
+                <div class="col-3 text-right">
+                        <span><a class="btn btn-danger" asp-action="ConfirmRemoval" asp-route-incidentId=@D.DispatchedIncident.IncidentId
+                            asp-route-unitId="@Model.UnitId">Remove from Incident</a></span>
+                </div>
+                
 
+
+            </div>
+            
+           
             }
+            
         </div>
     </div>
-
+</div>
 </div>
 }
 
@@ -170,6 +228,9 @@
     .occupied {
         color: red;
 
+    }
+    .oncall{
+        color:orange;
     }
 
     .available {
@@ -188,9 +249,8 @@
     .card {
         background-color: white
     }
-    .active_incident{
-        background-color: yellow;
-    }
 
-  
+    .active_incident {
+        background-color: rgb(252, 252, 163);
+    }
 </style>

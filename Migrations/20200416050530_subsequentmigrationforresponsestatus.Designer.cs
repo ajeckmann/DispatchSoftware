@@ -3,14 +3,16 @@ using System;
 using Dispatch.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dispatch.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    partial class HomeContextModelSnapshot : ModelSnapshot
+    [Migration("20200416050530_subsequentmigrationforresponsestatus")]
+    partial class subsequentmigrationforresponsestatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,7 +136,7 @@ namespace Dispatch.Migrations
                     b.Property<string>("NumberType")
                         .IsRequired();
 
-                    b.Property<string>("ResponseStatus");
+                    b.Property<bool>("ResponseStatus");
 
                     b.Property<string>("UnitType")
                         .IsRequired();
