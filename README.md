@@ -6,7 +6,7 @@ My goal was to create a small-scale dispatching system that could be used by a 9
 
 I determined the needs of this application from my own experience with real dispatching software--namely:
 
-1: The need to store create an incident object in a database and store its information
+1: The need to store incidents (instances of the "Incident" class) in a database
 
 2: The need to determine the appropriate rescue vehicle to dispatch to the incident
 
