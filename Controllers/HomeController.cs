@@ -34,14 +34,14 @@ namespace Dispatch.Controllers {
                     //add the registree to the db
                     dbContext.Users.Add (registree);
 
-                    //save the datase
+                    //save the database
                     dbContext.SaveChanges ();
                     //go back to the login page and make them log in
-                    return RedirectToAction ("Login");
+                    return RedirectToAction ("Index");
                     //make them login again (first time)
                 }
             } else {
-                return View ("Index");
+                return View ("Login");
             }
 
         }
@@ -120,7 +120,7 @@ namespace Dispatch.Controllers {
             ViewBag.OOS = OutOfService;
             return View (Incidents);
         }
-
+        //Navigage to createincident page to complete form/add new incident.
         [HttpPost ("createincident")]
         public IActionResult CreateIncident () {
             User userinDb = LoggedIn ();
@@ -129,6 +129,29 @@ namespace Dispatch.Controllers {
             }
             ViewBag.Dispatcher = LoggedIn ();
             return View ();
+        }
+
+        [HttpGet ("editincident/{incidentId}")]
+        public IActionResult EditIncident (int incidentId) {
+            User userinDb = LoggedIn ();
+            if (userinDb == null) {
+                return RedirectToAction ("Logout");
+            }
+            Incident IncidentToEdit = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == incidentId);
+            ViewBag.Dispatcher = LoggedIn ();
+            return View (IncidentToEdit);
+        }
+
+        [HttpPost ("updateincident/{incidentId}")]
+        public IActionResult UpdateIncident (int incidentId, string location, string description, string type) {
+            Incident IncidentToEdit = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == incidentId);
+            IncidentToEdit.Location = location;
+            IncidentToEdit.Description = description;
+            IncidentToEdit.Type = type;
+            IncidentToEdit.UpdatdAt = DateTime.Now;
+            dbContext.SaveChanges ();
+
+            return RedirectToAction ("Dashboard");
         }
 
         [HttpPost ("createrescuer")]
@@ -141,7 +164,34 @@ namespace Dispatch.Controllers {
             return View ();
         }
 
-        //Add an Incident to DB
+        [HttpGet ("editrescuer/{rescuerId}")]
+        public IActionResult EditRescuer (int rescuerId) {
+            User userinDb = LoggedIn ();
+            if (userinDb == null) {
+                return RedirectToAction ("Logout");
+            }
+            ViewBag.Dispatcher = LoggedIn ();
+            Rescuer RescuerToEdit = dbContext.Rescuers.FirstOrDefault (r => r.RescuerId == rescuerId);
+            return View (RescuerToEdit);
+        }
+
+        [HttpPost ("updaterescuer/{rescuerId}")]
+        public IActionResult UpdateRescuer (int rescuerId, string firstname, string lastname, int age, string rank) {
+            User userinDb = LoggedIn ();
+            if (userinDb == null) {
+                return RedirectToAction ("Logout");
+            }
+
+            Rescuer RescuerToEdit = dbContext.Rescuers.FirstOrDefault (r => r.RescuerId == rescuerId);
+            RescuerToEdit.FirstName = firstname;
+            RescuerToEdit.LastName = lastname;
+            RescuerToEdit.Age = age;
+            RescuerToEdit.Rank = rank;
+            dbContext.SaveChanges ();
+            return RedirectToAction ("ViewRescuer", RescuerToEdit);
+        }
+
+        //Add an Incident to DB. Create new instance of Incident class.
 
         [HttpPost ("addincident")]
         public IActionResult AddIncident (Incident newIncident) {
@@ -165,7 +215,7 @@ namespace Dispatch.Controllers {
 
             }
         }
-
+        //Navigage to createrescuer page to add a rescuer
         [HttpPost ("addrescuer")]
         public IActionResult AddRescuer (Rescuer newRescuer) {
             User userinDb = LoggedIn ();
@@ -183,7 +233,7 @@ namespace Dispatch.Controllers {
                 return View ("CreateRescuer");
             }
         }
-
+        //Navigage to createunit page to add a new unit
         [HttpPost ("createunit")]
         public IActionResult CreateUnit () {
             User userinDb = LoggedIn ();
@@ -194,7 +244,7 @@ namespace Dispatch.Controllers {
             return View ();
 
         }
-
+        //add new object to the Unit class
         [HttpPost ("addunit")]
         public IActionResult AddUnit (Unit newUnit) {
             User userinDb = LoggedIn ();
@@ -202,7 +252,7 @@ namespace Dispatch.Controllers {
                 return RedirectToAction ("Logout");
             }
             if (ModelState.IsValid) {
-                Console.WriteLine ("hi ari");
+
                 dbContext.Add (newUnit);
                 dbContext.SaveChanges ();
                 ViewBag.UserLoggedIn = LoggedIn ();
@@ -210,7 +260,6 @@ namespace Dispatch.Controllers {
 
             } else {
                 ViewBag.Dispatcher = LoggedIn ();
-                Console.WriteLine ("oops, wrong");
                 return RedirectToAction ("CreateUnit");
             }
         }
@@ -481,22 +530,6 @@ namespace Dispatch.Controllers {
             ViewBag.UserLoggedIn = LoggedIn ();
             return View (rescuerToview);
         }
-
-        // [HttpGet("unit/{unitId}")]
-        //     public IActionResult ViewUnit(int unitId)
-        //     {
-
-        //         ViewBag.AvailableUnits=dbContext.Units.Include(u=>u.personnel).ThenInclude(p=>p.RiderAssigned).Where(u=>u.IsAvailable==true);
-
-        //         Unit Unittodisplay=dbContext.Units
-        //         .Include(u=>u.personnel)
-        //         .ThenInclude(a=>a.RiderAssigned)
-        //         .Include(u=>u.calls)
-        //         .ThenInclude(c=>c.DispatchedIncident)
-        //         .FirstOrDefault(u=>u.UnitId==unitId);
-        //         return View(Unittodisplay);
-
-        //     }
 
         public IActionResult Privacy () {
             return View ();

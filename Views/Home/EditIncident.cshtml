@@ -1,27 +1,25 @@
 @model Incident
 
-<div class="container-fluid">
+
     <div class="row  justify-content-between" style="height:100px">
-        <h5>Dispatcher: @ViewBag.Dispatcher.FirstName @ViewBag.Dispatcher.LastName[0]</h5>
+       
         <form asp-action="Dashboard" method="get">
                 <input type="submit" class="btn btn-danger" value= "Cancel" />
         </form>
-        
-
     </div>
 
 
 
-    <h2 class="text-center ">Enter Incident Information Carefully Below</h2><br>
+    <h2 class="text-center ">Edit Incident Informtion</h2><br>
     <div class="row justify-content-center";>
         
-        <form class="col-8 incident_box " asp-action="AddIncident" asp-controller="Home" method="post">
+        <form class="col-8 incident_box " asp-action="UpdateIncident" asp-route-incidentId="@Model.IncidentId" asp-controller="Home" method="post">
 
             <b><span asp-validation-for="Location" offset-3></span></b>
             <div class="form-group row">
                 <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
                 <div class="col">
-                    <input asp-for="Location" class="form-control form-control-lg descriptor_input">
+                    <input asp-for="Location" name="location" class="form-control form-control-lg descriptor_input" >
                 </div>
             </div><br><br>
 
@@ -52,34 +50,22 @@
             </div><br><br>
 
             <span asp-validation-for="Description"></span>
-
-    <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
-            
-
     <div class="form-group row justify-content-between">
 
 
             <label class="col-sm-5 col-form-label incident_descriptor">INCIDENT GENERATED ON:</label>
             <div class="col-sm-7">
-            <h3>@DateTime.Now.ToLongDateString() at @DateTime.Now.ToLongTimeString()</h3><br>
+            <h3>@Model.CreatedAt</h3><br>
         </div>
     </div>
 
         <div class="row justify-content-center">
-                <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit" value="Generate New Incident">
-
+                <input type="hidden" name="incidentId" value="@Model.IncidentId">
+                <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit" value="Update Incident">
         </div>
-
-            
-
-
-
-
-
-
         </form>
     </div>
-</div>
+
 
 <style>
   
