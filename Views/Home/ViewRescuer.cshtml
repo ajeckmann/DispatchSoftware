@@ -12,15 +12,17 @@
 
 
 
-<div class="row justify-content-center">
+<div class="row justify-content-center"style="margin: 50px;">
 
     <h1>Rescuer Details</h1>
 </div>
 <div class="row justify-content-center">
-    <div class="col-12 offset-4">
-        <div class="row justify-content-between">
-            <div class="col-3">
-                <h3>Rescuer ID</h3>
+    <!--Rescuer Info row-->
+    <div class="col-3 offset-1 ">
+        <!--Rescuer Info column-->
+        <div class="row justify-content-around">
+            <div class="col-6 text-left">
+                <h3 class="rescuer_descriptor">Rescuer ID:</h3>
             </div>
             <div class="col-6 text-left">
                 <h3> @Model.RescuerId</h3>
@@ -28,9 +30,9 @@
 
         </div><br>
 
-        <div class="row justify-content-between">
-            <div class="col-3">
-                <h3>Rescuer First Name: </h3>
+        <div class="row justify-content-around">
+            <div class="col-6 text-left">
+                <h3 class="rescuer_descriptor">Rescuer First Name: </h3>
             </div>
             <div class="col-6 text-left">
                 <h3>@Model.FirstName</h3>
@@ -38,20 +40,29 @@
         </div><br>
 
 
-        <div class="row justify-content-between">
-            <div class="col-3">
-                <h3>Rescuer Last Name: </h3>
+        <div class="row justify-content-around">
+            <div class="col-6 text-left">
+                <h3 class="rescuer_descriptor">Rescuer Last Name: </h3>
             </div>
             <div class="col-6 text-left">
                 <h3>@Model.LastName</h3>
             </div>
         </div><Br>
 
+            <div class="row justify-content-around">
+                    <div class="col-6 text-left">
+                        <h3 class="rescuer_descriptor">Rescuer Age: </h3>
+                    </div>
+                    <div class="col-6 text-left">
+                        <h3>@Model.Age</h3>
+                    </div>
+                </div><Br>
 
 
-        <div class="row justify-content-between">
-            <div class="col-3 ">
-                <h3>Rescuer Rank:</h3>
+
+        <div class="row justify-content-around">
+            <div class="col-6 text-left">
+                <h3 class="rescuer_descriptor">Rescuer Rank:</h3>
             </div>
             <div class="col-6 text-left">
                 <h3> @Model.Rank</h3>
@@ -60,56 +71,58 @@
 
         </div><Br>
 
-        <div class="row justify-content-beginning">
+        <div class="row justify-content-around">
             @if(@Model.IsAssigned==false)
             {
-                <div class="col-3">
-                        <h3>Unit Assigned: </h3>
+                <div class="col-6 text-left">
+                        <h3 class="rescuer_descriptor">No Unit Assignment </h3>
                     </div>
-                    <div class="col-3 offset-2 text-center">
-                            <h3>None: </h3>
+                    <div class="col-6 text-left">
+                        <a class="btn btn-info" asp-action="AddRescuerToUnit"
+                        asp-route-rescuerId=@Model.RescuerId>  Assign to Unit</a> 
                         </div>
-                        <div class="col-2 ">
-                                <a class="btn btn-info" asp-action="AddRescuerToUnit"
-                                asp-route-rescuerId=@Model.RescuerId>  Assign to Unit</a> 
-                            </div>
+                        
                         
             }
             @if(@Model.IsAssigned==true)
             
             {
-
                 @foreach(Assignment a in @Model.AssignedUnit)
                 {
-                    <div class="col-3">
-                            <h3>Unit Assigned: </h3>
+                    <div class="col-6 text-left">
+                            <h3 class="rescuer_descriptor">Current Assignment: </h3>
                         </div>
         
                     
-                    <div class="col-3 offset-2 text-center">
+                    <div class="col-3 text-left">
                         <h3>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</h3>
                     </div>
                     
-                <div class="col-2 ">
-                        <a   class="btn btn-success" asp-action="RemoveRescuerFromUnit" asp-route-unitId=@a.UnitAssigned.UnitId
+                <div class="col-3 ">
+                        <a   class="btn btn-warning" asp-action="RemoveRescuerFromUnit" asp-route-unitId=@a.UnitAssigned.UnitId
                             asp-route-rescuerId=@Model.RescuerId>Remove from Unit</a>
                     </div>
                     
+                }
+            }   
+        </div>         
+    </div><!--End Rescuer Info column-->
+    
+</div><!--End Rescuer Info row-->
 
-
-            }
-
-            }
-            
-        </div>
-
-        
-        
-    </div>
+<div class="row justify-content-center">
+    <a class="btn btn-dark btn-sm" asp-action="EditRescuer" asp-route-rescuerId="@Model.RescuerId" style="margin-top: 20px;">Edit Details</a>
 </div>
+
+
+
 <style>
 .container-fluid {
         padding-left: 40px;
         padding-right: 40px;
     }
+.rescuer_descriptor{
+    font-weight: 700;
+    font-size: 175%;
+}
 </style>

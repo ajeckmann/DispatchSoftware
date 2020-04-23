@@ -59,7 +59,7 @@
                         </div>
                             @if (@Model.IsAvailable==true)
                             {
-                            <form asp-action="InactivateUnit" class="text-center asp-route-unitId=@Model.UnitId Controller="Home"
+                            <form asp-action="InactivateUnit" class="text-center" asp-route-unitId=@Model.UnitId Controller="Home"
                                 method="post">
 
                                 <input type="submit" value="Take Unit Out Of Service" class="btn btn-outline-danger">
@@ -67,7 +67,7 @@
                             }
                             @if (@Model.calls.Count==0 && @Model.IsAvailable==false)
                             {
-                            <form asp-action="ActivateUnit" asp-route-unitId=@Model.UnitId Controller="Home"
+                            <form asp-action="ActivateUnit" class="text-center" asp-route-unitId=@Model.UnitId Controller="Home"
                                 method="post">
 
                                 <input type="submit" value="Place Unit In Service" class="btn btn-outline-success">

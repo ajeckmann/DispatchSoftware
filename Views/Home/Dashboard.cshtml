@@ -10,7 +10,7 @@
         <title>Document</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+       
         <script>
             console.log($);
             $(document).ready(function () {
@@ -18,45 +18,34 @@
                 $('h3').click(function () {
                     $('.btn').toggle(2000);
                 });
-
-
-            //     function flashrow() {
-            //         $('.roww').removeClass("active");
-            //         $('.roww').addClass("active");
-            //     }
-            //     setInterval(flashrow, 1200);
-
             });
-
         </script>
+        
         <div class="row justify-content-between">
             <div class="col-3">
-                <h4>Hello, Dispatcher @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
+                <h4>Dispatcher: @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName[0]</h4>
             </div>
             <div class="col-9 text-right">
                 <h5><a asp-action="Logout">Logout</a></h5>
             </div>
         </div>
-
     </head>
 
     <body>
-
         <div class="row justify-content-center" style="margin-top: 70px;">
             <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
                 <input class="btn btn-danger btn-lg" type="submit" value="Create New Incident">
             </form>
         </div><br>
         <div class="row justify-content-center">
-
             <h3>Incidents</h3>
-
         </div>
         <div class="row justify-content-around">
+            
+            @* Column containing "all unit"s" card*@
             <div class="col-2">
                 <div class="row">
                     <div class="card all_units">
-
                         <div class="card-body" style="height: 750px;">
                             <div class="card-header text-center" style="height: 50px;">
                                 <h4>All Units:</h4> &nbsp&nbsp&nbsp&nbsp
@@ -85,25 +74,24 @@
                         </div>
                     </div>
                 </div>
-                
-
             </div>
-            <div class="col-6">
+            @* Col containing incident table *@
+            <div class="col-8">
                 <table class="table table-border-top">ג
                     <thead>
                         <tr>
-                            <th style="vertical-align: top">Incident Status</th>
-                            <th>Incident ID</th>
-                            <th style="vertical-align: top">Incident Location</th>
+                            <th style="vertical-align: top;text-align: center;">Incident Status</th>
+                            <th style="vertical-align: top; text-align: center;">Incident ID</th>
+                            <th style="vertical-align: top; text-align: center;">Incident Location</th>
                             <th>Incident Type</th>
-                            <th>Units Responding (click to remove)</th>
-                            <th style="vertical-align: top">Action</th>
-                            <th style="vertical-align: top">Dispatch</th>
-                            <th>Incident Time/Date</th>
+                            <th style="vertical-align: top; text-align: center;">Notes</th>
+                            <th style="vertical-align: top; text-align: center;">Units Responding (click to remove)</th>
+                            <th style="vertical-align: top; text-align: center;">Action</th>
+                            <th style="vertical-align: top; text-align: center;">Dispatch</th>
+                            <th style="vertical-align: top; text-align: center;">Incident Time/Date</th>
                         </tr>
-
                     </thead>
-                    <!--Incident Table -->
+                    @* Incident Table *@
                     <tbody>
                         @foreach(Incident inc in @Model.OrderByDescending(i=>i.CreatedAt))
                         {
@@ -114,6 +102,7 @@
                             <td>@inc.IncidentId</td>
                             <td>@inc.Location</td>
                             <td>@inc.Type</td>
+                            <td>@inc.Description</td>
                             <td>
 
                             </td>
@@ -126,9 +115,10 @@
                         {
                         <tr class="blinking1">
                             <td class="status_descriptor">AWAITING DISPATCH</td>
-                            <td>@inc.IncidentId</td>
+                            <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
                             <td>@inc.Location</td>
                             <td>@inc.Type</td>
+                            <td>@inc.Description</td>
                             <td class="status_descriptor">
                                 AWAITING DISPATCH
                             </td>
@@ -148,9 +138,10 @@
                         {
                         <tr class="incident_dispatched">
                             <td class="status_descriptor">DISPATCHED</td>
-                            <td>@inc.IncidentId</td>
+                            <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
                             <td>@inc.Location</td>
                             <td>@inc.Type</td>
+                            <td>@inc.Description</td>
                             <td>
                                 @foreach(var u in @inc.dispatchedUnits)
                                 {
@@ -183,9 +174,7 @@
                                     {
                                         <span><a class="clear" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
                                             asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                   
-                                
+                                    }           
                                 }
                             </td>
                             <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
@@ -196,16 +185,14 @@
                                     Incident</a>
                             </td>
                             <td>@inc.CreatedAt</td>
-
-
                         </tr>
                         }
-
-                        }
+                    }
                     </tbody>
                 </table>
             </div>
             <!--end col-->
+            <!-- col containing "available units", "on a call", "out of service" cards-->
             <div class="col-2">
                 <div class="row">
                     <div class="card available" style="height: 350px;">
@@ -239,6 +226,7 @@
                     <div class="card on_call" style="width:100%">
                         <div class="card-header text-center" style="height: 50px;">
                             <h4>On A Call:</h4> &nbsp&nbsp&nbsp&nbsp
+                            <h4>@ViewBag.UnitsOnCall.Count</h4>
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
@@ -248,7 +236,7 @@
                                 {
                                     @if(unit != @ViewBag.UnitsOnCall[@ViewBag.UnitsOnCall.Count-1])
                                     {
-                                        <span><a class="unit_name" asp-action="ViewUnit"
+                                        <span><a class="unit_name " asp-action="ViewUnit"
                                             asp-route-unitId=@unit.UnitId>@unit.NumberType@unit.Number, &nbsp&nbsp
                                         </a></span>
                                     }
@@ -295,39 +283,41 @@
                     </div>
                 </div>
             </div>
-
+             <!-- end col containing "available units", "on a call", "out of service" cards-->
         </div>
+         <!--end 3-col row-->
 
-        </div>
-        <!--end row-->
+
+        <!--begin row with 3 forms: "create rescuer", "create unit", "available personnel"-->
         <div class="form-row justify-content-center ">
             <div class="col-6">
                 <div class="row justify-content-center">
                     <div class="col-2">
 
                         <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Rescuer">
+                            <input class="btn btn-dark btn-sm " type="submit" value="Create New Rescuer">
                         </form>
                     </div>
 
                     <div class="col-2">
                         <form asp-action="CreateUnit" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="Create New Unit">
+                            <input class="btn btn-dark btn-sm " type="submit" value="Create New Unit">
                         </form>
                     </div>
 
                     <div class="col-2">
                         <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-outline-info btn-sm " type="submit" value="View Personnel">
+                            <input class="btn btn-dark btn-sm " type="submit" value="View Personnel">
                         </form>
                     </div>
                 </div>
             </div>
         </div><br>
+        <!--end row with 3 forms: "create rescuer", "create unit", "available personnel"-->
 
 
-        </div>
-        </div>
+
+        
 
 
 
@@ -337,6 +327,7 @@
 
             }
 
+            /*  Incident statuse*/
             .incident_dispatched {
                 background-color: yellow;
             
@@ -345,8 +336,9 @@
                 animation: blinkingText2 1.2s infinite;
                 font-weight:700;
             }
+            /*  Unit statuses while responding*/
             .enroute{
-                color: rgb(233, 193, 16);
+                color: rgb(248, 136, 8);
                 font-weight:700;
             }
             .on_scene{
@@ -368,6 +360,7 @@
                 text-decoration: line-through;
             
             }
+            /*  End Unit statuses while responding*/
 
             .complete {
                 background-color: slategray;
