@@ -107,7 +107,6 @@ namespace Dispatch.Controllers {
             if (userinDB == null) {
                 return RedirectToAction ("Logout");
             }
-
             List<Incident> Incidents = dbContext.Incidents.Include (i => i.dispatchedUnits).ThenInclude (p => p.UnitDispatched).ToList ();
             ViewBag.UserLoggedIn = LoggedIn ();
             List<Unit> AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true).OrderBy (i => i.NumberType).ThenBy (i => i.Number).ToList ();
@@ -118,6 +117,8 @@ namespace Dispatch.Controllers {
             ViewBag.UnitsOnCall = UnitsOnCall;
             List<Unit> OutOfService = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.calls.Count == 0 && u.IsAvailable == false).OrderBy (u => u.NumberType).ThenBy (i => i.Number).ToList ();
             ViewBag.OOS = OutOfService;
+            List<Incident> ActiveIncidents = dbContext.Incidents.Include (i => i.dispatchedUnits).ThenInclude (p => p.UnitDispatched).Where (i => i.IncidentStatus == "awaitingDispatch" | i.IncidentStatus == "dispatched").ToList ();
+            ViewBag.ActiveIncidents = ActiveIncidents;
             return View (Incidents);
         }
         //Navigage to createincident page to complete form/add new incident.
@@ -274,6 +275,7 @@ namespace Dispatch.Controllers {
                 .Include (u => u.calls)
                 .ThenInclude (c => c.DispatchedIncident)
                 .FirstOrDefault (u => u.UnitId == unitId);
+            ViewBag.TimeElapsed = (DateTime.Now - Unittodisplay.CreatedAt).TotalDays;
             return View (Unittodisplay);
 
         }
@@ -358,9 +360,8 @@ namespace Dispatch.Controllers {
         }
 
         [HttpPost ("dispatch")]
-        public IActionResult ProcessDispatch (Dispatchh newDispatch, int unitId)
+        public IActionResult ProcessDispatch (Dispatchh newDispatch, int unitId) {
 
-        {
             User userinDb = LoggedIn ();
             if (userinDb == null) {
                 return RedirectToAction ("Logout");
@@ -370,6 +371,8 @@ namespace Dispatch.Controllers {
             Unit unittoinactivate = dbContext.Units.FirstOrDefault (u => u.UnitId == newDispatch.UnitId);
             unittoinactivate.IsAvailable = false;
             unittoinactivate.ResponseStatus = "Dispatched";
+            Incident incidentToUpdate = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == newDispatch.IncidentId);
+            incidentToUpdate.IncidentStatus = "dispatched";
             dbContext.SaveChanges ();
 
             return RedirectToAction ("Dashboard");
@@ -462,7 +465,6 @@ namespace Dispatch.Controllers {
             Rescuer rescuerToupdate = dbContext.Rescuers.FirstOrDefault (r => r.RescuerId == newAssignment.RescuerId);
             rescuerToupdate.IsAssigned = true;
             dbContext.SaveChanges ();
-            Console.WriteLine ("######$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             Unit UnitToDisplay = newAssignment.UnitAssigned;
             // int unitId= UnitToDisplay.UnitId;
             ViewBag.AvailableRescuers = dbContext.Rescuers
@@ -499,7 +501,7 @@ namespace Dispatch.Controllers {
         {
             //Change Incident Status to InActive
             Incident incidentTocomplete = dbContext.Incidents.FirstOrDefault (i => i.IncidentId == incidentId);
-            incidentTocomplete.IsActive = false;
+            incidentTocomplete.IncidentStatus = "complete";
             dbContext.SaveChanges ();
 
             //Take Every Unit on that incident and change status IsAvailable to true
@@ -508,9 +510,9 @@ namespace Dispatch.Controllers {
                 .Include (u => u.UnitDispatched)
                 .Where (u => u.IncidentId == incidentId).ToList ();
 
-            foreach (var u in @ViewBag.Dispatches) {
-                dbContext.Dispatches.Remove (u);
-                u.UnitDispatched.IsAvailable = true;
+            foreach (var d in @ViewBag.Dispatches) {
+                dbContext.Dispatches.Remove (d);
+                d.UnitDispatched.IsAvailable = true;
                 dbContext.SaveChanges ();
             }
             dbContext.SaveChanges ();

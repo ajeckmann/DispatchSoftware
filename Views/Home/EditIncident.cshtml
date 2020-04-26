@@ -1,97 +1,95 @@
 @model Incident
 
 
-    <div class="row  justify-content-between" style="height:100px">
-       
-        <form asp-action="Dashboard" method="get">
-                <input type="submit" class="btn btn-danger" value= "Cancel" />
-        </form>
-    </div>
+<div class="row  justify-content-between" style="height:100px">
 
+    <form asp-action="Dashboard" method="get">
+        <input type="submit" class="btn btn-danger" value="Cancel" />
+    </form>
+</div>
+<h2 class="text-center ">Edit Incident Informtion</h2><br>
+<div class="row justify-content-center" ;>
 
-
-    <h2 class="text-center ">Edit Incident Informtion</h2><br>
-    <div class="row justify-content-center";>
-        
-        <form class="col-8 incident_box " asp-action="UpdateIncident" asp-route-incidentId="@Model.IncidentId" asp-controller="Home" method="post">
-
-            <b><span asp-validation-for="Location" offset-3></span></b>
-            <div class="form-group row">
-                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
-                <div class="col">
-                    <input asp-for="Location" name="location" class="form-control form-control-lg descriptor_input" >
-                </div>
-            </div><br><br>
-
-            <span asp-validation-for="Description"></span>
-
-            <div class="form-group row justify-content-between">
-                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: (inquire # of patients, gender, age) </label>
-                
-            
-            <div class="col-md-7">
-                    <textarea asp-for="Description" class="form-control descriptor_input" rows="4"></textarea><br>
+    <form class="col-8 incident_box " asp-action="UpdateIncident" asp-route-incidentId="@Model.IncidentId"
+        asp-controller="Home" method="post">
+        <b><span asp-validation-for="Location" offset-3></span></b>
+        <div class="form-group row">
+            <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
+            <div class="col">
+                <input asp-for="Location" name="location" class="form-control form-control-lg descriptor_input">
             </div>
-            
         </div><br><br>
 
-            <span asp-validation-for="Type"></span>
+        <span asp-validation-for="Description"></span>
 
-            <div class="form-group row justify-content-between">
-                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Type">INCIDENT TYPE:</label>
-                <div class="col-sm-7">
-                    <select class="form-control form-control-lg descriptor_input" asp-for="Type">
-                        <option value="Medical-BLS">Medical-BLS</option>
-                        <option value="Medical-ALS">Medical-ALS</option>
-                        <option value="Fire">Fire</option>
-                        <option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
-                    </select>
-                </div>
-            </div><br><br>
+        <div class="form-group row justify-content-between">
+            <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: (inquire # of
+                patients, gender, age) </label>
 
-            <span asp-validation-for="Description"></span>
-    <div class="form-group row justify-content-between">
 
+            <div class="col-md-7">
+                <textarea asp-for="Description" class="form-control descriptor_input" rows="4"></textarea><br>
+            </div>
+
+        </div><br><br>
+
+        <span asp-validation-for="Type"></span>
+
+        <div class="form-group row justify-content-between">
+            <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Type">INCIDENT TYPE:</label>
+            <div class="col-sm-7">
+                <select class="form-control form-control-lg descriptor_input" asp-for="Type">
+                    <option value="Medical-BLS">Medical-BLS</option>
+                    <option value="Medical-ALS">Medical-ALS</option>
+                    <option value="Fire">Fire</option>
+                    <option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+                </select>
+            </div>
+        </div><br><br>
+
+        <span asp-validation-for="Description"></span>
+        <div class="form-group row justify-content-between">
 
             <label class="col-sm-5 col-form-label incident_descriptor">INCIDENT GENERATED ON:</label>
             <div class="col-sm-7">
-            <h3>@Model.CreatedAt</h3><br>
+                <h3>@Model.CreatedAt</h3><br>
+            </div>
         </div>
-    </div>
-
         <div class="row justify-content-center">
-                <input type="hidden" name="incidentId" value="@Model.IncidentId">
-                <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit" value="Update Incident">
+            <input type="hidden" name="incidentId" value="@Model.IncidentId">
+            <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit"
+                value="Update Incident">
         </div>
-        </form>
-    </div>
+    </form>
+</div>
 
 
 <style>
-  
-  h2{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  .incident_descriptor{
-        color:rgb(253, 4, 4);
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size:175%;
-        font-weight: 600;
-  }
-    .descriptor_input{
-        border:red solid 2px;
-        
+    h2 {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 
-.container-fluid{
-    margin-top: 20px;
-     padding-right: 20px;
-padding-left: 20px;
-            
-}
+    .incident_descriptor {
+        color: rgb(253, 4, 4);
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 175%;
+        font-weight: 600;
+    }
 
-.incident_box{
-    border: solid black 4px;
-    padding: 30px;
-}
+    .descriptor_input {
+        border: red solid 2px;
+
+    }
+
+    .container-fluid {
+        margin-top: 20px;
+        padding-right: 20px;
+        padding-left: 20px;
+
+    }
+
+    .incident_box {
+        border: solid black 4px;
+        padding: 30px;
+    }
 </style>
