@@ -4,10 +4,6 @@
     <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
        
@@ -20,7 +16,8 @@
                 });
             });
         </script>
-        
+        </head>
+    <body> 
         <div class="row justify-content-between">
             <div class="col-3">
                 <h4>Dispatcher: @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName[0]</h4>
@@ -29,17 +26,23 @@
                 <h5><a asp-action="Logout">Logout</a></h5>
             </div>
         </div>
-    </head>
+        <div class="row justify-content-center">
+            <h1 class="active_incident_header"># Active Incidents:<span style="font-size: 150%; font-weight: 600;"> @ViewBag.ActiveIncidents.Count</span> </h1>
+        </div>
+    
 
-    <body>
+    
         <div class="row justify-content-center" style="margin-top: 70px;">
             <form asp-action="CreateIncident" asp-controller="Home" asp-method="post">
                 <input class="btn btn-danger btn-lg" type="submit" value="Create New Incident">
             </form>
         </div><br>
         <div class="row justify-content-center">
-            <h3>Incidents</h3>
+            <h3>All Incidents</h3>
         </div>
+        
+            
+        
         <div class="row justify-content-around">
             
             @* Column containing "all unit"s" card*@
@@ -75,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            @* Col containing incident table *@
+            <!--Col containing incident table -->
             <div class="col-8">
                 <table class="table table-border-top">ג
                     <thead>
@@ -95,99 +98,128 @@
                     <tbody>
                         @foreach(Incident inc in @Model.OrderByDescending(i=>i.CreatedAt))
                         {
-                        @if(@inc.IsActive==false)
-                        {
-                        <tr class="complete">
-                            <td>COMPLETE</td>
-                            <td>@inc.IncidentId</td>
-                            <td>@inc.Location</td>
-                            <td>@inc.Type</td>
-                            <td>@inc.Description</td>
-                            <td>
-
-                            </td>
-                            <td>Incident Complete-No Action Possible</td>
-                            <td>Cannot Add Units</td>
-                            <td>@inc.CreatedAt</td>
-                        </tr>
-                        }
-                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()==0)
-                        {
-                        <tr class="blinking1">
-                            <td class="status_descriptor">AWAITING DISPATCH</td>
-                            <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
-                            <td>@inc.Location</td>
-                            <td>@inc.Type</td>
-                            <td>@inc.Description</td>
-                            <td class="status_descriptor">
-                                AWAITING DISPATCH
-                            </td>
-                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
-                                    Incident
-                                    Complete</a>
-                            </td>
-                            <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
-                                    Incident</a>
-                            </td>
-                            <td>@inc.CreatedAt</td>
+                         <!--Different Cases for incidents-->
+                            
+                            if(@inc.IncidentStatus=="awaitingDispatch")
+                            {
+                            <tr class="blinking1">
+                                <td class="status_descriptor">AWAITING DISPATCH</td>
+                                <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
+                                <td>@inc.Location</td>
+                                <td>@inc.Type</td>
+                                <td>@inc.Description</td>
+                                <td class="status_descriptor">
+                                    AWAITING DISPATCH
+                                </td>
+                                <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
+                                        Incident
+                                        Complete</a>
+                                </td>
+                                <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
+                                        Incident</a>
+                                </td>
+                                <td>@inc.CreatedAt</td>
 
 
-                        </tr>
+                            </tr>
+                            }
+                            
+                            else if(@inc.IncidentStatus=="dispatched" && @inc.dispatchedUnits.Count==0)
+                            {
+                            <tr class="incident_dispatched">
+                                <td class="status_descriptor">DISPATCHED</td>
+                                <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
+                                <td>@inc.Location</td>
+                                <td>@inc.Type</td>
+                                <td>@inc.Description</td>
+                                <td>
+                                    No Units Remaining. Mark Incident Complete 
+                                </td>
+                                <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
+                                        Incident
+                                        Complete</a>
+                                </td>
+                                <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
+                                        Incident</a>
+                                </td>
+                                <td>@inc.CreatedAt</td>
+                            </tr>
+                            }
+                            
+                            else if(@inc.IncidentStatus=="dispatched" && @inc.dispatchedUnits.Count>0)
+                            {
+                            <tr class="incident_dispatched">
+                                <td class="status_descriptor">DISPATCHED</td>
+                                <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
+                                <td>@inc.Location</td>
+                                <td>@inc.Type</td>
+                                <td>@inc.Description</td>
+                                <td>
+                                    @foreach(var u in @inc.dispatchedUnits)
+                                    {
+                                        @if(@u.UnitDispatched.ResponseStatus=="Dispatched")
+                                        {
+                                            <span><a class="unit_dispatched" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }
+                                        @if(@u.UnitDispatched.ResponseStatus=="Enroute")
+                                        {
+                                            <span><a class="enroute" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }
+                                        @if(@u.UnitDispatched.ResponseStatus=="On The Scene")
+                                        {
+                                            <span><a class="on_scene" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }
+                                        @if(@u.UnitDispatched.ResponseStatus=="Enroute To Hospital")
+                                        {
+                                            <span><a class="to_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }
+                                        @if(@u.UnitDispatched.ResponseStatus=="At the Hospital")
+                                        {
+                                            <span><a class="at_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }
+                                        @if(@u.UnitDispatched.ResponseStatus=="Clear of Incident")
+                                        {
+                                            <span><a class="clear" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                        }           
+                                    }
+                                </td>
+                                <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
+                                        Incident
+                                        Complete</a>
+                                </td>
+                                <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
+                                        Incident</a>
+                                </td>
+                                <td>@inc.CreatedAt</td>
+                            </tr>
+                            } 
+
+                            @if(@inc.IncidentStatus=="complete")
+                            {
+                            <tr class="complete">
+                                <td>COMPLETE</td>
+                                <td>@inc.IncidentId</td>
+                                <td>@inc.Location</td>
+                                <td>@inc.Type</td>
+                                <td>@inc.Description</td>
+                                <td>
+
+                                </td>
+                                <td>Incident Complete-No Action Possible</td>
+                                <td>Cannot Add Units</td>
+                                <td>@inc.CreatedAt</td>
+                            </tr>
+                            }
+
+
+                       
                         }
-                        else if(@inc.IsActive==true && inc.dispatchedUnits.Count()!=0)
-                        {
-                        <tr class="incident_dispatched">
-                            <td class="status_descriptor">DISPATCHED</td>
-                            <td><a asp-action="EditIncident" asp-route-incidentId="@inc.IncidentId">@inc.IncidentId</a></td>
-                            <td>@inc.Location</td>
-                            <td>@inc.Type</td>
-                            <td>@inc.Description</td>
-                            <td>
-                                @foreach(var u in @inc.dispatchedUnits)
-                                {
-                                    @if(@u.UnitDispatched.ResponseStatus=="Dispatched")
-                                    {
-                                        <span><a class="unit_dispatched" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                    @if(@u.UnitDispatched.ResponseStatus=="Enroute")
-                                    {
-                                        <span><a class="enroute" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                    @if(@u.UnitDispatched.ResponseStatus=="On The Scene")
-                                    {
-                                        <span><a class="on_scene" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                    @if(@u.UnitDispatched.ResponseStatus=="Enroute To Hospital")
-                                    {
-                                        <span><a class="to_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                    @if(@u.UnitDispatched.ResponseStatus=="At the Hospital")
-                                    {
-                                        <span><a class="at_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }
-                                    @if(@u.UnitDispatched.ResponseStatus=="Clear of Incident")
-                                    {
-                                        <span><a class="clear" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                            asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
-                                    }           
-                                }
-                            </td>
-                            <td><a asp-action="ConfirmCompleteIncident" asp-route-incidentId="@inc.IncidentId">Mark
-                                    Incident
-                                    Complete</a>
-                            </td>
-                            <td><a asp-action="AddUnitToIncident" asp-route-incidentId="@inc.IncidentId">Add Units to
-                                    Incident</a>
-                            </td>
-                            <td>@inc.CreatedAt</td>
-                        </tr>
-                        }
-                    }
                     </tbody>
                 </table>
             </div>
@@ -197,7 +229,7 @@
                 <div class="row">
                     <div class="card available" style="height: 350px;">
                         <div class="card-header text-center" style="height: 50px;">
-                            <h4>Available Units:</h4> &nbsp&nbsp&nbsp&nbsp
+                            <h4>Available Units: (@ViewBag.AvailableUnits.Count)</h4> &nbsp&nbsp&nbsp&nbsp
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
@@ -225,8 +257,8 @@
                 <div class="row">
                     <div class="card on_call" style="width:100%">
                         <div class="card-header text-center" style="height: 50px;">
-                            <h4>On A Call:</h4> &nbsp&nbsp&nbsp&nbsp
-                            <h4>@ViewBag.UnitsOnCall.Count</h4>
+                            <h4>On A Call: (@ViewBag.UnitsOnCall.Count)</h4> 
+                            
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
@@ -256,7 +288,7 @@
                 <div class="row">
                     <div class="card " style="width:100%; height:150px;">
                         <div class="card-header text-center" style="height: 50px;">
-                            <h4>Out of Service:</h4>
+                            <h4>Out of Service: (@ViewBag.OOS.Count)</h4>
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-center">
@@ -315,6 +347,8 @@
         </div><br>
         <!--end row with 3 forms: "create rescuer", "create unit", "available personnel"-->
 
+       
+
 
 
         
@@ -322,6 +356,12 @@
 
 
         <style type="text/css">
+
+            .active_incident_header{
+                border: 3px solid black;
+                padding: 10px;
+                color: blue;
+            }
             .incident_active {
                 background-color: rgb(196, 88, 88);
 

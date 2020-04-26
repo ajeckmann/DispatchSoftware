@@ -11,6 +11,9 @@ namespace Dispatch.Models {
         [Required (ErrorMessage = "Must Include Location")]
         public string Location { get; set; }
 
+        [Required (ErrorMessage = "Must Include Description")]
+        public String Description { get; set; }
+
         [Required (ErrorMessage = "Must Include Type")]
         public string Type { get; set; }
         public int UserId { get; set; }
@@ -19,11 +22,10 @@ namespace Dispatch.Models {
         public List<Dispatchh> dispatchedUnits { get; set; }
         public User Dispatcher { get; set; }
 
-        [Required (ErrorMessage = "Must Include Description")]
-        public String Description { get; set; }
-
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatdAt { get; set; } = DateTime.Now;
+
+        public String IncidentStatus { get; set; } = "awaitingDispatch";
 
         //incident is always "active" after being created (IsActive=true by default)
 

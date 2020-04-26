@@ -1,7 +1,7 @@
 @model Rescuer
 
-<div class="row justify-content-end" style="margin-top: 20px;">   
-    <form  class="text-right" asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
+<div class="row justify-content-end" style="margin-top: 20px;">
+    <form class="text-right" asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
         <input class="btn btn-outline-info btn-sm " type="submit" value="Back to Available Personnel">
     </form><br>
 </div>
@@ -45,26 +45,29 @@
 
                 <label class="col-sm-2 col-form-label Rescuer_Info" asp-for="Rank">Rank: </label>
                 <div class="col-6">
-                    <select asp-for="Rank" class="form-control col-3"  style="vertical-align: top">
+                    <select asp-for="Rank" class="form-control col-3" style="vertical-align: top">
 
                         <option>EMT-B</option>
                         <option>Paramedic</option>
                         <option>FirefighterI</option>
                         <option>FirefighterII</option>
                         <option>Lieutenant</option>
-                        
+
                     </select>
                 </div>
 
             </div>
-
+            <input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
+            <div class="row justify-content-beginning" style="margin-top: 30px;">
+                <div class="col offset-2">
+                    <input class="btn btn-outline-dark" type="submit" value="Create Rescuer">
+                </div>
+                
+            </div>
+        </form>
     </div>
 </div>
-<input asp-for="UserId" type="hidden" value="@ViewBag.Dispatcher.UserId">
-<div class="row justify-content-center" style="margin-top: 30px;">
-    <input class="btn btn-outline-dark" type="submit" value="Create Rescuer">
-</div>
-</form>
+
 
 
 <style>
