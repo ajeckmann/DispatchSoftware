@@ -1,7 +1,7 @@
 @model List<Rescuer>
 
     <div class="row  justify-content-between" style="margin-top: 20px;">
-        <h5>Dispatcher: @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
+        <h5>Dispatcher: @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName[0]</h5>
         <form asp-action="Dashboard" method="get">
             <input type="submit" class="btn btn-danger" value="Cancel" />
         </form>
@@ -16,10 +16,71 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col">
-                    <table class="table">
+                    <table class="table table-bordered">
 
                         <thead>
                             <tr className="incident_row">
+                                <th style="vertical-align: top;text-align: center;">Last Name</th>
+                                <th style="vertical-align: top;text-align: center;">First Name</th>
+                                <th style="vertical-align: top;text-align: center;">Age</th>
+                                <th style="vertical-align: top;text-align: center;">Rank</th>
+                                <th style="vertical-align: top;text-align: center;">Status</th>
+                                <th style="vertical-align: top;text-align: center;">Units Assigned To</th>
+                                <th style="vertical-align: top;text-align: center;">User Profile</th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach(var resc in @ViewBag.AvailableRescuers)
+                            {
+
+
+                            <tr class="@(resc.Rank  == " EMT-B"? "emt" : resc.Rank=="Paramedic" ? "paramedic" :
+                                resc.Rank=="FirefighterI" ? "ff1" : resc.Rank=="FirefighterII" ? "ff2" :
+                                resc.Rank=="Lieutenant" ? "lieutenant" : "" )">
+
+                                <td>@resc.LastName</td>
+                                <td>@resc.FirstName</td>
+                                <td>@resc.Age</td>
+                                <td>@resc.Rank</td>
+                                @if(@resc.IsAssigned==true)
+                                {
+                                <td>ASSIGNED TO UNIT</td>
+                                }
+                                else
+                                {
+                                <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
+                                        Assignment</a></td>
+                                }
+                                <td>None</td>
+                                <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row justify-content-center">
+                        <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
+                            <input class="btn btn-outline-info btn-sm" type="submit" value="Add New Rescuer">
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-------End of Avaialble Personnel---->
+        <div class="col-4">
+            <div class="row justify-content-center">
+                <h1>All Personnel</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
                                 <th>Last Name</th>
                                 <th>First Name</th>
                                 <th>Age</th>
@@ -27,73 +88,14 @@
                                 <th>Status</th>
                                 <th>Units Assigned To</th>
                                 <th>User Profile</th>
-
                             </tr>
-
                         </thead>
-                        @foreach(var resc in @ViewBag.AvailableRescuers)
-                        {
-                        <tr>
-                            <td>@resc.LastName</td>
-                            <td>@resc.FirstName</td>
-                            <td>@resc.Age</td>
-                            <td>@resc.Rank</td>
-
-                            @if(@resc.IsAssigned==true)
-                            {
-                            <td>ASSIGNED TO UNIT</td>
-
-                            }
-                            else
-                            {
-                            <td><a asp-action="AddRescuerToUnit" asp-route-rescuerId=@resc.RescuerId>Available for
-                                    Assignment</a></td>
-                            }
-
-
-                            <td>None</td>
-
-                            <td><a asp-action="ViewRescuer" asp-route-rescuerId=@resc.RescuerId>Rescuer Profile</a></td>
-
-                        </tr>
-                        }
-                    </table>
-                    <div class="row justify-content-center">
-                            <form asp-action="CreateRescuer" asp-controller="Home" asp-method="post">
-                                <input class="btn btn-outline-info btn-sm" type="submit" value="Add New Rescuer">
-                            </form>
-                </div>
-
-
-                
-                </div>
-            </div>
-        </div>
-            <!-------End of Avaialble Personnel---->
-            <div class="col-4">
-                <div class="row justify-content-center">
-                    <h1>All Personnel</h1>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <table class="table">
-
-                            <thead>
-                                <tr>
-                                    <th>Last Name</th>
-                                    <th>First Name</th>
-                                    <th>Age</th>
-                                    <th>Rank</th>
-                                    <th>Status</th>
-                                    <th>Units Assigned To</th>
-                                    <th>User Profile</th>
-
-                                </tr>
-
-                            </thead>
+                        <tbody>
                             @foreach(var resc in @ViewBag.AllRescuers)
                             {
-                            <tr>
+                            <tr class="@(resc.Rank  == " EMT-B"? "emt" : resc.Rank=="Paramedic" ? "paramedic" :
+                                resc.Rank=="FirefighterI" ? "ff1" : resc.Rank=="FirefighterII" ? "ff2" :
+                                resc.Rank=="Lieutenant" ? "lieutenant" : "" )">
                                 <td>@resc.LastName</td>
                                 <td>@resc.FirstName</td>
                                 <td>@resc.Age</td>
@@ -102,7 +104,6 @@
                                 @if(@resc.IsAssigned==true)
                                 {
                                 <td>ASSIGNED TO UNIT</td>
-
                                 }
                                 else
                                 {
@@ -111,11 +112,10 @@
                                 }
                                 @if(@resc.IsAssigned==true)
                                 {
-                                @foreach(Assignment a in @resc.AssignedUnit)
-                                {
-                                <td>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</td>
-                                }
-
+                                    @foreach(Assignment a in @resc.AssignedUnit)
+                                    {
+                                    <td>@a.UnitAssigned.NumberType@a.UnitAssigned.Number</td>
+                                    }
                                 }
                                 else
                                 {
@@ -126,10 +126,11 @@
 
                             </tr>
                             }
-                    </div>
+                        </tbody>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <style>
@@ -137,10 +138,33 @@
             padding-left: 40px;
             padding-right: 40px;
         }
-        .available{
+
+        .available {
             color: green;
         }
-        h1{
+
+        h1 {
             color: black;
+        }
+
+        .emt {
+            background-color: lightblue;
+        }
+
+        .paramedic {
+            background-color: gold;
+        }
+
+        .ff1 {
+            background-color: rgb(236, 93, 93);
+        }
+
+        .ff2 {
+            background-color: darkorange;
+
+        }
+
+        .lieutenant {
+            background-color: white;
         }
     </style>

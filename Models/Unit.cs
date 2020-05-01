@@ -18,6 +18,11 @@ namespace Dispatch.Models {
         [Required (ErrorMessage = "Must include Unit Capacity")]
         public string UnitType { get; set; }
 
+        //unit is always active by default after being created(IsActive==true)
+        public Boolean IsAvailable { get; set; } = true;
+
+        public string ResponseStatus { get; set; }
+
         //navigation property to refer to association between rescuer and unit
         public List<Assignment> personnel { get; set; }
 
@@ -30,11 +35,6 @@ namespace Dispatch.Models {
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
-        //unit is always active by default after being created(IsActive==true)
-        public Boolean IsAvailable { get; set; } = true;
-
-        public string ResponseStatus { get; set; }
 
     }
 }

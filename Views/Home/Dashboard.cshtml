@@ -86,7 +86,7 @@
                             <th style="vertical-align: top;text-align: center;">Incident Status</th>
                             <th style="vertical-align: top; text-align: center;">Incident ID</th>
                             <th style="vertical-align: top; text-align: center;">Incident Location</th>
-                            <th>Incident Type</th>
+                            <th style="vertical-align: top;text-align: center;">Incident Type</th>
                             <th style="vertical-align: top; text-align: center;">Notes</th>
                             <th style="vertical-align: top; text-align: center;">Units Responding (click to remove)</th>
                             <th style="vertical-align: top; text-align: center;">Action</th>
@@ -155,37 +155,37 @@
                                 <td>@inc.Type</td>
                                 <td>@inc.Description</td>
                                 <td>
-                                    @foreach(var u in @inc.dispatchedUnits)
+                                    @foreach(var d in @inc.dispatchedUnits)
                                     {
-                                        @if(@u.UnitDispatched.ResponseStatus=="Dispatched")
+                                        @if(@d.UnitDispatched.ResponseStatus=="Dispatched")
                                         {
                                             <span><a class="unit_dispatched" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }
-                                        @if(@u.UnitDispatched.ResponseStatus=="Enroute")
+                                        @if(@d.UnitDispatched.ResponseStatus=="Enroute")
                                         {
-                                            <span><a class="enroute" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                            <span><a  asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }
-                                        @if(@u.UnitDispatched.ResponseStatus=="On The Scene")
+                                        @if(@d.UnitDispatched.ResponseStatus=="On The Scene")
                                         {
                                             <span><a class="on_scene" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }
-                                        @if(@u.UnitDispatched.ResponseStatus=="Enroute To Hospital")
+                                        @if(@d.UnitDispatched.ResponseStatus=="Enroute To Hospital")
                                         {
                                             <span><a class="to_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }
-                                        @if(@u.UnitDispatched.ResponseStatus=="At the Hospital")
+                                        @if(@d.UnitDispatched.ResponseStatus=="At the Hospital")
                                         {
                                             <span><a class="at_hospital" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }
-                                        @if(@u.UnitDispatched.ResponseStatus=="Clear of Incident")
+                                        @if(@d.UnitDispatched.ResponseStatus=="Clear of Incident")
                                         {
                                             <span><a class="clear" asp-action="ViewUnit" asp-route-incidentId=@inc.IncidentId
-                                                asp-route-unitId="@u.UnitDispatched.UnitId">@u.UnitDispatched.NumberType@u.UnitDispatched.Number</a></span>
+                                                asp-route-unitId="@d.UnitDispatched.UnitId">@d.UnitDispatched.NumberType@d.UnitDispatched.Number</a></span>
                                         }           
                                     }
                                 </td>
@@ -338,9 +338,7 @@
                     </div>
 
                     <div class="col-2">
-                        <form asp-action="AvailablePersonnel" asp-controller="Home" asp-method="post">
-                            <input class="btn btn-dark btn-sm " type="submit" value="View Personnel">
-                        </form>
+                        <a class="btn btn-dark btn-sm" asp-action="AvailablePersonnel" asp-controller="Home">Available Personnel</a>
                     </div>
                 </div>
             </div>
@@ -421,7 +419,7 @@
                 font-weight: 700
             }
 
-            @@keyframes blinkingText1 {
+             @@keyframes blinkingText1 {
                 0% {
                     background-color: red;
                 }

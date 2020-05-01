@@ -9,14 +9,10 @@
         
 
     </div>
-
-
-
     <h2 class="text-center ">Enter Incident Information Carefully Below</h2><br>
     <div class="row justify-content-center";>
         
         <form class="col-8 incident_box " asp-action="AddIncident" asp-controller="Home" method="post">
-
             <b><span asp-validation-for="Location" offset-3></span></b>
             <div class="form-group row">
                 <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Location">INCIDENT LOCATION: </label>
@@ -26,15 +22,11 @@
             </div><br><br>
 
             <span asp-validation-for="Description"></span>
-
             <div class="form-group row justify-content-between">
-                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: (inquire # of patients, gender, age) </label>
-                
-            
+                <label class="col-sm-5 col-form-label incident_descriptor" asp-for="Description">NOTES: (inquire # of patients, gender, age) </label>    
             <div class="col-md-7">
                     <textarea asp-for="Description" class="form-control descriptor_input" rows="4"></textarea><br>
-            </div>
-            
+            </div>      
         </div><br><br>
 
             <span asp-validation-for="Type"></span>
@@ -57,26 +49,14 @@
             
 
     <div class="form-group row justify-content-between">
-
-
             <label class="col-sm-5 col-form-label incident_descriptor">INCIDENT GENERATED ON:</label>
             <div class="col-sm-7">
             <h3>@DateTime.Now.ToLongDateString() at @DateTime.Now.ToLongTimeString()</h3><br>
         </div>
     </div>
-
         <div class="row justify-content-center">
                 <input class="btn btn-warning text-center btn-lg" style="font-weight: 700;" type="submit" value="Generate New Incident">
-
         </div>
-
-            
-
-
-
-
-
-
         </form>
     </div>
 </div>

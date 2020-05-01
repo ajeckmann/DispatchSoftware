@@ -121,7 +121,7 @@ namespace Dispatch.Controllers {
             ViewBag.ActiveIncidents = ActiveIncidents;
             return View (Incidents);
         }
-        //Navigage to createincident page to complete form/add new incident.
+        //Navigate to createincident page to complete form/add new incident.
         [HttpPost ("createincident")]
         public IActionResult CreateIncident () {
             User userinDb = LoggedIn ();
@@ -205,7 +205,6 @@ namespace Dispatch.Controllers {
                 dbContext.SaveChanges ();
                 List<Incident> Incidents = dbContext.Incidents.Include (i => i.dispatchedUnits).ThenInclude (p => p.UnitDispatched).ToList ();
                 ViewBag.UserLoggedIn = LoggedIn ();
-                newIncident.IsActive = true;
                 ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
                 ViewBag.AllUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned);
                 return RedirectToAction ("Dashboard", Incidents);
@@ -227,7 +226,7 @@ namespace Dispatch.Controllers {
                 dbContext.Add (newRescuer);
                 dbContext.SaveChanges ();
                 ViewBag.UserLoggedIn = LoggedIn ();
-                return RedirectToAction ("Dashboard");
+                return RedirectToAction ("AvailablePersonnel");
 
             } else {
                 ViewBag.Dispatcher = LoggedIn ();
@@ -310,7 +309,6 @@ namespace Dispatch.Controllers {
 
         [HttpPost ("editresponsestatus/{unitId}/{status}")]
         public IActionResult EditResponseStatus (int unitId, string status) {
-            Console.WriteLine ("is this working???");
             Unit unitToEdit = dbContext.Units.FirstOrDefault (u => u.UnitId == unitId);
             if (status == "enroute") {
                 unitToEdit.ResponseStatus = "Enroute";
@@ -336,17 +334,29 @@ namespace Dispatch.Controllers {
         }
 
         [HttpGet ("addunittoincident")]
-        public IActionResult AddUnitToIncident (int incidentId)
-
-        {
+        public IActionResult AddUnitToIncident (int incidentId) {
             ViewBag.Dispatcher = LoggedIn ();
-            ViewBag.AvailableUnits = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
-            ViewBag.AvailableAmbulances = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "A");
-            ViewBag.AvailableMedics = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "M");
-            ViewBag.AvailableEngines = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "E");
-            ViewBag.AvailableTrucks = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "T");
-            ViewBag.AvailableRescueSquads = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "RS");
-            ViewBag.IncidentToEdit = dbContext.Incidents.Include (i => i.dispatchedUnits).ThenInclude (p => p.UnitDispatched).FirstOrDefault (i => i.IncidentId == incidentId);
+            ViewBag.AvailableUnits = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true);
+            ViewBag.AvailableAmbulances = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "A");
+            ViewBag.AvailableMedics = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "M");
+            ViewBag.AvailableEngines = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "E");
+            ViewBag.AvailableTrucks = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "T");
+            ViewBag.AvailableRescueSquads = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.IsAvailable == true && u.NumberType == "RS");
+            ViewBag.IncidentToEdit = dbContext.Incidents
+                .Include (i => i.dispatchedUnits)
+                .ThenInclude (p => p.UnitDispatched).FirstOrDefault (i => i.IncidentId == incidentId);
 
             return View ();
         }
@@ -420,7 +430,7 @@ namespace Dispatch.Controllers {
             return RedirectToAction ("Dashboard");
         }
 
-        [HttpPost ("availablepersonnel")]
+        [HttpGet ("availablepersonnel")]
         public IActionResult AvailablePersonnel () {
             User userinDb = LoggedIn ();
             if (userinDb == null) {
@@ -446,11 +456,20 @@ namespace Dispatch.Controllers {
         [HttpGet ("AddRescuer/{rescuerId}")]
         public IActionResult AddRescuerToUnit (int rescuerId) {
 
-            ViewBag.Ambulances = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "A");
-            ViewBag.Medics = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "M");
-            ViewBag.Engines = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "E");
-            ViewBag.Trucks = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "T");
-            ViewBag.RescueSquads = dbContext.Units.Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "RS");
+            ViewBag.Ambulances = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "A");
+            ViewBag.Medics = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "M");
+            ViewBag.Engines = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "E");
+            ViewBag.Trucks = dbContext.Units
+                .Include (u => u.personnel).ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "T");
+            ViewBag.RescueSquads = dbContext.Units
+                .Include (u => u.personnel)
+                .ThenInclude (p => p.RiderAssigned).Where (u => u.NumberType == "RS");
             ViewBag.RescuerToAdd = dbContext.Rescuers.FirstOrDefault (r => r.RescuerId == rescuerId);
             return View ();
         }

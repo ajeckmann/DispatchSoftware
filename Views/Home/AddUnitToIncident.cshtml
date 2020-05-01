@@ -113,7 +113,7 @@
 
 
             <div class="col-sm-4">
-                <!--ambulance column-->
+                <!--ambulance column/card-->
                 <div class="card ambulance_background">
                     <div class="card-header text-center">
                         <h4>Available Ambulances: </h4>
@@ -131,7 +131,7 @@
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
                                 asp-route-unitId="@a.UnitId">@a.NumberType@a.Number, </a></span>
 
-                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                        
                         }
 
 
@@ -145,7 +145,7 @@
             <!--end col-->
 
             <div class="col-sm-4">
-                <!--Medic Column-->
+                <!--Medic Column/card-->
                 <div class="card medic_background">
                     <div class="card-header text-center">
                         <h4>Available Medics</h4>
@@ -155,12 +155,9 @@
                     <div class="card-body text-center">
                         @foreach(Unit a in @ViewBag.AvailableMedics)
                         {
-
                         <span><a class="unit" asp-action="Confirm"
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
-                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
-
-                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number,</a></span> 
                         }
 
 
@@ -188,9 +185,8 @@
 
                         <span><a class="unit" asp-action="Confirm"
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
-                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
-
-                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number,</a></span>
+                        
                         }
 
 
@@ -220,9 +216,8 @@
 
                         <span><a class="unit" asp-action="Confirm"
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
-                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
-
-                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number,</a></span>
+   
                         }
 
                     </div>
@@ -252,9 +247,7 @@
 
                         <span><a class="unit" asp-action="Confirm"
                                 asp-route-incidentId=@ViewBag.IncidentToEdit.IncidentId
-                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number ,</a></span>
-
-                        <input asp-for="IncidentId" type="hidden" value="@ViewBag.IncidentToEdit.IncidentId">
+                                asp-route-unitId="@a.UnitId">@a.NumberType@a.Number,</a></span>
 
                         }
                     </div>

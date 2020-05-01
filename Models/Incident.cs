@@ -27,9 +27,5 @@ namespace Dispatch.Models {
 
         public String IncidentStatus { get; set; } = "awaitingDispatch";
 
-        //incident is always "active" after being created (IsActive=true by default)
-
-        public Boolean IsActive { get; set; } = true;
-
     }
 }
