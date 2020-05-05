@@ -1,4 +1,7 @@
 Check out this video explanation of the project!!
+https://youtu.be/NW0MQJpYF1w
+
+And this detailed video explanation of the code!
 https://youtu.be/Z0R4wAfqtLM
 
 Here's a description:
